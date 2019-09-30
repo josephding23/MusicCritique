@@ -53,10 +53,10 @@ def verse(track):
 
     play_note(4, 1.5, track)       # 海
     play_note(3, 0.5, track)       # 里
-    play_note(1, 0.5, track)       # 成
-    play_note(6, 0.5, track, -1)
+    play_note(1, 0.5, track, channel=1)       # 成
+    play_note(6, 0.5, track, -1, channel=1)
 
-    play_note(1, 3, track)         # 长
+    play_note(1, 3, track, channel=1)         # 长
 
 
 def chorus(track, num):
