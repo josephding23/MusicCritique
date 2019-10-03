@@ -2,19 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b77e5dfc-4c90-42b0-97d0-a4afd2ccd659" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/cssxfire.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/dub.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/dub.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/hpss.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/hpss.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/keys.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/keys.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/midi.py" beforeDir="false" afterPath="$PROJECT_DIR$/write/mother_ocean.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/midiutil.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/midiutil.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/presents.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/presents.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/pygame_player.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/pygame_player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/roundabout.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/misc/roundabout.mp3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/vocal.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/vocal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/midi/utility.py" beforeDir="false" afterPath="$PROJECT_DIR$/midi/utility.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/music/midi/write/attempt.mid" beforeDir="false" afterPath="$PROJECT_DIR$/music/midi/write/attempt.mid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/write/mother_ocean.py" beforeDir="false" afterPath="$PROJECT_DIR$/write/mother_ocean.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,7 +25,7 @@
     <SUITE FILE_PATH="coverage/MusicCritique$keys.coverage" NAME="keys Coverage Results" MODIFIED="1569661967857" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
     <SUITE FILE_PATH="coverage/MusicCritique$presents.coverage" NAME="presents Coverage Results" MODIFIED="1569567881122" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
     <SUITE FILE_PATH="coverage/MusicCritique$pydub.coverage" NAME="pydub Coverage Results" MODIFIED="1569806957191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
-    <SUITE FILE_PATH="coverage/MusicCritique$mother_ocean.coverage" NAME="mother_ocean Coverage Results" MODIFIED="1570086366971" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/write" />
+    <SUITE FILE_PATH="coverage/MusicCritique$mother_ocean.coverage" NAME="mother_ocean Coverage Results" MODIFIED="1570104267523" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/write" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="290279856">
@@ -64,13 +56,13 @@
         <counts>
           <entry key="Python Console" value="294" />
           <entry key="dummy" value="21" />
-          <entry key="py" value="15606" />
+          <entry key="py" value="15956" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="21" />
-          <entry key="Python" value="15900" />
+          <entry key="Python" value="16250" />
         </counts>
       </usages-collector>
     </session>
@@ -101,12 +93,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/write/mother_ocean.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3078">
-              <caret line="171" column="8" selection-start-line="171" selection-start-column="8" selection-end-line="171" selection-end-column="8" />
+            <state relative-caret-position="2809">
+              <caret line="322" column="52" selection-start-line="322" selection-start-column="52" selection-end-line="322" selection-end-column="52" />
               <folding>
-                <marker date="1570086523199" expanded="true" signature="7746:7757" ph="..." />
-                <marker date="1570086523199" expanded="true" signature="8690:9810" ph="..." />
-                <marker date="1570086523199" expanded="true" signature="9844:13054" ph="..." />
+                <marker date="1570104267451" expanded="true" signature="7742:7753" ph="..." />
+                <marker date="1570104267451" expanded="true" signature="8686:9806" ph="..." />
+                <marker date="1570104267451" expanded="true" signature="9840:13050" ph="..." />
               </folding>
             </state>
           </provider>
@@ -129,14 +121,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/midi/utility.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="89" column="59" selection-start-line="89" selection-start-column="59" selection-end-line="89" selection-end-column="59" />
+            <state relative-caret-position="1232">
+              <caret line="196" column="32" selection-start-line="196" selection-start-column="32" selection-end-line="196" selection-end-column="32" />
               <folding>
                 <element signature="e#0#58#0" expanded="true" />
-                <marker date="1570085038188" expanded="true" signature="559:1059" ph="..." />
-                <marker date="1570085038188" expanded="true" signature="1091:1096" ph="..." />
-                <marker date="1570085038188" expanded="true" signature="2920:3446" ph="..." />
-                <marker date="1570085038188" expanded="true" signature="7029:8336" ph="..." />
+                <marker date="1570105160018" expanded="true" signature="559:1059" ph="..." />
+                <marker date="1570105160018" expanded="true" signature="2684:3210" ph="..." />
+                <marker date="1570105160018" expanded="true" signature="6660:7967" ph="..." />
               </folding>
             </state>
           </provider>
@@ -194,12 +185,14 @@
       <find>=</find>
       <find>play_note</find>
       <find>play_chord</find>
+      <find>PADRA</find>
     </findStrings>
     <replaceStrings>
       <replace>：</replace>
       <replace>:</replace>
       <replace>:add_notw</replace>
       <replace>add_chord</replace>
+      <replace>PASDA</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -223,6 +216,7 @@
         <option value="$PROJECT_DIR$/midi/midi.py" />
         <option value="$PROJECT_DIR$/midi/basic.py" />
         <option value="$PROJECT_DIR$/write/mother_ocean.py" />
+        <option value="$PROJECT_DIR$/midi/utility.py" />
       </list>
     </option>
   </component>
@@ -233,12 +227,14 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="672" />
-    <option name="y" value="92" />
-    <option name="width" value="695" />
+    <option name="x" value="676" />
+    <option name="y" value="30" />
+    <option name="width" value="697" />
     <option name="height" value="745" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -444,15 +440,16 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="22" width="1382" height="754" extended-state="6" />
+    <frame x="-8" y="22" width="1382" height="754" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.797136" visible="true" weight="0.15431164" />
-      <window_info id="Structure" order="1" sideWeight="0.20286396" side_tool="true" visible="true" weight="0.15431164" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.79735684" visible="true" weight="0.059001513" />
+      <window_info id="Structure" order="1" sideWeight="0.20264317" side_tool="true" visible="true" weight="0.059001513" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" weight="0.32956383" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.273021" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26655897" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3990307" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -460,9 +457,9 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="CSS-X-Fire" order="10" />
+      <window_info anchor="bottom" id="CSS-X-Fire" order="10" weight="0.32956383" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.49919742" side_tool="true" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="12" visible="true" weight="0.3231018" />
+      <window_info anchor="bottom" id="Terminal" order="12" weight="0.2197092" />
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.5008026" weight="0.3279483" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -535,16 +532,6 @@
     <entry file="file://$PROJECT_DIR$/write/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/midi/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/misc/midiutil.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/Users/lenovo/Anaconda3/Lib/site-packages/matplotlib/artist.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15534">
@@ -565,6 +552,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/misc/midiutil.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/misc/keys.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
@@ -572,28 +566,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/midi/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/midi/utility.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="89" column="59" selection-start-line="89" selection-start-column="59" selection-end-line="89" selection-end-column="59" />
+        <state relative-caret-position="1232">
+          <caret line="196" column="32" selection-start-line="196" selection-start-column="32" selection-end-line="196" selection-end-column="32" />
           <folding>
             <element signature="e#0#58#0" expanded="true" />
-            <marker date="1570085038188" expanded="true" signature="559:1059" ph="..." />
-            <marker date="1570085038188" expanded="true" signature="1091:1096" ph="..." />
-            <marker date="1570085038188" expanded="true" signature="2920:3446" ph="..." />
-            <marker date="1570085038188" expanded="true" signature="7029:8336" ph="..." />
+            <marker date="1570105160018" expanded="true" signature="559:1059" ph="..." />
+            <marker date="1570105160018" expanded="true" signature="2684:3210" ph="..." />
+            <marker date="1570105160018" expanded="true" signature="6660:7967" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/write/mother_ocean.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3078">
-          <caret line="171" column="8" selection-start-line="171" selection-start-column="8" selection-end-line="171" selection-end-column="8" />
+        <state relative-caret-position="2809">
+          <caret line="322" column="52" selection-start-line="322" selection-start-column="52" selection-end-line="322" selection-end-column="52" />
           <folding>
-            <marker date="1570086523199" expanded="true" signature="7746:7757" ph="..." />
-            <marker date="1570086523199" expanded="true" signature="8690:9810" ph="..." />
-            <marker date="1570086523199" expanded="true" signature="9844:13054" ph="..." />
+            <marker date="1570104267451" expanded="true" signature="7742:7753" ph="..." />
+            <marker date="1570104267451" expanded="true" signature="8686:9806" ph="..." />
+            <marker date="1570104267451" expanded="true" signature="9840:13050" ph="..." />
           </folding>
         </state>
       </provider>

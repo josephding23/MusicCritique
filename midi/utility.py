@@ -31,43 +31,27 @@ def set_track_meta_info(track, name, time, bpm, key, instruments):
         track.append(Message('program_change', channel=int(channel), program=program, time=0))
 
 def get_chord_arrangement(name):
-    maj3 = [0, 4, 7, 0]  # 大三和弦 根音-大三度-纯五度
-    min3 = [0, 3, 7, 0]  # 小三和弦 根音-小三度-纯五度
-    aug3 = [0, 4, 6, 0]  # 增三和弦 根音-大三度-三全音
-    dim3 = [0, 3, 6, 0]  # 减三和弦 根音-小三度-三全音
+    chord_dict = {
+        'maj3': [0, 4, 7, 0],  # 大三和弦 根音-大三度-纯五度
+        'min3': [0, 3, 7, 0],  # 小三和弦 根音-小三度-纯五度
+        'aug3': [0, 4, 8, 0],  # 增三和弦 根音-大三度-增五度
+        'dim3': [0, 3, 6, 0],  # 减三和弦 根音-小三度-减五度
 
-    M7 = [0, 4, 7, 11]  # 大七和弦 根音-大三度-纯五度-大七度
-    Mm7 = [0, 4, 7, 10]  # 属七和弦 根音-大三度-纯五度-小七度
-    m7 = [0, 3, 7, 10]  # 小七和弦 根音-小三度-纯五度-小七度
-    mM7 = [0, 3, 7, 11]  # 小大七和弦 根音-小三度-纯五度-大七度
-    aug7 = [0, 4, 6, 11]  # 增大七和弦 根音-大三度-三全音-大七度
-    m7b5 = [0, 3, 6, 10]  # 半减七和弦 根音-小三度-三全音-小七度
-    dim7 = [0, 3, 6, 9]  # 减减七和弦 根音-小三度-三全音-减七度
+        'M7': [0, 4, 7, 11],  # 大七和弦 根音-大三度-纯五度-大七度
+        'Mm7': [0, 4, 7, 10],  # 属七和弦 根音-大三度-纯五度-小七度
+        'm7': [0, 3, 7, 10],  # 小七和弦 根音-小三度-纯五度-小七度
+        'mM7': [0, 3, 7, 11],  # 小大七和弦 根音-小三度-纯五度-大七度
+        'aug7': [0, 4, 8, 10],  # 增七和弦 根音-大三度-增五度-小七度
+        'augM7': [0, 4, 8, 11],  # 增大七和弦 根音-大三度-增五度-小七度
+        'm7b5': [0, 3, 6, 10],  # 半减七和弦 根音-小三度-减五度-减七度
+        'dim7': [0, 3, 6, 9]  # 减减七和弦 根音-小三度-减五度-减七度
+    }
 
     chord = [0, 0, 0, 0]
-    if name == 'maj3':
-        chord = maj3
-    if name == 'min3':
-        chord = min3
-    if name == 'aug3':
-        chord = aug3
-    if name == 'dim3':
-        chord = dim3
-    if name == 'M7':
-        chord = M7
-    if name == 'Mm7':
-        chord = Mm7
-    if name == 'm7':
-        chord = m7
-    if name == 'mM7':
-        chord = mM7
-    if name == 'aug7':
-        chord = aug7
-    if name == 'm7b5':
-        chord = m7b5
-    if name == 'dim7':
-        chord = dim7
-
+    try:
+        chord = chord_dict[name]
+    except:
+        print(traceback.format_exc())
     return chord
 
 def add_chord(root, name, format, length, track, root_base=0, channel=3):
@@ -128,7 +112,7 @@ def add_note(note, length, track, base_num=0, delay=0, velocity=1.0, channel=0, 
     elif pitch_type == 2: # Bend
         try:
             pitch = bend_setting['pitch']
-            PASDA = bend_setting['PADRA'] # Prepare-Attack-Sustain-Decay-Aftermath (Taken the notion of ADSR)
+            PASDA = bend_setting['PASDA'] # Prepare-Attack-Sustain-Decay-Aftermath (Taken the notion of ADSR)
             prepare_rate = PASDA[0] / sum(PASDA)
             attack_rate = PASDA[1] / sum(PASDA)
             sustain_rate = PASDA[2] / sum(PASDA)
@@ -136,11 +120,10 @@ def add_note(note, length, track, base_num=0, delay=0, velocity=1.0, channel=0, 
             aftermath_rate = PASDA[4] / sum(PASDA)
             track.append(Message('note_on', note=base_note + base_num * 12 + sum(major_notes[0:note]),
                                  velocity=round(64 * velocity), time=round(delay * meta_time), channel=channel))
-            track.append(Message('pitchwheel', pitch=0, time=round(meta_time * length * prepare_rate), channel=channel))
+            track.append(Message('aftertouch', time=round(meta_time * length * prepare_rate), channel=channel))
             track.append(Message('pitchwheel', pitch=pitch, time=round(meta_time * length * attack_rate), channel=channel))
             track.append(Message('aftertouch', time=round(meta_time * length * sustain_rate), channel=channel))
             track.append(Message('pitchwheel', pitch=0, time=round(meta_time * length * decay_rate), channel=channel))
-            #track.append(Message('pitchwheel', pitch=0, time=round(meta_time * length * aftermath_rate), channel=channel))
             track.append(Message('note_off', note=base_note + base_num * 12 + sum(major_notes[0:note]),
                                  velocity=round(64 * velocity), time=round(meta_time * length * aftermath_rate), channel=channel))
         except:
@@ -213,12 +196,9 @@ def add_drum(name, time, track, delay=0, velocity=1):
     except:
         print(traceback.format_exc())
         return
+    track.append(Message('note_on', note=note, velocity=round(64 * velocity), time=delay, channel=9))
     track.append(
-        Message('note_on', note=note, velocity=round(64 * velocity),
-                time=delay, channel=9))
-    track.append(
-        Message('note_off', note=note, velocity=round(64 * velocity),
-                time=round(meta_time * time), channel=9))
+        Message('note_off', note=note, velocity=round(64 * velocity), time=round(meta_time * time), channel=9))
 
 
 def play_midi(file):
