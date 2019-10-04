@@ -94,6 +94,7 @@ MetaMessage的种类也很多，可以参考[官方文档](https://mido.readthed
  #### 2. 编曲
  下面开始正式编曲了，我选择的是《大海啊，故乡》这首歌，简谱如下：
  ![大海啊，故乡](https://imgconvert.csdnimg.cn/aHR0cDovL3d3dy5nZXB1d2FuZy5uZXQvZC9maWxlL3AvMjAxNjEyMTgvYTk3Nzg2ZmI0ZTRkZmExMDY5NGQyZDQ3NzZhNDM3YmEuanBn?x-oss-process=image/format,png)
+ 
  由于我们是纯乐器演奏，而前奏与后面重复率极高，故略过前奏。之后我将此音乐以八小节为单位分为3个部分，其中后两部分仅一个半音部分有区别。根据此特征，我编写了chorus和verse两个函数，代码如下：
  ```python
  def verse(track):
