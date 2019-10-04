@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b77e5dfc-4c90-42b0-97d0-a4afd2ccd659" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/cssxfire.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/midi/utility.py" beforeDir="false" afterPath="$PROJECT_DIR$/midi/utility.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/music/midi/write/attempt.mid" beforeDir="false" afterPath="$PROJECT_DIR$/music/midi/write/attempt.mid" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/write/mother_ocean.py" beforeDir="false" afterPath="$PROJECT_DIR$/write/mother_ocean.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,15 +27,16 @@
     <session id="290279856">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.25" value="1" />
+          <entry key="project.open.time.27" value="1" />
           <entry key="project.open.time.37" value="1" />
           <entry key="project.open.time.38" value="1" />
           <entry key="project.open.time.47" value="1" />
           <entry key="project.open.time.82" value="1" />
           <entry key="project.open.time.93" value="1" />
-          <entry key="project.opened" value="7" />
+          <entry key="project.opened" value="8" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -93,8 +90,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/write/mother_ocean.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2809">
-              <caret line="322" column="52" selection-start-line="322" selection-start-column="52" selection-end-line="322" selection-end-column="52" />
+            <state relative-caret-position="72">
+              <caret line="268" column="51" selection-start-line="268" selection-start-column="51" selection-end-line="268" selection-end-column="51" />
               <folding>
                 <marker date="1570104267451" expanded="true" signature="7742:7753" ph="..." />
                 <marker date="1570104267451" expanded="true" signature="8686:9806" ph="..." />
@@ -121,7 +118,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/midi/utility.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1232">
+            <state relative-caret-position="3456">
               <caret line="196" column="32" selection-start-line="196" selection-start-column="32" selection-end-line="196" selection-end-column="32" />
               <folding>
                 <element signature="e#0#58#0" expanded="true" />
@@ -141,7 +138,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/misc/pygame_player.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-72">
+            <state relative-caret-position="162">
               <caret line="11" selection-start-line="11" selection-end-line="11" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
@@ -240,7 +237,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -262,6 +258,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -440,16 +437,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="22" width="1382" height="754" extended-state="7" />
-    <editor active="true" />
+    <frame x="-8" y="22" width="1382" height="754" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.79735684" visible="true" weight="0.059001513" />
-      <window_info id="Structure" order="1" sideWeight="0.20264317" side_tool="true" visible="true" weight="0.059001513" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.7950311" visible="true" weight="0.1301059" />
+      <window_info id="Structure" order="1" sideWeight="0.20496894" side_tool="true" visible="true" weight="0.1301059" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Concurrent Activities Diagram" weight="0.32956383" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.26655897" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.26655897" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3990307" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -459,8 +454,9 @@
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="CSS-X-Fire" order="10" weight="0.32956383" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.49919742" side_tool="true" weight="0.3289689" />
-      <window_info anchor="bottom" id="Terminal" order="12" weight="0.2197092" />
+      <window_info anchor="bottom" id="Terminal" order="12" visible="true" weight="0.2197092" />
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.5008026" weight="0.3279483" />
+      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="14" weight="0.32956383" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -522,6 +518,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/misc/keys.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="22" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://D:/Users/lenovo/Anaconda3/Lib/site-packages/mido/midifiles/midifiles.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4194">
@@ -532,16 +535,25 @@
     <entry file="file://$PROJECT_DIR$/write/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://D:/Users/lenovo/Anaconda3/Lib/site-packages/matplotlib/artist.py">
+    <entry file="file://$PROJECT_DIR$/midi/utility.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15534">
-          <caret line="880" selection-start-line="880" selection-end-line="880" />
+        <state relative-caret-position="3456">
+          <caret line="196" column="32" selection-start-line="196" selection-start-column="32" selection-end-line="196" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#58#0" expanded="true" />
+            <marker date="1570105160018" expanded="true" signature="559:1059" ph="..." />
+            <marker date="1570105160018" expanded="true" signature="2684:3210" ph="..." />
+            <marker date="1570105160018" expanded="true" signature="6660:7967" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/midi/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/misc/pygame_player.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-72">
+        <state relative-caret-position="162">
           <caret line="11" selection-start-line="11" selection-end-line="11" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
@@ -559,33 +571,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/misc/keys.py">
+    <entry file="file://D:/Users/lenovo/Anaconda3/Lib/site-packages/matplotlib/artist.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="22" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/midi/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/midi/utility.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1232">
-          <caret line="196" column="32" selection-start-line="196" selection-start-column="32" selection-end-line="196" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#58#0" expanded="true" />
-            <marker date="1570105160018" expanded="true" signature="559:1059" ph="..." />
-            <marker date="1570105160018" expanded="true" signature="2684:3210" ph="..." />
-            <marker date="1570105160018" expanded="true" signature="6660:7967" ph="..." />
-          </folding>
+        <state relative-caret-position="15534">
+          <caret line="880" selection-start-line="880" selection-end-line="880" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/write/mother_ocean.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2809">
-          <caret line="322" column="52" selection-start-line="322" selection-start-column="52" selection-end-line="322" selection-end-column="52" />
+        <state relative-caret-position="72">
+          <caret line="268" column="51" selection-start-line="268" selection-start-column="51" selection-end-line="268" selection-end-column="51" />
           <folding>
             <marker date="1570104267451" expanded="true" signature="7742:7753" ph="..." />
             <marker date="1570104267451" expanded="true" signature="8686:9806" ph="..." />
