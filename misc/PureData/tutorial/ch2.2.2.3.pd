@@ -1,0 +1,43 @@
+#N canvas 708 119 649 466 12;
+#X obj 21 45 sel maria;
+#X obj 21 75 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X symbolatom 21 12 10 0 0 0 - - -;
+#X text 7 101 Symbol boxes;
+#X obj 122 12 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 2700 1;
+#X floatatom 120 36 5 0 0 0 - - -;
+#X text 118 63 Slider;
+#X obj 285 18 hradio 15 1 0 8 empty empty empty 0 -8 0 10 -262144 -1
+-1 4;
+#X floatatom 284 46 5 0 0 0 - - -;
+#X text 290 78 Radio;
+#X obj 17 138 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X floatatom 14 163 5 0 0 0 - - -;
+#X obj 14 191 + 400;
+#X floatatom 13 221 5 0 0 0 - - -;
+#X obj 14 250 osc~;
+#X obj 16 286 *~;
+#X obj 16 325 dac~;
+#X obj 95 163 hradio 15 1 0 8 empty empty empty 0 -8 0 10 -262144 -1
+-1 0;
+#X floatatom 95 197 5 0 0 0 - - -;
+#X obj 94 230 / 6;
+#X floatatom 93 267 5 0 0 0 - - -;
+#X text 15 358 Using slider and radio;
+#X connect 0 0 1 0;
+#X connect 2 0 0 0;
+#X connect 4 0 5 0;
+#X connect 7 0 8 0;
+#X connect 10 0 11 0;
+#X connect 11 0 12 0;
+#X connect 12 0 13 0;
+#X connect 13 0 14 0;
+#X connect 14 0 15 0;
+#X connect 15 0 16 0;
+#X connect 15 0 16 1;
+#X connect 17 0 18 0;
+#X connect 18 0 19 0;
+#X connect 19 0 20 0;
+#X connect 20 0 15 1;

@@ -1,0 +1,25 @@
+#N canvas 569 242 450 300 12;
+#X floatatom 173 45 5 0 0 0 - - -;
+#X obj 173 70 osc~ 1;
+#X obj 173 96 *~ 140;
+#X obj 68 126 osc~;
+#X obj 68 152 *~ 0.8;
+#X obj 69 202 dac~;
+#X obj 128 136 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 69 100 +~;
+#X floatatom 232 90 5 0 0 0 - - -;
+#X floatatom 36 54 5 0 0 0 - - -;
+#X text 160 23 Modulator;
+#X text 29 33 Carrier;
+#X text 160 160 Frequency modulation;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 7 1;
+#X connect 3 0 4 0;
+#X connect 4 0 5 0;
+#X connect 4 0 5 1;
+#X connect 6 0 4 1;
+#X connect 7 0 3 0;
+#X connect 8 0 2 1;
+#X connect 9 0 7 0;

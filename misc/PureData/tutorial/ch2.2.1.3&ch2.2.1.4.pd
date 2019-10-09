@@ -1,0 +1,27 @@
+#N canvas 791 172 450 300 12;
+#X floatatom 34 18 5 0 0 0 - - -;
+#X obj 34 53 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X text 24 78 Input for bang;
+#X floatatom 169 16 20 0 0 0 - - -;
+#X text 167 47 How number are represented;
+#X floatatom 43 124 5 0 0 0 - - -;
+#X obj 43 165 t f b;
+#X obj 43 233 print left;
+#X obj 75 203 print right;
+#X text 41 265 More on trigger;
+#X obj 205 145 symbol peter;
+#X obj 319 145 symbol erwin;
+#X obj 297 102 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 209 193 print;
+#X obj 324 195 print;
+#X text 219 228 Series;
+#X connect 0 0 1 0;
+#X connect 5 0 6 0;
+#X connect 6 0 7 0;
+#X connect 6 1 8 0;
+#X connect 10 0 13 0;
+#X connect 11 0 14 0;
+#X connect 12 0 11 0;
+#X connect 12 0 10 0;

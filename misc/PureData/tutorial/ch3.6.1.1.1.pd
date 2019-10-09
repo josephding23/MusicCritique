@@ -1,0 +1,56 @@
+#N canvas 1066 153 698 794 12;
+#N canvas 0 0 450 300 graph4 0;
+#X array array1 40000 float 0;
+#X coords 0 1 39999 -1 200 140 1;
+#X restore 355 -12 graph;
+#X obj 57 163 osc~ 5;
+#X msg 106 130 0;
+#X obj 130 162 osc~ 4;
+#X obj 190 56 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+-1;
+#X obj 211 56 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+-1;
+#X obj 142 214 tabwrite~ array2;
+#X obj 105 252 tabwrite~ array1;
+#N canvas 0 0 450 300 graph4 0;
+#X array array2 40000 float 0;
+#X coords 0 1 39999 -1 200 140 1;
+#X restore 352 168 graph;
+#N canvas 0 0 450 300 graph4 0;
+#X array array3 40000 float 0;
+#X coords 0 1 39999 -1 200 140 1;
+#X restore 352 351 graph;
+#N canvas 0 0 450 300 graph4 0;
+#X array array4 200000 float 0;
+#X coords 0 1 199999 -1 200 140 1;
+#X restore 352 528 graph;
+#X obj 57 308 *~ 0.5;
+#X obj 85 383 tabwrite~ array3;
+#X obj 48 421 tabwrite~ array4;
+#X obj 118 360 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+-1;
+#X obj 139 360 bng 15 250 50 0 empty empty empty 0 -6 0 8 -262144 -1
+-1;
+#X text 535 677 200000;
+#X text 539 499 40000;
+#X text 537 315 40000;
+#X text 546 134 40000;
+#X text 184 31 graph;
+#X text 112 335 graph;
+#X text 81 -44 3.6.1.1. Ring modulation 1;
+#X text 124 664 www.pd-tutorial.com;
+#X text 126 636 Johannes Kreidler;
+#X connect 1 0 7 0;
+#X connect 1 0 11 0;
+#X connect 2 0 1 1;
+#X connect 2 0 3 1;
+#X connect 3 0 6 0;
+#X connect 3 0 11 0;
+#X connect 4 0 2 0;
+#X connect 4 0 7 0;
+#X connect 5 0 2 0;
+#X connect 5 0 6 0;
+#X connect 11 0 13 0;
+#X connect 11 0 12 0;
+#X connect 14 0 13 0;
+#X connect 15 0 12 0;

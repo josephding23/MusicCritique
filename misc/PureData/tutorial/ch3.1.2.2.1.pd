@@ -1,0 +1,68 @@
+#N canvas 676 30 681 686 12;
+#X obj 30 69 osc~ 300;
+#X obj 29 198 *~;
+#X obj 104 13 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 3800 1;
+#X obj 104 175 line~;
+#X msg 104 149 \$1 20;
+#X obj 160 195 *~;
+#X obj 235 10 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 3200 1;
+#X obj 235 172 line~;
+#X msg 235 146 \$1 20;
+#X obj 293 194 *~;
+#X obj 368 9 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 7400 1;
+#X obj 368 171 line~;
+#X msg 368 145 \$1 20;
+#X obj 422 193 *~;
+#X obj 497 8 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 1700 1;
+#X obj 497 170 line~;
+#X msg 497 144 \$1 20;
+#X obj 557 195 *~;
+#X obj 632 10 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 6000 1;
+#X obj 632 172 line~;
+#X msg 632 146 \$1 20;
+#X obj 161 66 osc~ 500;
+#X obj 294 65 osc~ 1100;
+#X obj 423 64 osc~ 1300;
+#X obj 558 66 osc~ 3000;
+#X obj 242 279 *~;
+#X obj 241 312 dac~;
+#X obj 393 263 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X msg 354 291 \$1 20;
+#X obj 354 317 line~;
+#X text 286 370 Chord;
+#X connect 0 0 1 0;
+#X connect 1 0 25 0;
+#X connect 2 0 4 0;
+#X connect 3 0 1 1;
+#X connect 4 0 3 0;
+#X connect 5 0 25 0;
+#X connect 6 0 8 0;
+#X connect 7 0 5 1;
+#X connect 8 0 7 0;
+#X connect 9 0 25 0;
+#X connect 10 0 12 0;
+#X connect 11 0 9 1;
+#X connect 12 0 11 0;
+#X connect 13 0 25 0;
+#X connect 14 0 16 0;
+#X connect 15 0 13 1;
+#X connect 16 0 15 0;
+#X connect 17 0 25 0;
+#X connect 18 0 20 0;
+#X connect 19 0 17 1;
+#X connect 20 0 19 0;
+#X connect 21 0 5 0;
+#X connect 22 0 9 0;
+#X connect 23 0 13 0;
+#X connect 24 0 17 0;
+#X connect 25 0 26 0;
+#X connect 25 0 26 1;
+#X connect 27 0 28 0;
+#X connect 28 0 29 0;
+#X connect 29 0 25 1;

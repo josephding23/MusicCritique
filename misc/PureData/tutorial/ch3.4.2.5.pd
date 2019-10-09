@@ -1,0 +1,56 @@
+#N canvas 809 30 450 686 12;
+#X obj 144 32 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 144 52 sel 1;
+#X obj 144 94 timer;
+#X obj 144 173 expr 1000/$f1;
+#X obj 147 311 *~;
+#X obj 147 337 tabread4~ array1;
+#X obj 147 397 *~;
+#X obj 147 423 hip~ 5;
+#X obj 147 449 dac~;
+#X obj 191 81 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X msg 176 126 0;
+#X obj 165 281 * 44.1;
+#X floatatom 172 370 5 0 0 0 - - -;
+#X obj 23 144 tabwrite~ array1;
+#X msg 79 117 stop;
+#X obj 23 94 adc~;
+#N canvas 0 50 450 250 (subpatch) 0;
+#X array array1 100 float 3;
+#A 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0;
+#X coords 0 1 100 -1 200 140 1;
+#X restore 356 363 graph;
+#X text 165 12 start/stop recording start loop;
+#X obj 147 215 line~;
+#X obj 148 242 phasor~;
+#X obj 73 80 del 20;
+#X text 123 489 A Loop Generator;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 0 10 0;
+#X connect 1 0 20 0;
+#X connect 1 1 9 0;
+#X connect 2 0 3 0;
+#X connect 2 0 11 0;
+#X connect 3 0 18 0;
+#X connect 4 0 5 0;
+#X connect 5 0 6 0;
+#X connect 6 0 7 0;
+#X connect 7 0 8 0;
+#X connect 7 0 8 1;
+#X connect 9 0 2 1;
+#X connect 9 0 14 0;
+#X connect 10 0 3 0;
+#X connect 11 0 4 1;
+#X connect 12 0 6 1;
+#X connect 14 0 13 0;
+#X connect 15 0 13 0;
+#X connect 15 1 13 0;
+#X connect 18 0 19 0;
+#X connect 19 0 4 0;
+#X connect 20 0 13 0;

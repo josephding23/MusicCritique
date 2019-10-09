@@ -1,0 +1,18 @@
+#N canvas 680 229 450 296 12;
+#X floatatom 66 47 5 0 0 0 - - -;
+#X obj 66 72 phasor~;
+#X obj 65 169 *~;
+#X obj 65 195 *~ 0.8;
+#X obj 65 227 dac~;
+#X obj 95 144 osc~ 1;
+#X floatatom 95 116 5 0 0 0 - - -;
+#X floatatom 116 177 5 0 0 0 - - -;
+#X text 135 94 More sonically complex ring modulation;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 3 0 4 1;
+#X connect 5 0 2 1;
+#X connect 6 0 5 0;
+#X connect 7 0 3 1;

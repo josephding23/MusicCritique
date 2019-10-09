@@ -1,0 +1,57 @@
+#N canvas 715 194 549 300 12;
+#X obj 26 46 metro 500;
+#X floatatom 86 16 5 0 0 0 - - -;
+#X obj 27 18 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 26 80 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X text 34 103 Metro;
+#X obj 159 17 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 160 44 delay 1000;
+#X obj 159 77 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X text 145 103 Delay;
+#X floatatom 265 17 5 0 0 0 - - -;
+#X obj 265 50 pipe 500;
+#X floatatom 265 87 5 0 0 0 - - -;
+#X text 262 116 Pipe;
+#X obj 395 69 pipe f f f 1000;
+#X obj 426 40 + 1;
+#X obj 463 42 + 2;
+#X floatatom 390 112 5 0 0 0 - - -;
+#X floatatom 442 112 5 0 0 0 - - -;
+#X floatatom 497 114 5 0 0 0 - - -;
+#X msg 387 10 1;
+#X text 393 140 Pipe as pack/unpack;
+#X obj 16 187 line;
+#X floatatom 15 220 5 0 0 0 - - -;
+#X msg 14 150 1500 \, 4000 1000;
+#X obj 163 183 timer;
+#X text 17 249 Line;
+#X obj 155 153 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 193 151 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X floatatom 160 217 5 0 0 0 - - -;
+#X text 160 252 Timer;
+#X connect 0 0 3 0;
+#X connect 1 0 0 1;
+#X connect 2 0 0 0;
+#X connect 5 0 6 0;
+#X connect 6 0 7 0;
+#X connect 9 0 10 0;
+#X connect 10 0 11 0;
+#X connect 13 0 16 0;
+#X connect 13 1 17 0;
+#X connect 13 2 18 0;
+#X connect 14 0 13 1;
+#X connect 15 0 13 2;
+#X connect 19 0 13 0;
+#X connect 19 0 14 0;
+#X connect 19 0 15 0;
+#X connect 21 0 22 0;
+#X connect 23 0 21 0;
+#X connect 24 0 28 0;
+#X connect 26 0 24 0;
+#X connect 27 0 24 1;

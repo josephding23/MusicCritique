@@ -1,0 +1,17 @@
+#N canvas 672 247 450 300 12;
+#X obj 101 24 adc~;
+#X obj 102 109 *~;
+#X obj 102 135 *~ 0.8;
+#X obj 102 170 dac~;
+#X floatatom 149 55 5 0 0 0 - - -;
+#X obj 149 83 osc~ 1;
+#X floatatom 158 115 5 0 0 0 - - -;
+#X text 229 84 Live ring modulation;
+#X connect 0 0 1 0;
+#X connect 0 1 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 2 0 3 1;
+#X connect 4 0 5 0;
+#X connect 5 0 1 1;
+#X connect 6 0 2 1;
