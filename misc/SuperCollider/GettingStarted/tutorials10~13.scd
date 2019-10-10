@@ -1,3 +1,5 @@
+//10 SynthDefs and Synths
+
 {SinOsc.ar(440, 0, 0.2)}.play;
 
 SynthDef.new("tutorial-SinOsc", {Out.ar(0, SinOsc.ar(440, 0, 0.2))}).play;
@@ -36,6 +38,9 @@ z = Synth("tutorial-args", ["freq", 880, "out", 1])
 "a String" === "a String"
 \aSymbol === 'aSymbol'
 
+
+//11 Busses
+
 In.ar(0, 1);
 In.ar(0, 4);
 
@@ -43,6 +48,15 @@ In.ar(0, 4);
 
 b = Bus.control(s, 2);
 c = Bus.audio(s);
+
+(
+SynthDef("tutorial-args", { arg freq = 440, out = 0;
+	Out.ar(out, SinOsc.ar(freq, 0, 0.2));
+}).add;
+)
+x = Synth("tutorial-args", [\out, 1, \freq, 660]);
+y = Synth("tutorial-args", [\out, 1, \freq, 770]);
+
 
 (
 SynthDef.new("tutorial-SinOsc-stereo", { var outArray;
@@ -150,7 +164,7 @@ z = Synth("default", [\freq, 600], x, \addAfter)
 x.free; y.free;
 z.free
 
-\\12Groups
+//12 Groups
 
 (
 SynthDef(\tutorial_DecaySin2, {arg outBus = 0, effectBus, direct = 0.5, freq = 440;
@@ -198,3 +212,118 @@ SinOsc.superclass;
 PureUGen.superclass;
 UGen.superclass;
 UGen.help;
+
+//13 Buffer
+
+s.boot;
+b = Buffer.alloc(s, 100, 2);
+b.free;
+
+b = Buffer.alloc(s, s.sampleRate * 8.0, 2);
+b.free;
+
+b = Buffer.read(s, "D:/PycharmProjects/MusicCritique/misc/SuperCollider/okay-2.wav");
+
+(
+x = SynthDef("tutorial-PlayBuf", { arg out = 0, bufnum;
+	Out.ar( out, PlayBuf.ar(1, bufnum, BufRateScale.kr(bufnum)))
+}).play(s, [\bufnum, b]);
+)
+
+x.free; b.free;
+
+(
+SynthDef("tutorial-Buffer-cue", {arg out = 0, bufnum;
+	Out.ar(out, DiskIn.ar(1, bufnum))
+}).add;
+)
+
+b = Buffer.cueSoundFile(s, "D:/PycharmProjects/MusicCritique/misc/SuperCollider/okay-2.wav", 0, 2);
+y = Synth.new("tutorial-Buffer-cue", [\bufnum, b], s);
+b.free; y.free;
+
+b = Buffer.read(s, "D:/PycharmProjects/MusicCritique/misc/SuperCollider/okay-2.wav")
+b.bufnum;
+b.numFrames;
+b.numChannels;
+b.sampleRate;
+b.free;
+
+(
+b = Buffer.read(s, "D:/PycharmProjects/MusicCritique/misc/SuperCollider/okay-2.wav", action: {arg buffer;
+	("numFrames after update:" + buffer.numFrames).postln;
+	x = {PlayBuf.ar(1, buffer, BufRateScale.kr(buffer))}.play;
+}
+);
+("numFrames before update:" + b.numFrames).postln;
+)
+x.free; b.free;
+
+b = Buffer.alloc(s, s.sampleRate * 5, 1);
+
+(
+x = SynthDef("tutorial-RecordBuf", { arg out=0, bufnum=0;
+	var noise;
+	noise = PinkNoise.ar(0.3);
+	RecordBuf.ar(noise, bufnum);
+}).play(s, [\out, 0, \bufnum, b])
+)
+
+x.free;
+
+(
+SynthDef("tutorial-playback", {arg out=0, bufnum=0;
+	var playbuf;
+	playbuf = PlayBuf.ar(1, bufnum);
+	FreeSelfWhenDone.kr(playbuf);
+	Out.ar(out, playbuf);
+})
+)
+b.free;
+
+b = Buffer.alloc(s, 8, 1);
+b.set(7, 0.5);
+b.get(7, {|msg| msg.postln});
+b.free;
+b.postln;
+
+b = Buffer.alloc(s, 16);
+b.setn(0, [1, 2, 3]);
+b.getn(0, 3, {|msg| msg.postln});
+b.setn(0, Array.fill(b.numFrames, {1.0.rand}));
+b.getn(0, b.numFrames, {|msg| msg.postln});
+b.free;
+
+(
+v = FloatArray.fill(44100, {1.0.rand2});
+b = Buffer.alloc(s, 44100);
+)
+(
+b.loadCollection(v, action: {|buf|
+	x = {PlayBuf.ar(buf.numChannels, buf, BufRateScale.kr(buf), loop: 1) * 0.2}.play;
+});
+)
+x.free;
+
+b.loadToFloatArray(0, -1, {|floatArray| (floatArray == v).postln});
+b.free;
+
+b = Buffer.read(s, "D:/PycharmProjects/MusicCritique/misc/SuperCollider/okay-2.wav");
+b.plot;
+
+b.play;
+x = b.play(true);
+x.free; b.free;
+
+b = Buffer.alloc(s, 512, 1);
+b.cheby([1, 0, 1, 1, 0, 1]);
+(
+x = play({
+	Shaper.ar(
+		b,
+		SinOsc.ar(300, 0, Line.kr(0, 1, 6)),
+		0.5
+	)
+});
+)
+x.free; b.free;
