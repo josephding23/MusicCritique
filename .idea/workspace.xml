@@ -2,8 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b77e5dfc-4c90-42b0-97d0-a4afd2ccd659" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/midi_extended/MidiFileExtended.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/midi_extended/Track.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/midi_extended/UtilityBox.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/markdown/ch1.basic.md" beforeDir="false" afterPath="$PROJECT_DIR$/markdown/ch1.basic.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/midi/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/midi_extended/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/midi/utility.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/python/dub.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/python/dub.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/python/hpss.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/python/hpss.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/python/presents.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/python/presents.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/python/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/python/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/misc/python/vocal.py" beforeDir="false" afterPath="$PROJECT_DIR$/misc/python/vocal.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/music/midi/read/californication.mid" beforeDir="false" afterPath="$PROJECT_DIR$/data/midi/read/californication.mid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/music/midi/read/roundabout.mid" beforeDir="false" afterPath="$PROJECT_DIR$/data/midi/read/roundabout.mid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/music/midi/read/roundabout_bass_only.mid" beforeDir="false" afterPath="$PROJECT_DIR$/data/midi/read/roundabout_bass_only.mid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/music/midi/write/attempt.mid" beforeDir="false" afterPath="$PROJECT_DIR$/data/midi/write/attempt.mid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/music/midi/write/attempt1.mid" beforeDir="false" afterPath="$PROJECT_DIR$/data/midi/write/attempt1.mid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/music/midi/write/drum.mid" beforeDir="false" afterPath="$PROJECT_DIR$/data/midi/write/drum.mid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/music/mp3/roundabout.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/data/mp3/roundabout.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/music/mp3/roundabout_early.mp3" beforeDir="false" afterPath="$PROJECT_DIR$/data/mp3/roundabout_early.mp3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/write/mother_ocean.py" beforeDir="false" afterPath="$PROJECT_DIR$/write/mother_ocean.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,101 +36,127 @@
     <SUITE FILE_PATH="coverage/MusicCritique$midiutil.coverage" NAME="midiutil Coverage Results" MODIFIED="1569814037244" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
     <SUITE FILE_PATH="coverage/MusicCritique$vocal.coverage" NAME="vocal Coverage Results" MODIFIED="1569567965709" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
     <SUITE FILE_PATH="coverage/MusicCritique$pygame_player.coverage" NAME="pygame_player Coverage Results" MODIFIED="1569737399890" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
+    <SUITE FILE_PATH="coverage/MusicCritique$MidiFileExtended.coverage" NAME="MidiFileExtended Coverage Results" MODIFIED="1570949920432" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/midi_extended" />
     <SUITE FILE_PATH="coverage/MusicCritique$hpss.coverage" NAME="hpss Coverage Results" MODIFIED="1569565075791" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
     <SUITE FILE_PATH="coverage/MusicCritique$keys.coverage" NAME="keys Coverage Results" MODIFIED="1569661967857" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
     <SUITE FILE_PATH="coverage/MusicCritique$presents.coverage" NAME="presents Coverage Results" MODIFIED="1569567881122" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
     <SUITE FILE_PATH="coverage/MusicCritique$pydub.coverage" NAME="pydub Coverage Results" MODIFIED="1569806957191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
-    <SUITE FILE_PATH="coverage/MusicCritique$mother_ocean.coverage" NAME="mother_ocean Coverage Results" MODIFIED="1570104267523" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/write" />
+    <SUITE FILE_PATH="coverage/MusicCritique$mother_ocean.coverage" NAME="mother_ocean Coverage Results" MODIFIED="1570950832470" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/write" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="290279856">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="6" />
+          <entry key="project.closed" value="7" />
           <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.25" value="1" />
           <entry key="project.open.time.27" value="1" />
+          <entry key="project.open.time.34" value="1" />
           <entry key="project.open.time.37" value="1" />
           <entry key="project.open.time.38" value="1" />
           <entry key="project.open.time.47" value="1" />
           <entry key="project.open.time.82" value="1" />
+          <entry key="project.open.time.88" value="1" />
           <entry key="project.open.time.93" value="1" />
-          <entry key="project.opened" value="8" />
+          <entry key="project.opened" value="10" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="md" value="4" />
-          <entry key="py" value="15" />
+          <entry key="png" value="2" />
+          <entry key="py" value="22" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
+          <entry key="Image" value="2" />
           <entry key="Markdown" value="4" />
-          <entry key="Python" value="15" />
+          <entry key="Python" value="22" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="294" />
-          <entry key="dummy" value="21" />
+          <entry key="dummy" value="31" />
           <entry key="md" value="7" />
-          <entry key="py" value="15956" />
+          <entry key="py" value="23050" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Markdown" value="7" />
-          <entry key="PLAIN_TEXT" value="21" />
-          <entry key="Python" value="16250" />
+          <entry key="PLAIN_TEXT" value="31" />
+          <entry key="Python" value="23344" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/midi/utility.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/midi_extended/UtilityBox.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="388">
-              <caret line="196" column="32" selection-start-line="196" selection-start-column="32" selection-end-line="196" selection-end-column="32" />
+            <state relative-caret-position="36">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
+              <folding>
+                <element signature="e#0#16#0" expanded="true" />
+                <marker date="1570940070701" expanded="true" signature="29:30" ph="..." />
+                <marker date="1570940070701" expanded="true" signature="49:262" ph="..." />
+                <marker date="1570940070701" expanded="true" signature="261:262" ph="..." />
+                <marker date="1570940070701" expanded="true" signature="1200:2707" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/midi_extended/MidiFileExtended.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1550">
+              <caret line="37" selection-start-line="37" selection-end-line="37" />
               <folding>
                 <element signature="e#0#58#0" expanded="true" />
-                <marker date="1570105160018" expanded="true" signature="559:1059" ph="..." />
-                <marker date="1570105160018" expanded="true" signature="2684:3210" ph="..." />
-                <marker date="1570105160018" expanded="true" signature="6660:7967" ph="..." />
+                <marker date="1570950832406" expanded="true" signature="2961:3754" ph="..." />
+                <marker date="1570950832406" expanded="true" signature="3749:3750" ph="..." />
+                <marker date="1570950832406" expanded="true" signature="4427:4465" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/midi/__init__.py">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/data/plots/mother_ocean/melody.png">
+          <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/misc/pygame_player.py">
+        <entry file="file://D:/Users/lenovo/Anaconda3/Lib/site-packages/mido/midifiles/midifiles.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
+            <state relative-caret-position="62">
+              <caret line="325" selection-start-line="325" selection-end-line="325" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/midi_extended/Track.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
               <folding>
-                <element signature="e#0#18#0" expanded="true" />
-                <marker date="1569737372813" expanded="true" signature="244:249" ph="..." />
-                <marker date="1569737372813" expanded="true" signature="351:356" ph="..." />
-                <marker date="1569737372813" expanded="true" signature="413:418" ph="..." />
+                <element signature="e#0#58#0" expanded="true" />
+                <marker date="1570939963881" expanded="true" signature="525:531" ph="..." />
+                <marker date="1570939963881" expanded="true" signature="838:844" ph="..." />
+                <marker date="1570939963881" expanded="true" signature="1201:1277" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/misc/midiutil.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/midi_extended/__init__.py">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -120,6 +164,21 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="15534">
               <caret line="880" selection-start-line="880" selection-end-line="880" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/write/mother_ocean.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3639">
+              <caret line="405" column="109" selection-start-line="405" selection-start-column="109" selection-end-line="405" selection-end-column="109" />
+              <folding>
+                <element signature="e#0#47#0" expanded="true" />
+                <marker date="1570950756845" expanded="true" signature="154:163" ph="..." />
+                <marker date="1570950756845" expanded="true" signature="17126:17127" ph="..." />
+                <marker date="1570950756845" expanded="true" signature="17895:19614" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -139,6 +198,8 @@
       <find>play_note</find>
       <find>play_chord</find>
       <find>PADRA</find>
+      <find>, track</find>
+      <find>self.mid.get_track_by_name</find>
     </findStrings>
     <replaceStrings>
       <replace>：</replace>
@@ -146,6 +207,7 @@
       <replace>:add_notw</replace>
       <replace>add_chord</replace>
       <replace>PASDA</replace>
+      <replace>self.mid.get_extended_track</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -168,11 +230,17 @@
         <option value="$PROJECT_DIR$/midi/_init_.py" />
         <option value="$PROJECT_DIR$/midi/midi.py" />
         <option value="$PROJECT_DIR$/midi/basic.py" />
-        <option value="$PROJECT_DIR$/write/mother_ocean.py" />
-        <option value="$PROJECT_DIR$/midi/utility.py" />
         <option value="$PROJECT_DIR$/markdown/ch2.harmony.md" />
         <option value="$PROJECT_DIR$/markdown/ch3.pitchwheel.md" />
         <option value="$PROJECT_DIR$/markdown/ch1.basic.md" />
+        <option value="$PROJECT_DIR$/midi/utility.py" />
+        <option value="$PROJECT_DIR$/midi/UtilityBox.py" />
+        <option value="$PROJECT_DIR$/midi/Track.py" />
+        <option value="$PROJECT_DIR$/midi/MidiFileExtended.py" />
+        <option value="$PROJECT_DIR$/midi_extended/Track.py" />
+        <option value="$PROJECT_DIR$/midi_extended/UtilityBox.py" />
+        <option value="$PROJECT_DIR$/write/mother_ocean.py" />
+        <option value="$PROJECT_DIR$/midi_extended/MidiFileExtended.py" />
       </list>
     </option>
   </component>
@@ -183,9 +251,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="685" />
+    <option name="x" value="54" />
     <option name="y" value="30" />
-    <option name="width" value="681" />
+    <option name="width" value="1319" />
     <option name="height" value="745" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -206,12 +274,30 @@
             <path>
               <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
               <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="plots" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="plots" type="462c0819:PsiDirectoryNode" />
+              <item name="mother_ocean" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
               <item name="markdown" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
               <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="midi" type="462c0819:PsiDirectoryNode" />
+              <item name="midi_extended" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
@@ -261,6 +347,28 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.mother_ocean">
+    <configuration name="MidiFileExtended" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="MusicCritique" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/midi_extended" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/midi_extended/MidiFileExtended.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="dub" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MusicCritique" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -349,42 +457,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="pydub" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="MusicCritique" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="D:\PycharmProjects\MusicCritique\examples\dub.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.midi" />
-      <item itemvalue="Python.pydub" />
       <item itemvalue="Python.dub" />
       <item itemvalue="Python.midiutil" />
       <item itemvalue="Python.mother_ocean" />
+      <item itemvalue="Python.MidiFileExtended" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.mother_ocean" />
+        <item itemvalue="Python.MidiFileExtended" />
         <item itemvalue="Python.midi" />
         <item itemvalue="Python.midiutil" />
         <item itemvalue="Python.dub" />
-        <item itemvalue="Python.pydub" />
       </list>
     </recent_temporary>
   </component>
@@ -402,15 +488,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="685" y="30" width="681" height="745" extended-state="0" />
-    <editor active="true" />
+    <frame x="54" y="30" width="1319" height="745" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.79535866" visible="true" weight="0.27697262" />
-      <window_info id="Structure" order="1" sideWeight="0.20464136" side_tool="true" visible="true" weight="0.27697262" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.78998387" visible="true" weight="0.0" />
+      <window_info id="Structure" order="1" sideWeight="0.21001616" side_tool="true" weight="0.16490166" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.26655897" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.5621971" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.21311475" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3990307" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -420,7 +505,34 @@
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="CSS-X-Fire" order="10" weight="0.32956383" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.49919742" side_tool="true" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="12" visible="true" weight="0.22295082" />
+      <window_info anchor="bottom" id="Terminal" order="12" weight="0.052459016" />
+      <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.5008026" weight="0.3279483" />
+      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="14" weight="0.32956383" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info active="true" anchor="right" id="SciView" order="3" visible="true" weight="0.08737093" />
+      <window_info anchor="right" id="R Graphics" order="4" />
+      <window_info anchor="right" id="R Packages" order="5" />
+      <window_info anchor="right" id="Database" order="6" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.78998387" visible="true" weight="0.16490166" />
+      <window_info id="Structure" order="1" sideWeight="0.21001616" side_tool="true" visible="true" weight="0.16490166" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32786885" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.0" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3990307" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="CSS-X-Fire" order="10" weight="0.32956383" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.49919742" side_tool="true" weight="0.3289689" />
+      <window_info anchor="bottom" id="Terminal" order="12" weight="0.052459016" />
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.5008026" weight="0.3279483" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="14" weight="0.32956383" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -430,7 +542,7 @@
       <window_info anchor="right" id="R Graphics" order="4" />
       <window_info anchor="right" id="R Packages" order="5" />
       <window_info anchor="right" id="Database" order="6" />
-    </layout>
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -446,90 +558,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/misc/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="38" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/misc/hpss.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/misc/presents.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="15" column="36" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/misc/dub.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/misc/vocal.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/misc/keys.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="22" selection-start-line="1" selection-start-column="22" selection-end-line="1" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Users/lenovo/Anaconda3/Lib/site-packages/mido/midifiles/midifiles.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4194">
-          <caret line="245" selection-start-line="245" selection-end-line="245" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/misc/test.py" />
+    <entry file="file://$PROJECT_DIR$/misc/hpss.py" />
+    <entry file="file://$PROJECT_DIR$/misc/presents.py" />
+    <entry file="file://$PROJECT_DIR$/misc/dub.py" />
+    <entry file="file://$PROJECT_DIR$/misc/vocal.py" />
+    <entry file="file://$PROJECT_DIR$/misc/keys.py" />
     <entry file="file://$PROJECT_DIR$/write/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/midi/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/misc/pygame_player.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-            <marker date="1569737372813" expanded="true" signature="244:249" ph="..." />
-            <marker date="1569737372813" expanded="true" signature="351:356" ph="..." />
-            <marker date="1569737372813" expanded="true" signature="413:418" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/misc/midiutil.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Users/lenovo/Anaconda3/Lib/site-packages/matplotlib/artist.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15534">
-          <caret line="880" selection-start-line="880" selection-end-line="880" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/markdown/ch4.drums.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
@@ -565,27 +601,77 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/write/mother_ocean.py">
+    <entry file="file://$PROJECT_DIR$/misc/pygame_player.py" />
+    <entry file="file://$PROJECT_DIR$/misc/midiutil.py" />
+    <entry file="file://$PROJECT_DIR$/midi_extended/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://D:/Users/lenovo/Anaconda3/Lib/site-packages/matplotlib/artist.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="268" column="51" selection-start-line="268" selection-start-column="51" selection-end-line="268" selection-end-column="51" />
+        <state relative-caret-position="15534">
+          <caret line="880" selection-start-line="880" selection-end-line="880" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Users/lenovo/Anaconda3/Lib/site-packages/mido/midifiles/midifiles.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="62">
+          <caret line="325" selection-start-line="325" selection-end-line="325" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/midi_extended/Track.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
           <folding>
-            <marker date="1570104267451" expanded="true" signature="7742:7753" ph="..." />
-            <marker date="1570104267451" expanded="true" signature="8686:9806" ph="..." />
-            <marker date="1570104267451" expanded="true" signature="9840:13050" ph="..." />
+            <element signature="e#0#58#0" expanded="true" />
+            <marker date="1570939963881" expanded="true" signature="525:531" ph="..." />
+            <marker date="1570939963881" expanded="true" signature="838:844" ph="..." />
+            <marker date="1570939963881" expanded="true" signature="1201:1277" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/midi/utility.py">
+    <entry file="file://$PROJECT_DIR$/midi_extended/UtilityBox.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="388">
-          <caret line="196" column="32" selection-start-line="196" selection-start-column="32" selection-end-line="196" selection-end-column="32" />
+        <state relative-caret-position="36">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+            <marker date="1570940070701" expanded="true" signature="29:30" ph="..." />
+            <marker date="1570940070701" expanded="true" signature="49:262" ph="..." />
+            <marker date="1570940070701" expanded="true" signature="261:262" ph="..." />
+            <marker date="1570940070701" expanded="true" signature="1200:2707" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/plots/mother_ocean/melody.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/write/mother_ocean.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3639">
+          <caret line="405" column="109" selection-start-line="405" selection-start-column="109" selection-end-line="405" selection-end-column="109" />
+          <folding>
+            <element signature="e#0#47#0" expanded="true" />
+            <marker date="1570950756845" expanded="true" signature="154:163" ph="..." />
+            <marker date="1570950756845" expanded="true" signature="17126:17127" ph="..." />
+            <marker date="1570950756845" expanded="true" signature="17895:19614" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/midi_extended/MidiFileExtended.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1550">
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
           <folding>
             <element signature="e#0#58#0" expanded="true" />
-            <marker date="1570105160018" expanded="true" signature="559:1059" ph="..." />
-            <marker date="1570105160018" expanded="true" signature="2684:3210" ph="..." />
-            <marker date="1570105160018" expanded="true" signature="6660:7967" ph="..." />
+            <marker date="1570950832406" expanded="true" signature="2961:3754" ph="..." />
+            <marker date="1570950832406" expanded="true" signature="3749:3750" ph="..." />
+            <marker date="1570950832406" expanded="true" signature="4427:4465" ph="..." />
           </folding>
         </state>
       </provider>

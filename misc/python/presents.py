@@ -13,7 +13,7 @@ librosa['sr'] = 44100
 librosa['hop_length'] = 1024
 librosa['n_fft'] = 4096
 
-filename = '../music/roundabout.mp3'
+filename = '../data/roundabout.mp3'
 y, sr = librosa.load(filename, duration=5, offset=35)
 
 M = librosa.feature.melspectrogram(y=y)

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import librosa
 import librosa.display
 
-y, sr = librosa.load('../music/roundabout.mp3')
+y, sr = librosa.load('../data/roundabout.mp3')
 
 S_full, phase = librosa.magphase(librosa.stft(y))
 

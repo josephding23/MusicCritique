@@ -1,8 +1,8 @@
 import librosa
 
 # filename = librosa.util.example_audio_file()
-# filename = '../music/roundabout.mp3'
-filename = '../music/roundabout_early.mp3'
+# filename = '../data/roundabout.mp3'
+filename = '../data/roundabout_early.mp3'
 
 y, sr = librosa.load(filename)
 

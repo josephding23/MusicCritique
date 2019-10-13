@@ -5,7 +5,7 @@ AudioSegment.ffmpeg = 'C:/ffmpeg/bin/ffmpeg.exe'
 AudioSegment.ffprobe = 'C:/ffmpeg/bin/ffprobe.exe'
 
 
-song = AudioSegment.from_mp3('D:/PycharmProjects/MusicCritique/music/mp3/roundabout_early.mp3')
+song = AudioSegment.from_mp3('D:/PycharmProjects/MusicCritique/data/mp3/roundabout_early.mp3')
 
 ten_seconds = 10 * 1000
 five_seconds = 5 * 1000
