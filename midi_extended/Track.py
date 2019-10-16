@@ -2,24 +2,37 @@ from mido import Message, MidiFile, MidiTrack, MetaMessage
 from fractions import Fraction
 import mido
 import traceback
-from midi_extended.UtilityBox import UtilityBox
+from midi_extended.UtilityBox import *
 
 class TrackExtended(MidiTrack):
-    def __init__(self, name, time_signature, bpm, key, instruments):
+    def __init__(self, name='default', time_signature=None, bpm=None, key=None, instruments=None):
         MidiTrack.__init__(self)
         self.name = name
         self.time_signature = time_signature
         self.bpm = bpm
         self.key = key
         self.instruments = instruments
-        self.add_meta_info()
-        self.utility_box = UtilityBox()
+
+        if self.isInitiated():
+            self.add_meta_info()
+
+    def initiate_with_track(self, track):
+        self.name = track.name
+        self.bpm = get_bpm_from_track(track)
+        self.key = get_key_from_track(track)
+        self.time_signature = get_time_signature_from_track(track)
+        self.instruments = get_instruments_from_track(track)
+
+        return self.isInitiated()
 
     def __str__(self):
         return "Track: " + self.name + \
                " time signature: " + Fraction(self.time_signature).__str__() + \
                " initiated bpm: " + str(self.bpm) + \
                " key: " + self.key
+
+    def isInitiated(self):
+        return self.name != 'default' and self.time_signature != None and self.bpm != None and self.key != None and self.instruments != None
 
     def print_msgs(self):
         for msg in super():
@@ -63,7 +76,7 @@ class TrackExtended(MidiTrack):
         for i, note in enumerate(notes):
             notes_dict[note] = 60 + sum(major_notes[0:i + 1])
         root_note = notes_dict[root] + root_base * 12
-        chord = self.utility_box.get_chord_arrangement(name)
+        chord = get_chord_arrangement(name)
         meta_time = 60 * 60 * 10 / bpm
         time = round(length / len(format) * meta_time)
 
@@ -145,7 +158,7 @@ class TrackExtended(MidiTrack):
     def add_drum(self, name, time, delay=0, velocity=1):
         bpm = self.bpm
         meta_time = 60 * 60 * 10 / bpm
-        drum_dict = self.utility_box.get_drum_dict()
+        drum_dict = get_drum_dict()
         try:
             note = drum_dict[name]
         except:

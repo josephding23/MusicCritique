@@ -1,6 +1,6 @@
 from mido import Message, MidiFile, MidiTrack, MetaMessage
 from midi_extended.Track import TrackExtended
-from midi_extended.UtilityBox import UtilityBox
+from midi_extended.UtilityBox import *
 import traceback
 import pypianoroll
 import matplotlib.pyplot as plt
@@ -12,12 +12,11 @@ with contextlib.redirect_stdout(None):
     import pygame
 
 class MidiFileExtended(MidiFile):
-    def __init__(self, path, mode='w', type=1, charset='utf-8'):
+    def __init__(self, path, mode='r', type=1, charset='utf-8'):
         self.path = path
         self.extended_tracks = []
-        self.utility_box = UtilityBox()
         if mode == 'r':
-            MidiFile.__init__(self, path, type=type, charset=charset)
+            MidiFile.__init__(self, path, type=type)
         elif mode == 'w':
             MidiFile.__init__(self, type=type, charset=charset)
 
@@ -34,7 +33,7 @@ class MidiFileExtended(MidiFile):
 
     def turn_track_into_numpy_matrix(self, track_name, path):
         track = self.get_track_by_name(track_name)
-        time_per_unit = 60 * 60 * 10 / self.utility_box.get_bpm_from_track(track) / 4
+        time_per_unit = 60 * 60 * 10 / get_bpm_from_track(track) / 4
         note_time_units = []
         length_units = []
         for msg in track:

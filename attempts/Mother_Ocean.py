@@ -1,4 +1,4 @@
-from midi_extended.UtilityBox import UtilityBox
+from midi_extended.UtilityBox import *
 from midi_extended.MidiFileExtended import MidiFileExtended
 
 class Mother_Ocean():
@@ -6,8 +6,8 @@ class Mother_Ocean():
         self.bpm = 75
         self.time_signature = '3/4'
         self.key = 'C'
-        self.file_path = '../data/midi/write/mother_ocean_simple.mid'
-        self.mid = MidiFileExtended(self.file_path, type=1)
+        self.file_path = '../data/midi/write/mother_ocean.mid'
+        self.mid = MidiFileExtended(self.file_path, type=1, mode='w')
 
     def verse(self):
         
@@ -380,9 +380,9 @@ class Mother_Ocean():
     def write_song(self):
 
         self.mid.add_new_track('Melody', self.time_signature, self.bpm, self.key, {'0': 30, '1': 30})
-        self.verse_simple()
-        self.chorus_simple(1)
-        self.chorus_simple(2)
+        self.verse()
+        self.chorus(1)
+        self.chorus(2)
 
         self.mid.add_new_track('Chord', self.time_signature, self.bpm, self.key, {'3': 25})
         self.chord()
@@ -424,12 +424,13 @@ def piano_roll_test():
                                                      save_path='../data/plots/mother_ocean/multi.png')
     '''
 if __name__ == '__main__':
-    piano_roll_test()
-    '''
+    # piano_roll_test()
+
     mother_ocean = Mother_Ocean()
+    mother_ocean.write_song()
 
     mother_ocean.mid.save_midi()
     mother_ocean.mid.play_it()
     # mother_ocean.mid.get_track_by_name('Melody').print_msgs()
     # mother_ocean.mid.play_it()
-    '''
+
