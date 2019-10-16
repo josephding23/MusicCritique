@@ -2,24 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b77e5dfc-4c90-42b0-97d0-a4afd2ccd659" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/attempts/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/midi/read/RATM/freedom.mid" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/midi/read/RATM/vietnow.mid" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/network/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/network/attempt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/MusicCritique.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MusicCritique.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/base_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/cycle_gan_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/networks.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/midi_pool.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/midi/write/mother_ocean.mid" beforeDir="false" afterPath="$PROJECT_DIR$/data/midi/write/mother_ocean.mid" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/plots/mother_ocean/chord.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/plots/mother_ocean/chord.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/plots/mother_ocean/hi-hat.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/plots/mother_ocean/hi-hat.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/plots/mother_ocean/tom_and_snare.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/plots/mother_ocean/tom_and_snare.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/midi_extended/MidiFileExtended.py" beforeDir="false" afterPath="$PROJECT_DIR$/midi_extended/MidiFileExtended.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/midi_extended/Track.py" beforeDir="false" afterPath="$PROJECT_DIR$/midi_extended/Track.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/midi_extended/UtilityBox.py" beforeDir="false" afterPath="$PROJECT_DIR$/midi_extended/UtilityBox.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/write/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/attempts/RATM.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/write/mother_ocean.py" beforeDir="false" afterPath="$PROJECT_DIR$/attempts/Mother_Ocean.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/network/attempt.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/attempt.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,7 +35,7 @@
     <SUITE FILE_PATH="coverage/MusicCritique$mother_ocean.coverage" NAME="mother_ocean Coverage Results" MODIFIED="1570950927307" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/write" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.40636042">
+    <splitter split-orientation="horizontal" split-proportion="0.24163027">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
@@ -77,7 +67,7 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/midi_extended/MidiFileExtended.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="361">
+                <state relative-caret-position="-5">
                   <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
                   <folding>
                     <element signature="e#0#58#0" expanded="true" />
@@ -131,11 +121,59 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/network/attempt.py">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/models/attempt.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="57">
-                  <caret line="3" column="31" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
+                  <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/models/cycle_gan_model.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="57">
+                  <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+                  <folding>
+                    <element signature="e#0#12#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/models/networks.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-7819">
+                  <caret line="128" lean-forward="true" selection-start-line="128" selection-end-line="128" />
+                  <folding>
+                    <element signature="e#0#12#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/models/base_model.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="3895">
+                  <caret line="205" column="17" lean-forward="true" selection-start-line="205" selection-start-column="17" selection-end-line="205" selection-end-column="17" />
+                  <folding>
+                    <element signature="e#0#9#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/util/midi_pool.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="123">
+                  <caret line="7" column="25" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
+                  <folding>
+                    <element signature="e#0#13#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -206,14 +244,18 @@
         <option value="$PROJECT_DIR$/attempts/Mother_Ocean.py" />
         <option value="$PROJECT_DIR$/network/torch.py" />
         <option value="$PROJECT_DIR$/network/attempt.py" />
+        <option value="$PROJECT_DIR$/util/midi_pool.py" />
+        <option value="$PROJECT_DIR$/models/cycle_gan_model.py" />
+        <option value="$PROJECT_DIR$/models/networks.py" />
+        <option value="$PROJECT_DIR$/models/base_model.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="952" />
-    <option name="y" value="22" />
-    <option name="width" value="976" />
-    <option name="height" value="1066" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="953" />
+    <option name="y" value="30" />
+    <option name="width" value="974" />
+    <option name="height" value="1057" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -286,7 +328,12 @@
             <path>
               <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
               <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="network" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -470,23 +517,23 @@
       <updated>1569562055874</updated>
       <workItem from="1571187338740" duration="1682000" />
       <workItem from="1571195520501" duration="1241000" />
-      <workItem from="1571217435738" duration="570000" />
+      <workItem from="1571217435738" duration="6251000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3493000" />
+    <option name="totallyTimeSpent" value="9174000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="952" y="22" width="976" height="1066" extended-state="0" />
+    <frame x="-8" y="22" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.78998387" visible="true" weight="0.3286026" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.78998387" visible="true" weight="0.20948827" />
       <window_info id="Structure" order="1" sideWeight="0.21001616" side_tool="true" weight="0.16490166" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.5606557" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33690986" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.33690986" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3990307" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -496,13 +543,13 @@
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="CSS-X-Fire" order="10" weight="0.32956383" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.49919742" side_tool="true" weight="0.3289689" />
-      <window_info anchor="bottom" id="Terminal" order="12" weight="0.29077253" />
-      <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.5008026" weight="0.3279483" />
+      <window_info anchor="bottom" id="Terminal" order="12" visible="true" weight="0.30472103" />
+      <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.5008026" weight="0.32725322" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="14" weight="0.32956383" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" visible="true" weight="0.1779476" />
+      <window_info anchor="right" id="SciView" order="3" visible="true" weight="0.086886995" />
       <window_info anchor="right" id="R Graphics" order="4" />
       <window_info anchor="right" id="R Packages" order="5" />
       <window_info anchor="right" id="Database" order="6" />
@@ -617,7 +664,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/midi_extended/MidiFileExtended.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
+        <state relative-caret-position="-5">
           <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
           <folding>
             <element signature="e#0#58#0" expanded="true" />
@@ -650,10 +697,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network/attempt.py">
+    <entry file="file://$PROJECT_DIR$/models/attempt.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
-          <caret line="3" column="31" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
+          <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util/midi_pool.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="123">
+          <caret line="7" column="25" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/cycle_gan_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/networks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7819">
+          <caret line="128" lean-forward="true" selection-start-line="128" selection-end-line="128" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/base_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3895">
+          <caret line="205" column="17" lean-forward="true" selection-start-line="205" selection-start-column="17" selection-end-line="205" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
