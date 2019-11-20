@@ -38,3 +38,20 @@ p = Pbind(
 Pdefn(\degree, (Pexprand(1, 8, inf) - 1).round);
 Pdefn(\dur, Pwrand(#[0.25, 0.5, 0.75], #[0.5, 0.3, 0.2], inf));
 // Another way is to use Pdefn, which is a global namespace of proxies for value patterns.
+
+(
+~legato = 1;
+c = MIDIFunc.cc({ |value, num, chan, src|
+	~legato = value.linlin(0, 127, 0.1, 2.5)
+}, 1);
+)
+
+(
+p = Pbind(
+	\degree, Pwhite(-7, 12, inf),
+	\dur, Pwrand([0.25, Pn(0.125, 2)], #[0.8, 0.2], inf),
+	\legato, Pfunc {~legato}
+).play;
+)
+
+c.free;
