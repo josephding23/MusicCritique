@@ -5,6 +5,7 @@
 // arguments: frequency, phase, mul, add
 { LFPar.ar(LFPar.kr(LFPar.kr(0.2, 0.8, 10), 0, 400, 800), 0, 0.1) }.scope(1, zoom: 4);
 { LFPar.ar(LFPar.kr(0.2, 0, 400, 800), 0, 0.1)}.scope(1, zoom: 4);
+{ LFPar.ar(8, 0, 1)}.scope(1, zoom: 4);
 { LFPar.ar(800, 0, 0.1)}.scope(1, zoom: 4);
 { LFPar.ar(XLine.kr(100, 15000, 6), 0, 0.1)}.scope(1, zoom: 4);
 // parabolic approximation of sine
@@ -57,11 +58,19 @@
 
 
 // Band Limited Oscillators
+// arguments: frequency, phase, mul, add
+{ SinOsc.ar(SinOsc.kr(0.2, 0, 400, 800), 0, 0.1) }.scope(1);
+{ SinOsc.ar(800, 0, 0.1) }.scope(1, zoom: 4);
+
+{ SinOscFB.ar(440, MouseX.kr(0, 4)) * 0.1 }.scope(1);
+// A sine oscillator that has phase modulation feedback; its output plugs back into the phase input
+
 { FSinOsc.ar(800, 0, 0.1)}.scope(1, zoom: 4);
 { FSinOsc.ar(FSinOsc.kr(FSinOsc.kr(0.2, 0.8, 10), 0, 400, 800), 0, 0.1)}.scope(1, zoom: 4);
 // Very fast sine wave generator implemented using a ringing filter. This generates a much cleaner sine wave than a table lookup oscillator and is a lot faster. However, the amplitude of the wave will vary with frequency.
 
 { Blip.ar(XLine.kr(20000, 200, 6), 100, 0.2)}.scope(1, zoom: 4);
+{ Blip.ar(200, Line.kr(1, 100, 20), 0.2) }.scope(1);
 // Band Limited ImPulse generator. All harmonics have equal amplitude.
 
 { Saw.ar(XLine.kr(20000, 200, 6), 0.2)}.scope(1, zoom: 4);
@@ -70,15 +79,41 @@
 
 { Pulse.ar(XLine.kr(40, 4000, 6), 0.1, 0.2)}.scope(1, zoom: 4);
 { Pulse.ar(200, SinOsc.kr(0.2).range(0.01, 0.99), 0.2)}.scope(1, zoom: 4);
+{ Pulse.ar(200, Line.kr(0.01, 0.99, 8), 0.2) }.scope(1, zoom: 4);
 // band limited pulse wave generatir with pulse width modulation
 
 { Klang.ar(`[[800, 1000, 1200], [0.3, 0.3, 0.3], [pi, pi, pi]], 1, 0) * 0.4}.scope(1);
+{ Klang.ar(`[[800, 1000, 1200], nil, nil], 1, 0) * 0.25 }.scope(1);
+{ Klang.ar(`[ Array.rand(12, 600.0, 1000.0), nil, nil ], 1, 0) * 0.05 }.scope(1);
 { Klang.ar(`[ {exprand(400, 2000)}.dup(16), nil, nil], 1, 0) * 0.04}.scope(1);
 // Klang is a bank of fixed frequency sine oscillators
 
 
 // Table Oscillators
+(
+b = Buffer.alloc(s, 2048, 1, bufnum: 80);
+b.sine1(1.0/(1..6), true, true, true);
+)
+
 { Osc.ar(80, 100, 0, 0.1)}.scope(1, zoom: 4);
+
+b.sine1(1.0/(1..6), true, true, true);
+
+{ COsc.ar(80, 100, 1, 0.1) }.scope(1, zoom:4);
+
+b.sine1(1.0/(1..12));
+b.sine1(1.0/(1..24));
+b.sine1(1.0/(1..32));
+b.sine1([1.0/(1,3..12), 0].flop.flat.postln);
+b.sine1([1.0/(1,3..32).squared, 0].flop.flat.postln);
+b.sine1((1.dup(4) ++ 0.dup(8)).scramble.postln);
+b.sine1((1.dup(4) ++ 0.dup(8)).scramble.postln);
+b.sine1((1.dup(4) ++ 0.dup(8)).scramble.postln);
+b.sine1((1.dup(4) ++ 0.dup(8)).scramble.postln);
+b.sine1({1.0.rand2.cubed}.dup(8).round(1e-3).postln);
+b.sine1({1.0.rand2.cubed}.dup(12).round(1e-3).postln);
+b.sine1({1.0.rand2.cubed}.dup(16).round(1e-3).postln);
+b.sine1({1.0.rand2.cubed}.dup(24).round(1e-3).postln);
 
 (
 // allocate tables 80 to 87

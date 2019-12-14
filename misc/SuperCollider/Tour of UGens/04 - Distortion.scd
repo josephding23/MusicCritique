@@ -8,7 +8,7 @@
 
 { SinOsc.ar(300, 0, MouseX.kr(0.1, 80, 1)).distort * 0.2 }.scope(1);
 { SinOsc.ar(300, 0, MouseX.kr(0.1, 80, 1)).softclip * 0.2 }.scope(1);
-{ SinOsc.ar(300, 0, MouseX.kr(0.1, 80, 1)).clip2(1) * 0.2 }.scope(1);
+{ SinOsc.ar(300, 0, MouseX.kr(0.1, 80, 1)).clip(1) * 0.2 }.scope(1);
 { SinOsc.ar(300, 0, MouseX.kr(0.1, 80, 1)).fold2(1) * 0.2 }.scope(1);
 { SinOsc.ar(300, 0, MouseX.kr(0.1, 80, 1)).wrap2(1) * 0.2 }.scope(1);
 
@@ -34,3 +34,19 @@ s.listSendMsg([\b_gen, 80, \cheby, 7] ++ {1.0.rand2.squared}.dup(6));
 s.listSendMsg([\b_gen, 80, \cheby, 7] ++ {1.0.rand2.squared}.dup(6));
 )
 // Shaper - input is used to look up a value in a table
+
+(
+s.boot;
+
+b = Buffer.alloc(s, 512, 1, { |buf| buf.chebyMsg([1,0,1,1,0,1])});
+b.plot;
+(
+{
+    Shaper.ar(
+        b,
+        SinOsc.ar(300, 0, Line.kr(0,1,6)),
+        0.5
+    )
+}.scope;
+)
+)

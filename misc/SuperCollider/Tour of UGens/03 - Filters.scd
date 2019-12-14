@@ -3,15 +3,21 @@
 // Low Pass, High Pass
 // arguments: in, freq(Cutoff frequency in Hertz), mul, add
 { LPF.ar(Saw.ar(200, 0.1), SinOsc.kr(XLine.kr(0.7, 300, 20), 0, 3600, 4000)) }.scope(1);
+{ LPF.ar(WhiteNoise.ar, MouseX.kr(1e2,2e4,1), 0.2) }.scope(1);
+{ LPF.ar(Saw.ar(100), MouseX.kr(1e2,2e4,1), 0.2) }.scope(1);
 // A second order low pass filter
-{ HPF.ar(Saw.ar(200, 0.1), FSinOsc.kr(XLine.kr(0.7, 300, 20), 0, 3600, 4000), 5)}.sco
+{ HPF.ar(Saw.ar(200, 0.1), FSinOsc.kr(XLine.kr(0.7, 300, 20), 0, 3600, 4000), 5)}.scope(1);
 
 
 // Band Pass, Band Cut
 // arguments: in, freq, rq, mul, add
 // rq： the reciprocal of Q, Q is conventionally defined as cutoffFreq / bandwidth, meaning rq = (bandwidth / cutoffFreq)。
+{ BPF.ar(WhiteNoise.ar, MouseX.kr(1e2,2e4,1), 0.4, 0.4) }.scope(1);
+{ BPF.ar(Saw.ar(100), MouseX.kr(1e2,2e4,1), 0.4, 0.4) }.scope(1);
 { BPF.ar(Saw.ar(200, 0.5), FSinOsc.kr(XLine.kr(0.7, 300, 20), 0, 3600, 4000), 0.3) }.scope(1);
 // A second order band pass filter
+{ BRF.ar(WhiteNoise.ar, MouseX.kr(1e2,2e4,1), 0.4, 0.2) }.scope(1);
+{ BRF.ar(Saw.ar(100), MouseX.kr(1e2,2e4,1), 0.4, 0.2) }.scope(1);
 { BRF.ar(Saw.ar(200, 0.5), FSinOsc.kr(XLine.kr(0.7, 300, 20), 0, 3800, 4000), 0.3) }.scope(1);
 // A second order band reject filter
 
@@ -19,8 +25,12 @@
 // Resonant Low Pass, High Pass, Band Pass
 // 12 dB / octave
 // arguments: in, freq, rq, mul, add
+{ RLPF.ar(WhiteNoise.ar, MouseX.kr(1e2,2e4,1), 0.2, 0.2) }.scope(1);
+{ RLPF.ar(Saw.ar(100), MouseX.kr(1e2,2e4,1), 0.2, 0.2) }.scope(1);
 { RLPF.ar(Saw.ar(200, 0.1), SinOsc.ar(XLine.kr(0.7, 300, 20), 0, 3600, 4000), 0.2) }.scope(1);
 // a resonant low pass filter
+{ RHPF.ar(WhiteNoise.ar, MouseX.kr(1e2,2e4,1), 0.2, 0.2) }.scope(1);
+{ RHPF.ar(Saw.ar(100), MouseX.kr(1e2,2e4,1), 0.2, 0.2) }.scope(1);
 { RHPF.ar(Saw.ar(200, 0.1), FSinOsc.kr(XLine.kr(0.7, 300, 20), 0, 3600, 4000), 0.2) }.scope(1);
 // a resonant high pass filter
 
