@@ -64,7 +64,7 @@ def get_note_name_by_midi_value(midi, mode=1):
     for num in range(8):
         min_note = 12 + num * 12
         max_note = 12 + (num + 1) * 12
-        if midi < max_note and midi > min_note:
+        if midi < max_note and midi >= min_note:
             range_num = num
             name = name_list[midi - min_note]
             break
@@ -149,6 +149,8 @@ get_drum_dict = lambda : {
 get_instrument_types = lambda : [type for type in get_instrument_dict().keys()]
 
 get_instrument_list = lambda : [[instr for num, instr in get_instrument_dict()[type].items()] for type in get_instrument_types()]
+
+get_instrument_margin = lambda : [len(instruments) for type, instruments in get_instrument_dict().items()]
 
 get_instrument_dict = lambda : {
         'Piano': {
@@ -314,5 +316,5 @@ get_instrument_dict = lambda : {
     }
 
 if __name__ == '__main__':
-    get_note_name_by_midi_value(60)
+    print(get_instrument_margin())
 

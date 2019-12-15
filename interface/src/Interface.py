@@ -16,7 +16,8 @@ class Interface(QMainWindow):
 
     def initUI(self):
         self.setCentralWidget(Piano())
-        self.resize(1500, 600)
+        self.resize(1500, 750)
+        self.move(5, 125)
         self.setFixedSize(self.width(), self.height())
         self.setWindowIcon(QIcon('./icon/gramophone.png'))
         self.setWindowTitle('MusicCritique Interface')

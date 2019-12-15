@@ -2,21 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b77e5dfc-4c90-42b0-97d0-a4afd2ccd659" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/interface/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/interface/src/Interface.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/interface/src/Piano.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/interface/src/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/interface/src/MusicSegment.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/interface/src/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interface/src/Interface.py" beforeDir="false" afterPath="$PROJECT_DIR$/interface/src/Interface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/interface/src/Piano.py" beforeDir="false" afterPath="$PROJECT_DIR$/interface/src/Piano.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/midi_extended/UtilityBox.py" beforeDir="false" afterPath="$PROJECT_DIR$/midi_extended/UtilityBox.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/SuperCollider/Tour of UGens/Control.scd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/SuperCollider/Tour of UGens/Delays and Buffer UGens.scd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/SuperCollider/Tour of UGens/Distortion.scd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/SuperCollider/Tour of UGens/Filters.scd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/SuperCollider/Tour of UGens/Granular Synthesis.scd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/SuperCollider/Tour of UGens/Noise.scd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/SuperCollider/Tour of UGens/Oscillators.scd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/SuperCollider/Tour of UGens/Panning.scd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/misc/SuperCollider/Tour of UGens/Reverbs.scd" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,8 +17,8 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/MusicCritique$pydub.coverage" NAME="pydub Coverage Results" MODIFIED="1569806957191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
-    <SUITE FILE_PATH="coverage/MusicCritique$test.coverage" NAME="test Coverage Results" MODIFIED="1569563183678" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/basic" />
-    <SUITE FILE_PATH="coverage/MusicCritique$Interface.coverage" NAME="Interface Coverage Results" MODIFIED="1576296530794" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interface" />
+    <SUITE FILE_PATH="coverage/MusicCritique$test.coverage" NAME="test Coverage Results" MODIFIED="1576385804867" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interface/src" />
+    <SUITE FILE_PATH="coverage/MusicCritique$Interface.coverage" NAME="Interface Coverage Results" MODIFIED="1576414144726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interface" />
     <SUITE FILE_PATH="coverage/MusicCritique$keys.coverage" NAME="keys Coverage Results" MODIFIED="1569661967857" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
     <SUITE FILE_PATH="coverage/MusicCritique$hpss.coverage" NAME="hpss Coverage Results" MODIFIED="1569565075791" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
     <SUITE FILE_PATH="coverage/MusicCritique$torch.coverage" NAME="torch Coverage Results" MODIFIED="1571217768074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/network" />
@@ -35,7 +26,8 @@
     <SUITE FILE_PATH="coverage/MusicCritique$midiutil.coverage" NAME="midiutil Coverage Results" MODIFIED="1569814037244" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
     <SUITE FILE_PATH="coverage/MusicCritique$midi.coverage" NAME="midi Coverage Results" MODIFIED="1570021374442" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
     <SUITE FILE_PATH="coverage/MusicCritique$RATM.coverage" NAME="RATM Coverage Results" MODIFIED="1571189355635" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/attempts" />
-    <SUITE FILE_PATH="coverage/MusicCritique$UtilityBox.coverage" NAME="UtilityBox Coverage Results" MODIFIED="1576246915307" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/midi_extended" />
+    <SUITE FILE_PATH="coverage/MusicCritique$UtilityBox.coverage" NAME="UtilityBox Coverage Results" MODIFIED="1576307738602" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/midi_extended" />
+    <SUITE FILE_PATH="coverage/MusicCritique$MusicSegment.coverage" NAME="MusicSegment Coverage Results" MODIFIED="1576392007714" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interface/src" />
     <SUITE FILE_PATH="coverage/MusicCritique$vocal.coverage" NAME="vocal Coverage Results" MODIFIED="1569567965709" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
     <SUITE FILE_PATH="coverage/MusicCritique$Mother_Ocean.coverage" NAME="Mother_Ocean Coverage Results" MODIFIED="1571189721805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/attempts" />
     <SUITE FILE_PATH="coverage/MusicCritique$dub.coverage" NAME="dub Coverage Results" MODIFIED="1569809652881" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
@@ -44,14 +36,14 @@
     <SUITE FILE_PATH="coverage/MusicCritique$mother_ocean.coverage" NAME="mother_ocean Coverage Results" MODIFIED="1570950927307" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/write" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.4811947">
+    <splitter split-orientation="horizontal" split-proportion="0.55009824">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/midi_extended/Track.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1900">
-                  <caret line="104" column="46" selection-start-line="104" selection-end-line="105" />
+                <state relative-caret-position="456">
+                  <caret line="87" column="19" selection-start-line="87" selection-start-column="19" selection-end-line="87" selection-end-column="19" />
                   <folding>
                     <element signature="e#0#58#0" expanded="true" />
                   </folding>
@@ -59,14 +51,14 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/midi_extended/UtilityBox.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="361">
-                  <caret line="19" column="45" lean-forward="true" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
+                <state relative-caret-position="468">
+                  <caret line="316" selection-start-line="316" selection-end-line="316" />
                   <folding>
                     <element signature="e#0#16#0" expanded="true" />
-                    <marker date="1576290422808" expanded="true" signature="28:53" ph="..." />
+                    <marker date="1576307731703" expanded="true" signature="28:53" ph="..." />
                   </folding>
                 </state>
               </provider>
@@ -75,7 +67,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/attempts/Mother_Ocean.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="152">
+                <state relative-caret-position="171">
                   <caret line="9" column="67" selection-start-line="9" selection-start-column="67" selection-end-line="9" selection-end-column="67" />
                   <folding>
                     <element signature="e#0#38#0" expanded="true" />
@@ -89,8 +81,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/midi_extended/MidiFileExtended.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="190">
-                  <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
+                <state relative-caret-position="931">
+                  <caret line="49" column="52" lean-forward="true" selection-start-line="49" selection-start-column="52" selection-end-line="49" selection-end-column="52" />
                   <folding>
                     <element signature="e#0#58#0" expanded="true" />
                     <marker date="1570954330044" expanded="true" signature="955:960" ph="..." />
@@ -109,8 +101,17 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/interface/src/Interface.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="399">
-                  <caret line="21" column="52" selection-start-line="21" selection-start-column="52" selection-end-line="21" selection-end-column="52" />
+                <state relative-caret-position="19">
+                  <caret line="1" column="25" selection-start-line="1" selection-end-line="2" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/interface/src/Piano.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="168">
+                  <caret line="530" column="25" lean-forward="true" selection-start-line="530" selection-start-column="25" selection-end-line="530" selection-end-column="25" />
                   <folding>
                     <element signature="e#0#29#0" expanded="true" />
                   </folding>
@@ -119,12 +120,12 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/interface/src/Piano.py">
+            <entry file="file://$PROJECT_DIR$/interface/src/MusicSegment.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="532">
-                  <caret line="229" column="49" selection-start-line="229" selection-start-column="49" selection-end-line="229" selection-end-column="49" />
+                <state relative-caret-position="-1254">
+                  <caret line="15" column="63" selection-start-line="15" selection-start-column="63" selection-end-line="15" selection-end-column="63" />
                   <folding>
-                    <element signature="e#0#29#0" expanded="true" />
+                    <element signature="e#0#18#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -150,6 +151,12 @@
       <find>, track</find>
       <find>self.mid.get_track_by_name</find>
       <find>(self,</find>
+      <find>add_signal</find>
+      <find>print_signals</find>
+      <find>BPS</find>
+      <find>record_start_btn</find>
+      <find>draw_btn</find>
+      <find>play_btn</find>
     </findStrings>
     <replaceStrings>
       <replace>：</replace>
@@ -202,10 +209,13 @@
         <option value="$PROJECT_DIR$/util/image_pool.py" />
         <option value="$PROJECT_DIR$/misc/python/foxdot.py" />
         <option value="$PROJECT_DIR$/interface/Piano.py" />
-        <option value="$PROJECT_DIR$/midi_extended/UtilityBox.py" />
         <option value="$PROJECT_DIR$/interface/Interface.py" />
+        <option value="$PROJECT_DIR$/midi_extended/UtilityBox.py" />
+        <option value="$PROJECT_DIR$/util/MusicSegment.py" />
+        <option value="$PROJECT_DIR$/interface/src/test.py" />
         <option value="$PROJECT_DIR$/interface/src/Interface.py" />
         <option value="$PROJECT_DIR$/interface/src/Piano.py" />
+        <option value="$PROJECT_DIR$/interface/src/MusicSegment.py" />
       </list>
     </option>
   </component>
@@ -260,23 +270,18 @@
             <path>
               <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
               <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
+              <item name="interface" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
               <item name="markdown" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
               <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
               <item name="midi_extended" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="misc" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="misc" type="462c0819:PsiDirectoryNode" />
-              <item name="python" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
@@ -305,19 +310,19 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\PycharmProjects\MusicCritique\data\midi\read\RATM" />
-      <recent name="D:\PycharmProjects\MusicCritique\markdown" />
-      <recent name="D:\PycharmProjects\MusicCritique" />
-      <recent name="D:\PycharmProjects\MusicCritique\examples" />
-      <recent name="D:\PycharmProjects\MusicCritique\music\midi" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\PycharmProjects\MusicCritique\interface\src" />
       <recent name="D:\PycharmProjects\MusicCritique\write" />
       <recent name="D:\PycharmProjects\MusicCritique\midi" />
       <recent name="D:\PycharmProjects\MusicCritique\music\midi" />
       <recent name="D:\PycharmProjects\MusicCritique\music\midi\read" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\PycharmProjects\MusicCritique\data\midi\read\RATM" />
+      <recent name="D:\PycharmProjects\MusicCritique\markdown" />
+      <recent name="D:\PycharmProjects\MusicCritique" />
+      <recent name="D:\PycharmProjects\MusicCritique\examples" />
+      <recent name="D:\PycharmProjects\MusicCritique\music\midi" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -355,7 +360,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Mother_Ocean" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="MusicSegment" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MusicCritique" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -363,34 +368,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/attempts" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/interface/src" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/attempts/Mother_Ocean.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="RATM" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="MusicCritique" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/attempts" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/attempts/RATM.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/interface/src/MusicSegment.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -413,6 +396,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/midi_extended/UtilityBox.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="MusicCritique" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/interface/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/interface/src/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -444,19 +449,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.RATM" />
-      <item itemvalue="Python.Mother_Ocean" />
       <item itemvalue="Python.torch" />
       <item itemvalue="Python.Interface" />
       <item itemvalue="Python.UtilityBox" />
+      <item itemvalue="Python.test" />
+      <item itemvalue="Python.MusicSegment" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.Interface" />
+        <item itemvalue="Python.MusicSegment" />
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.UtilityBox" />
         <item itemvalue="Python.torch" />
-        <item itemvalue="Python.Mother_Ocean" />
-        <item itemvalue="Python.RATM" />
       </list>
     </recent_temporary>
   </component>
@@ -479,23 +484,25 @@
       <workItem from="1572963341064" duration="193000" />
       <workItem from="1576136072429" duration="15131000" />
       <workItem from="1576238740061" duration="8790000" />
-      <workItem from="1576284137207" duration="12167000" />
+      <workItem from="1576284137207" duration="23155000" />
+      <workItem from="1576309981386" duration="6521000" />
+      <workItem from="1576371578860" duration="22564000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="47370000" />
+    <option name="totallyTimeSpent" value="87443000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="22" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.78998387" visible="true" weight="0.23294243" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.78998387" visible="true" weight="0.07356077" />
       <window_info id="Structure" order="1" sideWeight="0.21001616" side_tool="true" weight="0.16490166" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.5606557" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.15665236" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.13948497" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39806867" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -511,7 +518,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" weight="0.1779476" />
+      <window_info anchor="right" id="SciView" order="3" visible="true" weight="0.07835821" />
       <window_info anchor="right" id="R Graphics" order="4" />
       <window_info anchor="right" id="R Packages" order="5" />
       <window_info anchor="right" id="Database" order="6" />
@@ -674,19 +681,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/midi_extended/Track.py">
+    <entry file="file://$PROJECT_DIR$/midi_extended/UtilityBox.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1900">
-          <caret line="104" column="46" selection-start-line="104" selection-end-line="105" />
+        <state relative-caret-position="468">
+          <caret line="316" selection-start-line="316" selection-end-line="316" />
           <folding>
-            <element signature="e#0#58#0" expanded="true" />
+            <element signature="e#0#16#0" expanded="true" />
+            <marker date="1576307731703" expanded="true" signature="28:53" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interface/src/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="704">
+          <caret line="51" column="15" selection-start-line="51" selection-start-column="15" selection-end-line="51" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/attempts/Mother_Ocean.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
+        <state relative-caret-position="171">
           <caret line="9" column="67" selection-start-line="9" selection-start-column="67" selection-end-line="9" selection-end-column="67" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
@@ -698,8 +713,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/midi_extended/MidiFileExtended.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
+        <state relative-caret-position="931">
+          <caret line="49" column="52" lean-forward="true" selection-start-line="49" selection-start-column="52" selection-end-line="49" selection-end-column="52" />
           <folding>
             <element signature="e#0#58#0" expanded="true" />
             <marker date="1570954330044" expanded="true" signature="955:960" ph="..." />
@@ -710,33 +725,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/midi_extended/UtilityBox.py">
+    <entry file="file://$PROJECT_DIR$/midi_extended/Track.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="19" column="45" lean-forward="true" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
+        <state relative-caret-position="456">
+          <caret line="87" column="19" selection-start-line="87" selection-start-column="19" selection-end-line="87" selection-end-column="19" />
           <folding>
-            <element signature="e#0#16#0" expanded="true" />
-            <marker date="1576290422808" expanded="true" signature="28:53" ph="..." />
+            <element signature="e#0#58#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/interface/src/Interface.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="21" column="52" selection-start-line="21" selection-start-column="52" selection-end-line="21" selection-end-column="52" />
+        <state relative-caret-position="19">
+          <caret line="1" column="25" selection-start-line="1" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interface/src/Piano.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="530" column="25" lean-forward="true" selection-start-line="530" selection-start-column="25" selection-end-line="530" selection-end-column="25" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/interface/src/Piano.py">
+    <entry file="file://$PROJECT_DIR$/interface/src/MusicSegment.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="229" column="49" selection-start-line="229" selection-start-column="49" selection-end-line="229" selection-end-column="49" />
+        <state relative-caret-position="-1254">
+          <caret line="15" column="63" selection-start-line="15" selection-start-column="63" selection-end-line="15" selection-end-column="63" />
           <folding>
-            <element signature="e#0#29#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
