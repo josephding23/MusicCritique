@@ -22,12 +22,17 @@ class SegmentCanvas(FigureCanvas):
         self.axes.set_yticks(np.arange(60, 84, 12))
 
     def plot(self, msgs):
-        final_time = msgs[-1][2] + msgs[-1][1]
-        min_note = min([msg[0] for msg in msgs]) - 6
-        max_note = max([msg[0] for msg in msgs]) + 6
+        try:
+            final_time = msgs[-1][2] + msgs[-1][1]
+            min_note = min([min([msg[0] for msg in msgs]) - 6, 60])
+            max_note = max([max([msg[0] for msg in msgs]) + 6, 72])
+        except:
+            final_time = 0.5
+            min_note = 60
+            max_note = 72
         note_texts = [get_note_name_by_midi_value(note) for note in range(min_note, max_note+1)]
         self.axes.set_xlim(0, final_time)
-        self.axes.set_xticks(np.arange(0, final_time, 0.125))
+        self.axes.set_xticks(np.arange(0, final_time, 0.25))
         self.axes.set_ylim(min_note, max_note)
         self.axes.set_yticks(np.arange(min_note, max_note, 1))
         self.axes.tick_params(axis='both', which='minor', labelsize=10)
@@ -96,7 +101,7 @@ class SegmentWindow(QMainWindow):
         self.setCentralWidget(self.graphic_view)
 
 class MusicSegment:
-    def __init__(self, metre, bpm, length_per_note, total_length=128):
+    def __init__(self, metre, bpm, length_per_note, root_note, mode, total_length=128):
         self.metre_effects = {
             '1/4': (1, 4),
             '2/4': (2, 4),
@@ -113,18 +118,21 @@ class MusicSegment:
         self.time_scale = 16
 
         self.bpm = bpm
-        print(self.bpm)
-        self.time_per_unit = ( 60 / self.bpm ) * 4
-        print(self.time_per_unit)
+        self.time_per_unit = ( 60 / self.bpm )
         self.total_length = total_length
         self.length_per_note = length_per_note
         # self.matrix  = self.turn_into_numpy_matrix()
+
+        self.root_note = root_note
+
+        self.mode = mode
+
         self.msgs = []
         self.time_stamps = []
         # self.canvas = SegmentCanvas()
+        self.window_on = False
 
         self.segment_window = None
-        self.window_on = False
 
     def add_note(self, note, raw_time):
         time = raw_time
@@ -138,12 +146,15 @@ class MusicSegment:
         self.time_stamps.pop(len(self.time_stamps)-1)
 
     def replot(self):
+        self.segment_window = SegmentWindow(self)
         self.segment_window.segment_canvas = SegmentCanvas()
         self.segment_window.segment_canvas.plot(self.msgs)
         graphic_scene = QGraphicsScene()
         graphic_scene.addWidget(self.segment_window.segment_canvas)
         self.segment_window.graphic_view.setScene(graphic_scene)
         self.segment_window.graphic_view.show()
+        self.segment_window.show()
+        self.segment_window.move(1505, 125)
         self.segment_window.setCentralWidget(self.segment_window.graphic_view)
 
     def print_notes(self):

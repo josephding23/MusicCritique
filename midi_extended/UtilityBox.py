@@ -96,6 +96,39 @@ def get_chord_arrangement(name):
         print(traceback.format_exc())
     return chord
 
+get_mode_dict = lambda : {
+    'Heptatonic': {
+        'Ionian':     [0, 2, 2, 1, 2, 2, 2], # 全 - 全 - 半 - 全 - 全 - 全 - 半
+        'Dorian':     [0, 2, 1, 2, 2, 2, 1], # 全 - 半 - 全 - 全 - 全 - 半 - 全
+        'Phrygian':   [0, 1, 2, 2, 2, 1, 2], # 半 - 全 - 全 - 全 - 半 - 全 - 全
+        'Lydian':     [0, 2, 2, 2, 1, 2, 2], # 全 - 全 - 全 - 半 - 全 - 全 - 半
+        'Mixolydian': [0, 2, 2, 1, 2, 2, 1], # 全 - 全 - 半 - 全 - 全 - 半 - 全
+        'Aeolian':    [0, 2, 1, 2, 2, 1, 2], # 全 - 半 - 全 - 全 - 半 - 全 - 全
+        'Locrian':    [0, 1, 2, 2, 1, 2, 2]  # 半 - 全 - 全 - 半 - 全 - 全 - 全
+    },
+    'Pentatonic': {
+        '宫': [0, 2, 2, 3, 2],
+        '商': [0, 2, 3, 2, 3],
+        '角': [0, 3, 2, 3, 2],
+        '徵': [0, 2, 3, 2, 2],
+        '羽': [0, 3, 2, 2, 3]
+    }
+}
+
+get_mode_types = lambda : [type for type in get_mode_dict().keys()]
+
+get_mode_name_list = lambda : [[name for name, mode in get_mode_dict()[type].items()] for type in get_mode_types()]
+
+def get_mode_pattern_list():
+    whole_list = []
+    for group in  [[mode for name, mode in get_mode_dict()[type].items()] for type in get_mode_types()]:
+       for pattern in group:
+           whole_list.append(pattern)
+    return whole_list
+
+
+get_mode_margin = lambda : [len(mode) for type, mode in get_mode_dict().items()]
+
 get_drum_dict = lambda : {
         'acoustic_bass': 35,
         'bass1': 36,
