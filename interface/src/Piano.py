@@ -7,291 +7,7 @@ import time
 
 from midi_extended.UtilityBox import *
 from interface.src.MusicSegment import MusicSegment, SegmentWindow
-
-class Key(QWidget):
-
-    def __init__(self, player, note, volume=63, color='w'):
-        super().__init__()
-        self.player = player
-        self.note = note
-        self.volume = volume
-        self.note_name = get_note_name_by_midi_value(self.note)
-        # print(self.note_name)
-        self.color = color
-
-        self.is_recording = False
-        self.music_segment = None
-
-        self.initUI()
-
-    def change_volume(self, volume):
-        self.volume = volume
-
-    def set_note_signal_value(self):
-        print('note ' + self.note)
-
-    def initUI(self):
-        self.keyBtn = QPushButton(self.note_name)
-        self.note_font = QFont()
-        self.note_font.setFamily('Times New Roman')
-        self.note_font.setWeight(QFont.DemiBold)
-        self.note_font.setPixelSize(14)
-        self.keyBtn.setFont(self.note_font)
-        self.keyBtn.setFixedHeight(250)
-        self.keyBtn.setFixedWidth(50)
-        self.keyBtn.setCursor(Qt.PointingHandCursor)
-        self.keyBtn.pressed.connect(self.pressedKeyResponse)
-        self.keyBtn.released.connect(self.releasedKeyResponse)
-        self.keyLayout = QVBoxLayout()
-        self.keyLayout.addWidget(self.keyBtn)
-        self.setLayout(self.keyLayout)
-
-        if self.color == 'w':
-            self.setStyleSheet(
-                'QPushButton{background-color: white; color: black; border: 4px outset #828282;}'
-                'QPushButton:hover{background-color: #B5B5B5; color: black; border: 4px outset #828282;}'
-                'QPushButton:pressed{background-color: #CFCFCF; color: black; border: 4px inset #828282;}'
-            )
-        elif self.color == 'b':
-            self.setStyleSheet(
-                'QPushButton{background-color: black; color: white; border: 4px outset #828282;}'
-                'QPushButton:hover{background-color: #4F4F4F; color: white; border: 4px outset #828282;}'
-                'QPushButton:pressed{background-color: #363636; color: white; border: 4px inset #828282;}'
-            )
-        elif self.color == 'r':
-            self.setStyleSheet(
-                'QPushButton{background-color: #FF4040; color: #FFE4E1; border: 4px outset #9C9C9C;}'
-                'QPushButton:hover{background-color: #FA8072; color: #8B2323; border: 4px outset #9C9C9C;}'
-                'QPushButton:pressed{background-color: #CD2626; color: #FFE4E1; border: 4px inset #9C9C9C;}'
-            )
-        elif self.color == 'g':
-            self.setStyleSheet(
-                'QPushButton{background-color: #008B45; color: #C0FF3E; border: 4px outset #9C9C9C;}'
-                'QPushButton:hover{background-color: #9AFF9A; color: #6B8E23; border: 4px outset #9C9C9C;}'
-                'QPushButton:pressed{background-color: #6E8B3D; color: #8FBC8F; border: 4px inset #9C9C9C;}'
-            )
-        # self.resize(3, 20)
-
-    def pressedKeyResponse(self):
-        # self.note_sig.emit()
-        self.player.note_on(self.note, self.volume)
-
-    def start_recording(self, music_segment):
-        self.is_recording = True
-        self.music_segment = music_segment
-
-    def releasedKeyResponse(self):
-        self.player.note_off(self.note, self.volume)
-
-        if self.is_recording:
-            self.music_segment.add_note(self.note, self.music_segment.length_per_note)
-            if self.music_segment.window_on == True:
-                self.music_segment.replot()
-                '''
-                self.segment_window = SegmentWindow(self.music_segment)
-                self.segment_window.show()
-                self.segment_window.move(1200, 30)
-                '''
-
-
-
-class PianoRoll(QWidget):
-
-    def __init__(self, volume, octave, instr, mode, root_note, mode_display):
-        super().__init__()
-        self.setObjectName('PianoRoll')
-        self.octave = octave
-        self.instr = instr
-        self.volume = volume
-        self.mode = mode
-        self.mode_pattern = get_mode_dict()[self.mode[0]][self.mode[1]]
-        self.mode_distance = [sum(self.mode_pattern[:index+1]) for index in range(len(self.mode_pattern))]
-        self.root_note = root_note
-        self.mode_display = mode_display
-
-        self.stable_notes = [self.root_note + distance for distance in [self.mode_distance[0], self.mode_distance[2], self.mode_distance[4],
-                                    12 + self.mode_distance[0], 12 +self.mode_distance[2], 12 + self.mode_distance[4], 24]]
-        self.unstable_notes = [self.root_note + distance for distance in [self.mode_distance[1], self.mode_distance[3], self.mode_distance[5], self.mode_distance[6],
-                                      12 + self.mode_distance[1], 12 + self.mode_distance[3], 12 + self.mode_distance[5], 12 + self.mode_distance[6]]]
-
-        self.is_recording = False
-        self.music_segment = None
-
-        pygame.midi.init()
-        self.player = pygame.midi.Output(0)
-        self.player.set_instrument(self.instr)
-
-        self.white_notes_margin = [0, 2, 2, 1, 2, 2, 2]
-        self.black_notes_margin = [1, 2, 3, 2, 2]
-
-        self.white_notes_distance = [[0, 2, 4, 5, 7, 9, 11], [12, 14, 16, 17, 19, 21, 23, 24]]
-        self.black_notes_distance = [[1, 3, 6, 8, 10], [13, 15, 18, 20, 22]]
-
-        self.white_shortcuts = [
-            [Qt.Key_Z, Qt.Key_X, Qt.Key_C, Qt.Key_V, Qt.Key_B, Qt.Key_N, Qt.Key_M],
-            [Qt.Key_Q, Qt.Key_W, Qt.Key_E, Qt.Key_R, Qt.Key_T, Qt.Key_Y, Qt.Key_U, Qt.Key_I]
-        ]
-        self.black_shortcuts = [
-            [Qt.Key_S, Qt.Key_D, Qt.Key_G, Qt.Key_H, Qt.Key_J],
-            [Qt.Key_2, Qt.Key_3, Qt.Key_5, Qt.Key_6, Qt.Key_7]
-        ]
-
-        self.blackKeysList = [[], []]
-        self.whiteKeysList = [[], []]
-
-        self.pressed_time = 0
-        self.release_time = 0
-
-        self.start_note = 60 + (self.octave - 4) * 12
-        self.initUI()
-
-    def start_recording(self, music_segment):
-        self.is_recording = True
-        self.music_segment = music_segment
-        for group in range(2):
-            for black_key in self.blackKeysList[group]:
-                black_key.start_recording(music_segment)
-            for white_key in self.whiteKeysList[group]:
-                white_key.start_recording(music_segment)
-
-    def delete_player(self):
-        try:
-            self.player.close()
-            pygame.midi.quit()
-        except:
-            pass
-
-    def change_volume(self, volume):
-        self.volume = volume
-
-    def change_instrument(self, instr):
-        self.instr = instr
-        self.player.set_instrument(self.instr)
-
-    def initUI(self):
-        self.blackKeysBoxes = [QHBoxLayout(), QHBoxLayout()]
-        self.whiteKeysBoxes = [QHBoxLayout(), QHBoxLayout()]
-        self.octaveRollBoxes = [QVBoxLayout(), QVBoxLayout()]
-
-        for group in range(2):
-            for index in range(len(self.black_notes_distance[group])):
-                note = self.start_note + self.black_notes_distance[group][index]
-                if self.mode_display == True:
-                    if note in self.stable_notes:
-                        new_key = Key(self.player, note, self.volume, 'r')
-                        self.blackKeysList[group].append(new_key)
-                    elif note in self.unstable_notes:
-                        new_key = Key(self.player, note, self.volume, 'g')
-                        self.blackKeysList[group].append(new_key)
-                    else:
-                        new_key = Key(self.player, note, self.volume, 'b')
-                        self.blackKeysList[group].append(new_key)
-                else:
-                    new_key = Key(self.player, note, self.volume, 'b')
-                    self.blackKeysList[group].append(new_key)
-
-            for index in range(len(self.white_notes_distance[group])):
-                note = self.start_note + self.white_notes_distance[group][index]
-                if self.mode_display == True:
-                    if note in self.stable_notes:
-                        new_key = Key(self.player, note, self.volume, 'r')
-                        self.whiteKeysList[group].append(new_key)
-                    elif note in self.unstable_notes:
-                        new_key = Key(self.player, note, self.volume, 'g')
-                        self.whiteKeysList[group].append(new_key)
-                    else:
-                        new_key = Key(self.player, note, self.volume, 'w')
-                        self.whiteKeysList[group].append(new_key)
-                else:
-                    new_key = Key(self.player, note, self.volume, 'w')
-                    self.whiteKeysList[group].append(new_key)
-
-            for btn in self.blackKeysList[group]:
-                self.blackKeysBoxes[group].addWidget(btn)
-            self.blackKeysBoxes[group].setStretch(0, 2)
-            self.blackKeysBoxes[group].setStretch(1, 4)
-            self.blackKeysBoxes[group].setStretch(2, 2)
-            self.blackKeysBoxes[group].setStretch(3, 2)
-            self.blackKeysBoxes[group].setStretch(4, 2)
-
-            for btn in self.whiteKeysList[group]:
-                self.whiteKeysBoxes[group].addWidget(btn)
-            self.whiteKeysBoxes[group].setSpacing(20)
-            self.octaveRollBoxes[group].addLayout(self.blackKeysBoxes[group])
-            self.octaveRollBoxes[group].addLayout(self.whiteKeysBoxes[group])
-            self.octaveRollBoxes[group].setSpacing(2)
-
-        self.whiteKeysBoxes[0].setContentsMargins(0, 0, 0, 0)
-        self.whiteKeysBoxes[1].setContentsMargins(0, 0, 0, 0)
-        self.whiteKeysBoxes[0].addSpacing(25)
-        self.whiteKeysBoxes[1].addSpacing(25)
-        self.blackKeysBoxes[0].setContentsMargins(50, 0, 55, 0)
-        self.blackKeysBoxes[1].setContentsMargins(50, 0, 155, 0)
-
-        self.wholeLayout = QHBoxLayout()
-        self.wholeLayout.addLayout(self.octaveRollBoxes[0])
-        self.wholeLayout.addLayout(self.octaveRollBoxes[1])
-        self.wholeLayout.setStretch(0, 7)
-        self.wholeLayout.setStretch(1, 8)
-        self.wholeLayout.setSpacing(1)
-        self.wholeLayout.setContentsMargins(10, 10, 10, 10)
-        self.setLayout(self.wholeLayout)
-        self.setFixedSize(QSize(1500, 550))
-
-    def keyPressEvent(self, e):
-        for group in range(2):
-            for index in range(len(self.white_shortcuts[group])):
-                if e.key() == self.white_shortcuts[group][index]:
-                    self.player.note_on(self.whiteKeysList[group][index].note, self.volume)
-                    self.whiteKeysList[group][index].setStyleSheet(
-                        'QPushButton{background-color: #CFCFCF; color: black; border: 4px inset #828282;}'
-                    )
-
-                    return
-            for index in range(len(self.black_shortcuts[group])):
-                if e.key() == self.black_shortcuts[group][index]:
-                    self.player.note_on(self.blackKeysList[group][index].note, self.volume)
-                    self.blackKeysList[group][index].setStyleSheet(
-                        'QPushButton{background-color: #363636; color: white; border: 4px inset #9C9C9C;}'
-                    )
-                    return
-
-    def keyReleaseEvent(self, e):
-        for group in range(2):
-            for index in range(len(self.white_shortcuts[group])):
-                if e.key() == self.white_shortcuts[group][index]:
-                    self.player.note_off(self.whiteKeysList[group][index].note, self.volume)
-                    self.whiteKeysList[group][index].setStyleSheet(
-                        'QPushButton{background-color: white; color: black; border: 4px outset #828282;}'
-                        'QPushButton:hover{background-color: #B5B5B5; color: black; border: 4px outset #828282;}'
-                        'QPushButton:pressed{background-color: #CFCFCF; color: black; border: 4px inset #828282;}'
-                    )
-                    if self.is_recording:
-                        self.music_segment.add_note(self.whiteKeysList[group][index].note, self.music_segment.length_per_note)
-                        if self.music_segment.window_on == True:
-                            self.music_segment.replot()
-                            '''
-                            self.segment_window = SegmentWindow(self.music_segment)
-                            self.segment_window.show()
-                            self.segment_window.move(1200, 30)
-                            '''
-                    return
-            for index in range(len(self.black_shortcuts[group])):
-                if e.key() == self.black_shortcuts[group][index]:
-                    self.player.note_off(self.blackKeysList[group][index].note, self.volume)
-                    self.blackKeysList[group][index].setStyleSheet(
-                        'QPushButton{background-color: black; color: white; border: 4px outset #9C9C9C;}'
-                        'QPushButton:hover{background-color: #4F4F4F; color: white; border: 4px outset #9C9C9C;}'
-                        'QPushButton:pressed{background-color: #363636; color: white; border: 4px inset #9C9C9C;}'
-                    )
-                    if self.is_recording:
-                        self.music_segment.add_note(self.blackKeysList[group][index].note, self.music_segment.length_per_note)
-                        if self.music_segment.window_on == True:
-                            self.music_segment.replot()
-                            # self.segment_window.show()
-                            # self.segment_window.move(1200, 30)
-                    return
-
+from interface.src.PianoRoll import PianoRoll
 
 class Piano(QWidget):
 
@@ -685,11 +401,37 @@ class Piano(QWidget):
             retval = msg.exec_()
 
     def recordFinish(self):
-        self.is_record_mode = False
-        self.record_start_btn.setStyleSheet(self.record_btn_style)
-        # self.music_segment.turn_into_numpy_matrix()
-        # self.music_segment.plot_canvas()
-        # self.music_segment.play_music(self.piano_roll.player)
+        if self.is_record_mode == True and self.music_segment != None:
+            self.is_record_mode = False
+            self.record_start_btn.setStyleSheet(self.record_btn_style)
+            save_box = QMessageBox()
+            save_box.setWindowIcon(QIcon('./icon/gramophone.png'))
+            save_box.setIcon(QMessageBox.Question)
+            save_box.setText('Save Music Segment?')
+            save_box.setWindowTitle('Save Music Segment')
+            save_box.setStandardButtons(QMessageBox.Save | QMessageBox.No)
+            # save_box.buttonClicked.connect(self.saveBtnResponse)
+            save_box.show()
+
+            retval = save_box.exec_()
+            if retval == QMessageBox.Save:
+                print('save')
+                file_name, _ = QFileDialog.getSaveFileName(self, r'Please choose where to save',
+                                                             '.\..\data\music_segments', r'JSON Files(*.json)')
+                self.music_segment.save(file_name)
+            elif retval == QMessageBox.No:
+                print('no')
+            else:
+                pass
+        else:
+            msg = QMessageBox()
+            msg.setWindowIcon(QIcon('./icon/gramophone.png'))
+            msg.setIcon(QMessageBox.Information)
+            msg.setText('Please first start record mode')
+            msg.setWindowTitle('Not in Record Mode')
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.show()
+            retval = msg.exec_()
 
     def recordStop(self):
         self.is_record_mode = False
