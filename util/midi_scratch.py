@@ -1,4 +1,6 @@
 import requests
+from requests.utils import CaseInsensitiveDict
+import http
 from bs4 import BeautifulSoup
 import traceback
 from random import choice, uniform
@@ -10,6 +12,8 @@ import socket
 from urllib import request
 import mido
 import http.cookiejar
+import shutil
+import re
 
 myHeaders = ["Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; AcooBrowser; .NET CLR 1.1.4322; .NET CLR 2.0.50727)",
              "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Acoo Browser; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.0.04506)",
@@ -28,15 +32,15 @@ myHeaders = ["Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; AcooBrowse
              "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.20 (KHTML, like Gecko) Chrome/19.0.1036.7 Safari/535.20",
              "Opera/9.80 (Macintosh; Intel Mac OS X 10.6.8; U; fr) Presto/2.9.168 Version/11.52"]
 
-cookie_str = '_ga=GA1.2.279200440.1578048264; _GPSLSC=iUzgdaN6J2; _gid=GA1.2.2026261794.1578441620; PHPSESSID=rrmoq7gtgjv1636qp1nr1i9783; _gat=1'
+cookie_str = '_ga=GA1.2.279200440.1578048264; _GPSLSC=iUzgdaN6J2; PHPSESSID=9a6fflqbc68igptpb9uboribi2; _gid=GA1.2.673090349.1578697315; _gat=1'
 cookie_dict = {
     '_ga': 'GA1.2.279200440.1578048264',
     '_GPSLSC': 'iUzgdaN6J2',
-    'PHPSESSID': 'rrmoq7gtgjv1636qp1nr1i9783',
-    '_gid': 'GA1.2.2026261794.1578441620',
-    '_gat': '1'
+    'PHPSESSID': '9a6fflqbc68igptpb9uboribi2',
+    '_gid': 'GA1.2.673090349.1578697315',
 }
-cookies = requests.utils.cookiejar_from_dict(cookie_dict, cookiejar=None, overwrite=True)
+cookie_dict_alt = {'Cookie': cookie_str}
+cookies = requests.utils.cookiejar_from_dict(cookie_dict=cookie_dict, cookiejar=None, overwrite=True)
 
 def get_performer_collection():
     client = MongoClient(connect=False)
@@ -263,7 +267,7 @@ def get_free_midi_songs_and_add_performers_info():
             try:
                 params = {
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36',
-                    'Cookie': cookie,
+                    'Cookie': cookie_str,
                     'Referer': root_url + genre,
                     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
                     'Accept-Encoding': 'gzip, deflate, br',
@@ -326,6 +330,8 @@ def download_free_midi():
     params = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36',
         # 'Cookie': cookie,
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'same-origin',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
         'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
@@ -334,11 +340,16 @@ def download_free_midi():
     midi_collection = get_midi_collection()
 
     session = requests.Session()
+    requests.packages.urllib3.disable_warnings()
     session.headers.update(params)
+    session.cookies = cookies
+    # session.cookies = http.cookiejar.LWPCookieJar()
+    # r = session.get(root_url, verify=False)
+    # r.close()
+    # session.headers.update(params)
     # session.cookies.update(cookie_dict)
-    session.cookies = http.cookiejar.LWPCookieJar()
-    session.cookies.load(cookie_path, ignore_discard=True)
-    # print(session.cookies)
+    # session.cookies.load(cookie_path, ignore_discard=True)
+    # 3print(session.cookies)
     # session.cookies = cookie
     # session.cookies = cookie_dict
     # opener = request.build_opener(request.HTTPCookieProcessor(cj))
@@ -351,44 +362,50 @@ def download_free_midi():
         try:
             params = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36',
-                'Cookie': cookie_str,
+                # 'Cookie': cookie_str,
                 'Referer': performer_link,
+                'Sec-Fetch-Mode': 'navigate',
+                'Sec-Fetch-Site': 'same-origin',
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
                 'Accept-Encoding': 'gzip, deflate, br',
                 'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
                 'Connection': 'keep-alive'
             }
-            session.headers.update(params)
-            # text = get_html_text(download_link, params)
-            r = session.get(download_link)
-            r.encoding = 'utf-8'
+            session.headers.update({'Referer': performer_link})
+            r = session.get(download_link, verify=False, timeout=20)
+            # r.encoding = 'utf-8'
             if r.cookies.get_dict():
                 print(r.cookies.get_dict())
                 session.cookies = r.cookies
             if r.status_code != 200:
-                print('connection error ' + r.status_code)
+                print('connection error ' + str(r.status_code))
             soup = BeautifulSoup(r.text, 'html.parser')
+            r.close()
             try:
                 getter_link = root_url + soup.find(name='a', attrs={'id': 'downloadmidi'})['href']
                 print(getter_link)
                 download_header = {
-                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+                    # 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
                     'Accept-Encoding': 'gzip, deflate, br',
                     'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-                    'Connection': 'keep-alive',
                     'Referer': download_link,
                     # 'Cookie': cookie_str,
+                    'Sec-Fetch-Mode': 'navigate',
+                    'Sec-Fetch-Site': 'same-origin',
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36',
                 }
                 session.headers.update(download_header)
                 dir = root_path + '/' + genre
                 if not os.path.exists(dir):
                     os.mkdir(dir)
-                file_name = name + ' - ' + performer + '.mid'
+                rstr = r'[\\/:*?"<>|\r\n\t]+'  # '/ \ : * ? " < > |'
+                name = re.sub(rstr, '', name).strip(' ')
+                performer = re.sub(rstr, '', performer).strip(' ')
+                file_name = name + ' - ' + performer + '.midi'
                 path = dir + '/' +  file_name
                 try:
-                    cj = http.cookiejar.LWPCookieJar()
-                    cj.load(cookie_path, ignore_discard=True)
+                    # cj = http.cookiejar.LWPCookieJar()
+                    # cj.load(cookie_path, ignore_discard=True)
                     # cookie_handler = request.HTTPCookieProcessor(cj)
                     # cookie_opener = request.build_opener(cookie_handler)
 
@@ -397,17 +414,22 @@ def download_free_midi():
                     # cookie_opener.addheaders = [(key, value) for key, value in download_header.items()]
                     # request.install_opener(opener)
                     # request.urlretrieve(getter_link, path)
-                    socket.setdefaulttimeout(4)
-                    with open(path, 'wb') as output:
-                        r = session.get(getter_link)
-                         # print(response)
-                        output.write(r.content)
-                        if r.cookies.get_dict():
-                            print(r.cookies)
-                            session.cookies.update(r.cookies)
-                    # cookie_opener.open(getter_link)
-                    time.sleep(uniform(1, 2))
+                    # socket.setdefaulttimeout(4)
 
+                    with open(path, 'wb') as output:
+                        with session.get(getter_link, allow_redirects=True, verify=False, timeout=20) as r:
+                            if r.history:
+                                print('Request was redirected')
+                                for resp in r.history:
+                                    print(resp.url)
+                                print('Final: ' + str(r.url))
+                            r.raise_for_status()
+                            if r.cookies.get_dict():
+                                print(r.cookies)
+                                session.cookies.update(r.cookies)
+                            output.write(r.content)
+                    time.sleep(uniform(2, 3))
+                    # cookie_opener.open(getter_link)
                     # cj.save(cookie_path, ignore_discard=True)
                     if is_valid_midi(path):
                         print(file_name + ' downloaded')
@@ -436,7 +458,18 @@ def verify_midi_completeness():
         if should_num != actual_num:
             print(should_num, actual_num, name)
 
+def strip_space():
+    root_path = 'E:/free_MIDI'
+    for dir in os.listdir(root_path):
+        folder = root_path + '/' + dir
+        for song in os.listdir(folder):
+            path = folder + '/' + song
+            if song[-4:] == 'midi':
+                print(path[:-5] + '.mid')
+                os.rename(path, path[:-5] + '.mid')
+
 if __name__ == '__main__':
-    output_cookies()
-    download_free_midi()
+    # output_cookies()
+    # download_free_midi()
     # free_midi_hack_download_test()
+    strip_space()
