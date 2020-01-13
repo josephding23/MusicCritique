@@ -349,5 +349,7 @@ get_instrument_dict = lambda : {
     }
 
 if __name__ == '__main__':
-    print(get_instrument_margin())
+    # print(get_note_name_by_midi_value(52))
+    for num in range(23):
+        print(num * 68.18181818181818)
 

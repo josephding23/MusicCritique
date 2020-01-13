@@ -36,8 +36,9 @@ cookie_str = '_ga=GA1.2.279200440.1578048264; _GPSLSC=iUzgdaN6J2; PHPSESSID=9a6f
 cookie_dict = {
     '_ga': 'GA1.2.279200440.1578048264',
     '_GPSLSC': 'iUzgdaN6J2',
-    'PHPSESSID': '9a6fflqbc68igptpb9uboribi2',
+    'PHPSESSID': 'vgbfl8a1qgmlp8u73qt90shuh0',
     '_gid': 'GA1.2.673090349.1578697315',
+    '_gat': '1'
 }
 cookie_dict_alt = {'Cookie': cookie_str}
 cookies = requests.utils.cookiejar_from_dict(cookie_dict=cookie_dict, cookiejar=None, overwrite=True)
@@ -353,100 +354,101 @@ def download_free_midi():
     # session.cookies = cookie
     # session.cookies = cookie_dict
     # opener = request.build_opener(request.HTTPCookieProcessor(cj))
-    for midi in midi_collection.find({'Downloaded': False}, no_cursor_timeout = True):
-        performer_link = midi['PerformerUrl']
-        download_link = midi['DownloadPage']
-        name = midi['Name']
-        genre = midi['Genre']
-        performer = midi['Performer']
-        try:
-            params = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36',
-                # 'Cookie': cookie_str,
-                'Referer': performer_link,
-                'Sec-Fetch-Mode': 'navigate',
-                'Sec-Fetch-Site': 'same-origin',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                'Accept-Encoding': 'gzip, deflate, br',
-                'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-                'Connection': 'keep-alive'
-            }
-            session.headers.update({'Referer': performer_link})
-            r = session.get(download_link, verify=False, timeout=20)
-            # r.encoding = 'utf-8'
-            if r.cookies.get_dict():
-                print(r.cookies.get_dict())
-                session.cookies = r.cookies
-            if r.status_code != 200:
-                print('connection error ' + str(r.status_code))
-            soup = BeautifulSoup(r.text, 'html.parser')
-            r.close()
+    while midi_collection.count({'Downloaded': False}) != 0:
+        for midi in midi_collection.find({'Downloaded': False}, no_cursor_timeout = True):
+            performer_link = midi['PerformerUrl']
+            download_link = midi['DownloadPage']
+            name = midi['Name']
+            genre = midi['Genre']
+            performer = midi['Performer']
             try:
-                getter_link = root_url + soup.find(name='a', attrs={'id': 'downloadmidi'})['href']
-                print(getter_link)
-                download_header = {
-                    # 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-                    'Accept-Encoding': 'gzip, deflate, br',
-                    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-                    'Referer': download_link,
+                params = {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36',
                     # 'Cookie': cookie_str,
+                    'Referer': performer_link,
                     'Sec-Fetch-Mode': 'navigate',
                     'Sec-Fetch-Site': 'same-origin',
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36',
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+                    'Accept-Encoding': 'gzip, deflate, br',
+                    'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+                    'Connection': 'keep-alive'
                 }
-                session.headers.update(download_header)
-                dir = root_path + '/' + genre
-                if not os.path.exists(dir):
-                    os.mkdir(dir)
-                rstr = r'[\\/:*?"<>|\r\n\t]+'  # '/ \ : * ? " < > |'
-                name = re.sub(rstr, '', name).strip(' ')
-                performer = re.sub(rstr, '', performer).strip(' ')
-                file_name = name + ' - ' + performer + '.midi'
-                path = dir + '/' +  file_name
+                session.headers.update({'Referer': performer_link})
+                r = session.get(download_link, verify=False, timeout=20)
+                # r.encoding = 'utf-8'
+                if r.cookies.get_dict():
+                    print(r.cookies.get_dict())
+                    session.cookies = r.cookies
+                if r.status_code != 200:
+                    print('connection error ' + str(r.status_code))
+                soup = BeautifulSoup(r.text, 'html.parser')
+                r.close()
                 try:
-                    # cj = http.cookiejar.LWPCookieJar()
-                    # cj.load(cookie_path, ignore_discard=True)
-                    # cookie_handler = request.HTTPCookieProcessor(cj)
-                    # cookie_opener = request.build_opener(cookie_handler)
+                    getter_link = root_url + soup.find(name='a', attrs={'id': 'downloadmidi'})['href']
+                    print(getter_link)
+                    download_header = {
+                        # 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+                        'Accept-Encoding': 'gzip, deflate, br',
+                        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+                        'Referer': download_link,
+                        # 'Cookie': cookie_str,
+                        'Sec-Fetch-Mode': 'navigate',
+                        'Sec-Fetch-Site': 'same-origin',
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36',
+                    }
+                    session.headers.update(download_header)
+                    dir = root_path + '/' + genre
+                    if not os.path.exists(dir):
+                        os.mkdir(dir)
+                    rstr = r'[\\/:*?"<>|\r\n\t]+'  # '/ \ : * ? " < > |'
+                    name = re.sub(rstr, '', name).strip(' ')
+                    performer = re.sub(rstr, '', performer).strip(' ')
+                    file_name = name + ' - ' + performer + '.midi'
+                    path = dir + '/' +  file_name
+                    try:
+                        # cj = http.cookiejar.LWPCookieJar()
+                        # cj.load(cookie_path, ignore_discard=True)
+                        # cookie_handler = request.HTTPCookieProcessor(cj)
+                        # cookie_opener = request.build_opener(cookie_handler)
 
-                    # opener = request.build_opener()
-                    # opener.addheaders = [(key, value) for key, value in download_header.items()]
-                    # cookie_opener.addheaders = [(key, value) for key, value in download_header.items()]
-                    # request.install_opener(opener)
-                    # request.urlretrieve(getter_link, path)
-                    # socket.setdefaulttimeout(4)
+                        # opener = request.build_opener()
+                        # opener.addheaders = [(key, value) for key, value in download_header.items()]
+                        # cookie_opener.addheaders = [(key, value) for key, value in download_header.items()]
+                        # request.install_opener(opener)
+                        # request.urlretrieve(getter_link, path)
+                        # socket.setdefaulttimeout(4)
 
-                    with open(path, 'wb') as output:
-                        with session.get(getter_link, allow_redirects=True, verify=False, timeout=20) as r:
-                            if r.history:
-                                print('Request was redirected')
-                                for resp in r.history:
-                                    print(resp.url)
-                                print('Final: ' + str(r.url))
-                            r.raise_for_status()
-                            if r.cookies.get_dict():
-                                print(r.cookies)
-                                session.cookies.update(r.cookies)
-                            output.write(r.content)
-                    time.sleep(uniform(2, 3))
-                    # cookie_opener.open(getter_link)
-                    # cj.save(cookie_path, ignore_discard=True)
-                    if is_valid_midi(path):
-                        print(file_name + ' downloaded')
-                        midi_collection.update_one(
-                            {'_id': midi['_id']},
-                            {'$set': {'Downloaded': True, 'GetterLink': getter_link}}
-                        )
-                        print('Progress: {:.2%}\n'.format(midi_collection.count({'Downloaded': True}) / midi_collection.count()))
-                    else:
-                        print('Cannot successfully download midi.')
-                        os.remove(path)
+                        with open(path, 'wb') as output:
+                            with session.get(getter_link, allow_redirects=True, verify=False, timeout=20) as r:
+                                if r.history:
+                                    print('Request was redirected')
+                                    for resp in r.history:
+                                        print(resp.url)
+                                    print('Final: ' + str(r.url))
+                                r.raise_for_status()
+                                if r.cookies.get_dict():
+                                    print(r.cookies)
+                                    session.cookies.update(r.cookies)
+                                output.write(r.content)
+                        time.sleep(uniform(2, 3))
+                        # cookie_opener.open(getter_link)
+                        # cj.save(cookie_path, ignore_discard=True)
+                        if is_valid_midi(path):
+                            print(file_name + ' downloaded')
+                            midi_collection.update_one(
+                                {'_id': midi['_id']},
+                                {'$set': {'Downloaded': True, 'GetterLink': getter_link}}
+                            )
+                            print('Progress: {:.2%}\n'.format(midi_collection.count({'Downloaded': True}) / midi_collection.count()))
+                        else:
+                            print('Cannot successfully download midi.')
+                            os.remove(path)
+                    except:
+                        print(traceback.format_exc())
                 except:
-                    print(traceback.format_exc())
+                    print('Found no download link')
             except:
-                print('Found no download link')
-        except:
-            print(traceback.format_exc())
+                print(traceback.format_exc())
 
 def verify_midi_completeness():
     performer_collection = get_performer_collection()
@@ -470,6 +472,5 @@ def strip_space():
 
 if __name__ == '__main__':
     # output_cookies()
-    # download_free_midi()
+    download_free_midi()
     # free_midi_hack_download_test()
-    strip_space()

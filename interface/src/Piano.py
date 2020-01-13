@@ -89,7 +89,7 @@ class Piano(QWidget):
 
     def initUI(self):
         self.record_start_btn = QPushButton()
-        self.record_start_btn.setIcon(QIcon('./icon/clipboard_start.png'))
+        self.record_start_btn.setIcon(QIcon('../icon/clipboard_start.png'))
         self.record_start_btn.setToolTip('Start Recording')
         self.record_start_btn.setIconSize(self.record_btn_icon_size)
         self.record_start_btn.setFixedSize(self.record_btn_size)
@@ -98,7 +98,7 @@ class Piano(QWidget):
         self.record_start_btn.clicked.connect(self.recordStart)
 
         self.record_draw_btn = QPushButton()
-        self.record_draw_btn.setIcon(QIcon('./icon/clipboard_see.png'))
+        self.record_draw_btn.setIcon(QIcon('../icon/clipboard_see.png'))
         self.record_draw_btn.setToolTip('Draw Notes Plot')
         self.record_draw_btn.setIconSize(self.record_btn_icon_size)
         self.record_draw_btn.setFixedSize(self.record_btn_size)
@@ -107,7 +107,7 @@ class Piano(QWidget):
         self.record_draw_btn.clicked.connect(self.recordDraw)
 
         self.record_play_btn = QPushButton()
-        self.record_play_btn.setIcon(QIcon('./icon/clipboard_play.png'))
+        self.record_play_btn.setIcon(QIcon('../icon/clipboard_play.png'))
         self.record_play_btn.setToolTip('Play Recorded Segment')
         self.record_play_btn.setIconSize(self.record_btn_icon_size)
         self.record_play_btn.setFixedSize(self.record_btn_size)
@@ -116,7 +116,7 @@ class Piano(QWidget):
         self.record_play_btn.clicked.connect(self.recordPlay)
 
         self.record_return_btn = QPushButton()
-        self.record_return_btn.setIcon(QIcon('./icon/clipboard_return.png'))
+        self.record_return_btn.setIcon(QIcon('../icon/clipboard_return.png'))
         self.record_return_btn.setToolTip('Delete Last Note')
         self.record_return_btn.setIconSize(self.record_btn_icon_size)
         self.record_return_btn.setFixedSize(self.record_btn_size)
@@ -125,7 +125,7 @@ class Piano(QWidget):
         self.record_return_btn.clicked.connect(self.recordReturn)
 
         self.record_finish_btn = QPushButton()
-        self.record_finish_btn.setIcon(QIcon('./icon/clipboard_finish.png'))
+        self.record_finish_btn.setIcon(QIcon('../icon/clipboard_finish.png'))
         self.record_finish_btn.setToolTip('Finish Recording')
         self.record_finish_btn.setIconSize(self.record_btn_icon_size)
         self.record_finish_btn.setFixedSize(self.record_btn_size)
@@ -134,7 +134,7 @@ class Piano(QWidget):
         self.record_finish_btn.clicked.connect(self.recordFinish)
 
         self.record_stop_btn = QPushButton()
-        self.record_stop_btn.setIcon(QIcon('./icon/clipboard_stop.png'))
+        self.record_stop_btn.setIcon(QIcon('../icon/clipboard_stop.png'))
         self.record_stop_btn.setToolTip('Stop Recording')
         self.record_stop_btn.setIconSize(self.record_btn_icon_size)
         self.record_stop_btn.setFixedSize(self.record_btn_size)
@@ -392,7 +392,7 @@ class Piano(QWidget):
             self.music_segment.replot()
         else:
             msg = QMessageBox()
-            msg.setWindowIcon(QIcon('./icon/gramophone.png'))
+            msg.setWindowIcon(QIcon('../icon/gramophone.png'))
             msg.setIcon(QMessageBox.Information)
             msg.setText('Please first start record mode')
             msg.setWindowTitle('Not in Record Mode')
@@ -405,7 +405,7 @@ class Piano(QWidget):
             self.is_record_mode = False
             self.record_start_btn.setStyleSheet(self.record_btn_style)
             save_box = QMessageBox()
-            save_box.setWindowIcon(QIcon('./icon/gramophone.png'))
+            save_box.setWindowIcon(QIcon('../icon/gramophone.png'))
             save_box.setIcon(QMessageBox.Question)
             save_box.setText('Save Music Segment?')
             save_box.setWindowTitle('Save Music Segment')
@@ -425,7 +425,7 @@ class Piano(QWidget):
                 pass
         else:
             msg = QMessageBox()
-            msg.setWindowIcon(QIcon('./icon/gramophone.png'))
+            msg.setWindowIcon(QIcon('../icon/gramophone.png'))
             msg.setIcon(QMessageBox.Information)
             msg.setText('Please first start record mode')
             msg.setWindowTitle('Not in Record Mode')
