@@ -2,6 +2,14 @@ from pypianoroll import Multitrack, Track
 import matplotlib.pyplot as plt
 from pretty_midi import PrettyMIDI
 import pypianoroll
+import os
+import errno
+import traceback
+from pymongo import MongoClient
+
+def get_midi_collection():
+    client = MongoClient(connect=False)
+    return client.free_midi.midi
 
 def get_merged(multitrack):
     """Return a `pypianoroll.Multitrack` instance with piano-rolls merged to
@@ -30,6 +38,66 @@ def get_merged(multitrack):
             tracks.append(Track(None, program_dict[key], key == 'Drums', key))
     return Multitrack(None, tracks, multitrack.tempo, multitrack.downbeat, multitrack.beat_resolution, multitrack.name)
 
+
+def make_sure_path_exists(path):
+    """Create all intermediate-level directories if the given path does not
+    exist"""
+    try:
+        os.makedirs(path)
+    except OSError as exception:
+        if exception.errno != errno.EEXIST:
+            raise
+
+get_genres = lambda : ['pop', 'rock', 'hip-hop-rap', 'jazz', 'blues', 'classical', 'rnb-soul',
+                       'bluegrass',  'country', 'christian-gospel',  'dance-eletric', 'newage',
+                       'reggae-ska',  'folk', 'punk', 'disco', 'metal']
+
+def convert_midi_files():
+    """Save a multi-track piano-roll converted from a MIDI file to target
+    dataset directory and update MIDI information to `midi_dict`"""
+    converter_root_dir = 'E:/MIDI_converted'
+    root_dir = 'E:/free_MIDI'
+    midi_collection = get_midi_collection()
+    for midi in midi_collection.find({'Converted': False}):
+        genre = midi['Genre']
+        name = midi['Name']
+        performer = midi['Performer']
+        filepath = root_dir + '/' + genre + '/' + name + ' - ' + performer + '.mid'
+        try:
+            midi_name = os.path.splitext(os.path.basename(filepath))[0]
+            multitrack = Multitrack(beat_resolution=24, name=midi_name)
+
+            pm = PrettyMIDI(filepath)
+            midi_info = get_midi_info(pm)
+            multitrack = Multitrack(filepath)
+            merged = get_merged(multitrack)
+            os.chdir(converter_root_dir)
+            if not os.path.exists(converter_root_dir + '/' + genre):
+                os.mkdir(converter_root_dir + '/' + genre)
+            converter_path =converter_root_dir + '/' + genre + '/' + midi_name + '.npz'
+            # merged.save(converter_path)
+            print(get_midi_info(pm))
+            '''
+            midi_collection.update_one(
+                {'_id', midi['_id']},
+                {'$set' :{'Converted': True}}
+            )
+            '''
+            # print([midi_name, midi_info])
+        except:
+            print(filepath)
+            print(traceback.format_exc())
+
+def midi_filter(midi_info):
+    """Return True for qualified midi files and False for unwanted ones"""
+    if midi_info['first_beat_time'] > 0.0:
+        return False
+    elif midi_info['num_time_signature_change'] > 1:
+        return False
+    elif midi_info['time_signature'] not in ['4/4']:
+        return False
+    return True
+
 def get_midi_info(pm):
     """Return useful information from a pretty_midi.PrettyMIDI instance"""
     if pm.time_signature_changes:
@@ -44,7 +112,10 @@ def get_midi_info(pm):
         time_sign = '{}/{}'.format(pm.time_signature_changes[0].numerator,
                                    pm.time_signature_changes[0].denominator)
     else:
-        time_sign = None
+        time_sign = []
+        for i in range(len(pm.time_signature_changes)):
+            time_sign.append('{}/{}'.format(pm.time_signature_changes[i].numerator,
+                                   pm.time_signature_changes[i].denominator))
 
     midi_info = {
         'first_beat_time': first_beat_time,
@@ -56,20 +127,6 @@ def get_midi_info(pm):
     return midi_info
 
 if __name__ == '__main__':
-    test_path = 'And We Die Young - Alice In Chains.mid'
-    multi = Multitrack('And We Die Young - Alice In Chains.mid')
-    pretty = PrettyMIDI(test_path)
-    '''
-    for track in multi.tracks:
-        print(track.name, track.is_drum)
-    '''
-    '''
-    merged = get_merged(multi)
-    for track in merged.tracks:
-        print(track.name)
-        track.plot()
-        plt.show()
-    '''
-    print(get_midi_info(pretty))
+   pass
 
 

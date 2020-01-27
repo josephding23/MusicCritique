@@ -36,8 +36,9 @@ cookie_str = '_ga=GA1.2.279200440.1578048264; _GPSLSC=iUzgdaN6J2; PHPSESSID=9a6f
 cookie_dict = {
     '_ga': 'GA1.2.279200440.1578048264',
     '_GPSLSC': 'iUzgdaN6J2',
-    'PHPSESSID': 'vgbfl8a1qgmlp8u73qt90shuh0',
-    '_gid': 'GA1.2.673090349.1578697315',
+    'PHPSESSID': '6je82fhb5ng9phi6sg10f65ts1',
+    '_gid': 'GA1.2.50503124.1580089972',
+    '__gads': 'ID=50af6bd4cfb7ae9a:T=1580089970:S=ALNI_MaH_q30coeCPSuaKRG_o7Bv1sSUPg',
     '_gat': '1'
 }
 cookie_dict_alt = {'Cookie': cookie_str}
@@ -401,9 +402,9 @@ def download_free_midi():
                     if not os.path.exists(dir):
                         os.mkdir(dir)
                     rstr = r'[\\/:*?"<>|\r\n\t]+'  # '/ \ : * ? " < > |'
-                    name = re.sub(rstr, '', name).strip(' ')
-                    performer = re.sub(rstr, '', performer).strip(' ')
-                    file_name = name + ' - ' + performer + '.midi'
+                    name = re.sub(rstr, '', name).strip()
+                    performer = re.sub(rstr, '', performer).strip()
+                    file_name = name + ' - ' + performer + '.mid'
                     path = dir + '/' +  file_name
                     try:
                         # cj = http.cookiejar.LWPCookieJar()
@@ -467,10 +468,32 @@ def strip_space():
         for song in os.listdir(folder):
             path = folder + '/' + song
             if song[-4:] == 'midi':
-                print(path[:-5] + '.mid')
-                os.rename(path, path[:-5] + '.mid')
+                try:
+                    os.rename(path, path[:-5] + '.mid')
+                except:
+                    os.remove(path)
+                    print(path)
+
+def strip_name_space():
+    midi_collection = get_midi_collection()
+    for midi in midi_collection.find():
+        name = midi['Name']
+        midi_collection.update_one(
+            {'_id': midi['_id']},
+            {'$set': {'Name': name.strip()}}
+        )
+        print(name.strip())
+
 
 if __name__ == '__main__':
     # output_cookies()
-    download_free_midi()
+    root_dir = 'E:/free_MIDI'
+    for genre in get_genres():
+        genre_dir = root_dir + '/' + genre
+        os.chdir(genre_dir)
+        for song in os.listdir(genre_dir):
+            new_name = song.split(' - ')[0].strip() + ' - ' + song.split(' - ')[1].strip()
+            if new_name != song and len(new_name) + 1 == len(song):
+                print(song + '\n' + new_name + '\n')
+                os.rename(song, new_name)
     # free_midi_hack_download_test()
