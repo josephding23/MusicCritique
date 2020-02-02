@@ -36,8 +36,8 @@ cookie_str = '_ga=GA1.2.279200440.1578048264; _GPSLSC=iUzgdaN6J2; PHPSESSID=9a6f
 cookie_dict = {
     '_ga': 'GA1.2.279200440.1578048264',
     '_GPSLSC': 'iUzgdaN6J2',
-    'PHPSESSID': '6je82fhb5ng9phi6sg10f65ts1',
-    '_gid': 'GA1.2.50503124.1580089972',
+    'PHPSESSID': 'khn2fnrekl17ddltb4hn4difn5',
+    '_gid': 'GA1.2.2121598550.1580628914',
     '__gads': 'ID=50af6bd4cfb7ae9a:T=1580089970:S=ALNI_MaH_q30coeCPSuaKRG_o7Bv1sSUPg',
     '_gat': '1'
 }
@@ -486,14 +486,4 @@ def strip_name_space():
 
 
 if __name__ == '__main__':
-    # output_cookies()
-    root_dir = 'E:/free_MIDI'
-    for genre in get_genres():
-        genre_dir = root_dir + '/' + genre
-        os.chdir(genre_dir)
-        for song in os.listdir(genre_dir):
-            new_name = song.split(' - ')[0].strip() + ' - ' + song.split(' - ')[1].strip()
-            if new_name != song and len(new_name) + 1 == len(song):
-                print(song + '\n' + new_name + '\n')
-                os.rename(song, new_name)
-    # free_midi_hack_download_test()
+   download_free_midi()

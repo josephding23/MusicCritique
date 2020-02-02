@@ -16,7 +16,8 @@ def get_merged(multitrack):
     five tracks (Bass, Drums, Guitar, Piano and Strings)"""
     category_list = {'Bass': [], 'Drums': [], 'Guitar': [], 'Piano': [], 'Strings': []}
     program_dict = {'Piano': 0, 'Drums': 0, 'Guitar': 24, 'Bass': 32, 'Strings': 48}
-
+    multi = Multitrack(tempo=multitrack.tempo, downbeat=multitrack.downbeat,
+                       beat_resolution=multitrack.beat_resolution, name=multitrack.name)
     for idx, track in enumerate(multitrack.tracks):
         if track.is_drum:
             category_list['Drums'].append(idx)
@@ -29,14 +30,17 @@ def get_merged(multitrack):
         else:
             category_list['Strings'].append(idx)
 
-    tracks = []
-    for key in category_list:
+    for key in category_list.keys():
+        is_drum = key == 'Drums'
         if category_list[key]:
             merged = multitrack[category_list[key]].get_merged_pianoroll()
-            tracks.append(Track(merged, program_dict[key], key == 'Drums', key))
+            track = Track(merged, program_dict[key], is_drum=is_drum, name=key)
+            track.plot()
+            multi.append_track(track)
         else:
-            tracks.append(Track(None, program_dict[key], key == 'Drums', key))
-    return Multitrack(None, tracks, multitrack.tempo, multitrack.downbeat, multitrack.beat_resolution, multitrack.name)
+            track = Track(None, program_dict[key], is_drum=is_drum, name=key)
+            multi.append_track(track)
+    return multi
 
 
 def make_sure_path_exists(path):
@@ -127,6 +131,12 @@ def get_midi_info(pm):
     return midi_info
 
 if __name__ == '__main__':
-   pass
-
+   file_path = 'E:/free_MIDI/rock/21st Century Schizoid Man - King Crimson.mid'
+   multitrack = Multitrack(file_path)
+   merged = get_merged(multitrack)
+   merged.save('E:/MIDI_converted/rock/21st Century Schizoid Man - King Crimson.mid')
+   # merged.plot()
+   plt.show()
+   for track in merged.tracks:
+       print(track.name)
 

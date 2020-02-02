@@ -17,8 +17,10 @@ class BaseModel(ABC):
 
     def __init__(self, opt):
         """Initialize the BaseModel class.
+
         Parameters:
             opt (Option class)-- stores all the experiment flags; needs to be a subclass of BaseOptions
+
         When creating your custom class, you need to implement your own initialization.
         In this fucntion, you should first call <BaseModel.__init__(self, opt)>
         Then, you need to define four lists:
@@ -44,9 +46,11 @@ class BaseModel(ABC):
     @staticmethod
     def modify_commandline_options(parser, is_train):
         """Add new model-specific options, and rewrite default values for existing options.
+
         Parameters:
             parser          -- original option parser
             is_train (bool) -- whether training phase or test phase. You can use this flag to add training-specific or test-specific options.
+
         Returns:
             the modified parser.
         """
@@ -55,6 +59,7 @@ class BaseModel(ABC):
     @abstractmethod
     def set_input(self, input):
         """Unpack input data from the dataloader and perform necessary pre-processing steps.
+
         Parameters:
             input (dict): includes the data itself and its metadata information.
         """
@@ -72,6 +77,7 @@ class BaseModel(ABC):
 
     def setup(self, opt):
         """Load and print networks; create schedulers
+
         Parameters:
             opt (Option class) -- stores all the experiment flags; needs to be a subclass of BaseOptions
         """
@@ -91,6 +97,7 @@ class BaseModel(ABC):
 
     def test(self):
         """Forward function used in test time.
+
         This function wraps <forward> function in no_grad() so we don't save intermediate steps for backprop
         It also calls <compute_visuals> to produce additional visualization results
         """
@@ -135,6 +142,7 @@ class BaseModel(ABC):
 
     def save_networks(self, epoch):
         """Save all the networks to the disk.
+
         Parameters:
             epoch (int) -- current epoch; used in the file name '%s_net_%s.pth' % (epoch, name)
         """
@@ -166,6 +174,7 @@ class BaseModel(ABC):
 
     def load_networks(self, epoch):
         """Load all the networks from the disk.
+
         Parameters:
             epoch (int) -- current epoch; used in the file name '%s_net_%s.pth' % (epoch, name)
         """
@@ -190,6 +199,7 @@ class BaseModel(ABC):
 
     def print_networks(self, verbose):
         """Print the total number of parameters in the network and (if verbose) network architecture
+
         Parameters:
             verbose (bool) -- if verbose: print the network architecture
         """
