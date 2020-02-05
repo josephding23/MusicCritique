@@ -2,24 +2,95 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b77e5dfc-4c90-42b0-97d0-a4afd2ccd659" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/models/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/origin_models/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/origin_models/colorization_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/origin_models/cycle_gan_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/origin_models/pix2pix_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/origin_models/template_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/origin_models/test_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/origin_util/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/origin_util/get_data.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/origin_util/html.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/origin_util/image_pool.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/origin_util/util.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/origin_util/visualizer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/CycleGAN.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/data/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/data/aligned_dataset.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/data/base_dataset.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/data/colorization_dataset.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/data/image_folder.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/data/single_dataset.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/data/template_dataset.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/data/unaligned_dataset.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/docs/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/docs/README_es.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/docs/datasets.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/docs/docker.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/docs/overview.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/docs/qa.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/docs/tips.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/environment.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/imgs/edges2cats.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/imgs/horse2zebra.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/options/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/options/base_options.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/options/midinet.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/options/test_options.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/options/train_options.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/pix2pix.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/conda_deps.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/download_cyclegan_model.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/download_pix2pix_model.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/edges/PostprocessHED.m" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/edges/batch_hed.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/eval_cityscapes/caffemodel/deploy.prototxt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/eval_cityscapes/cityscapes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/eval_cityscapes/download_fcn8s.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/eval_cityscapes/evaluate.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/eval_cityscapes/util.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/install_deps.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/test_before_push.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/test_colorization.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/test_cyclegan.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/test_pix2pix.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/test_single.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/train_colorization.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/train_cyclegan.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/scripts/train_pix2pix.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cyclegan/train.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/interface/pic/guitar_tab.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/interface/pic/guitar_tab.xcf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/midinet/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/midinet/demo.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/midinet/get_data.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/midinet/get_train_and_test_data.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/midinet/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/midinet/model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/midinet/ops.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/midinet/result/generation_300.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/midinet/result/generation_600.mp3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/OpenMPT/dnb1.bak" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/OpenMPT/dnb1.it" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/OpenMPT/dnb1.it.AutoSave.20200115.152016.it" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/OpenMPT/dnb1.it.AutoSave.20200116.095720.it" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/OpenMPT/dnb1.it.AutoSave.20200116.111720.it" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/OpenMPT/somedrum.bak" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/misc/OpenMPT/somedrum.it.AutoSave.20200112.183636.it" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/music_transfer/Testfile.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/music_transfer/convert_clean.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/music_transfer/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/music_transfer/model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/music_transfer/module.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/music_transfer/ops.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/music_transfer/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/music_transfer/style_classifier.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/music_transfer/utils.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/music_transfer/write_midi.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/base_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/origin_models/base_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/midi_convertion.py" beforeDir="false" afterPath="$PROJECT_DIR$/models/midi_convertion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/networks.py" beforeDir="false" afterPath="$PROJECT_DIR$/origin_models/networks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/midi_scratch.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/midi_scratch.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/origin_models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/models/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/origin_models/base_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/models/base_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/origin_models/colorization_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/models/colorization_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/origin_models/cycle_gan_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/models/cycle_gan_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/origin_models/networks.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/models/networks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/origin_models/pix2pix_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/models/pix2pix_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/origin_models/template_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/models/template_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/origin_models/test_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/models/test_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/origin_util/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/util/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/origin_util/get_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/util/get_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/origin_util/html.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/util/html.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/origin_util/image_pool.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/util/image_pool.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/origin_util/util.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/util/util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/origin_util/visualizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/util/visualizer.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -52,60 +123,13 @@
     <SUITE FILE_PATH="coverage/MusicCritique$Interface__1_.coverage" NAME="Interface (1) Coverage Results" MODIFIED="1579500724800" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interface/src" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.3642496">
+    <splitter split-orientation="horizontal" split-proportion="0.5578876">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/interface/src/Interface.py">
+            <entry file="file://$PROJECT_DIR$/cyclegan/models/cycle_gan_model.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="57">
-                  <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/interface/src/GuitarTab.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="950">
-                  <caret line="56" column="21" selection-start-line="56" selection-start-column="21" selection-end-line="56" selection-end-column="21" />
-                  <folding>
-                    <element signature="e#0#29#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/midi_extended/UtilityBox.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="152">
-                  <caret line="9" column="45" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
-                  <folding>
-                    <element signature="e#0#16#0" expanded="true" />
-                    <marker date="1578835388278" expanded="true" signature="28:53" ph="..." />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/models/midi_convertion.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="294">
-                  <caret line="21" selection-start-line="21" selection-end-line="22" />
-                  <folding>
-                    <element signature="e#0#41#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/origin_models/cycle_gan_model.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="342">
-                  <caret line="140" selection-start-line="140" selection-end-line="193" selection-end-column="63" />
+                <state>
                   <folding>
                     <element signature="e#0#12#0" expanded="true" />
                   </folding>
@@ -114,10 +138,88 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/models/midi_write.py">
+            <entry file="file://$PROJECT_DIR$/cyclegan/models/networks.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2242">
-                  <caret line="119" column="24" selection-start-line="119" selection-start-column="24" selection-end-line="119" selection-end-column="24" />
+                <state relative-caret-position="95">
+                  <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+                  <folding>
+                    <element signature="e#0#12#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/midinet/ops.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="114">
+                  <caret line="6" selection-start-line="6" selection-end-line="6" />
+                  <folding>
+                    <element signature="e#0#18#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/midinet/README.md">
+              <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+                <state split_layout="SPLIT">
+                  <first_editor />
+                  <second_editor />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/midinet/model.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-795">
+                  <caret line="89" column="38" selection-start-line="89" selection-start-column="38" selection-end-line="89" selection-end-column="38" />
+                  <folding>
+                    <element signature="e#0#18#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/midinet/main.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="95">
+                  <caret line="5" selection-start-line="5" selection-end-line="5" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/midinet/get_train_and_test_data.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state>
+                  <folding>
+                    <element signature="e#0#18#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/midinet/get_data.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-9967">
+                  <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
+                  <folding>
+                    <element signature="e#0#34#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/midinet/demo.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="133">
+                  <caret line="7" selection-start-line="7" selection-end-line="7" />
                   <folding>
                     <element signature="e#0#18#0" expanded="true" />
                   </folding>
@@ -128,73 +230,34 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/interface/src/PianoRoll.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="593">
-                  <caret line="134" column="21" selection-start-line="134" selection-start-column="21" selection-end-line="134" selection-end-column="21" />
-                  <folding>
-                    <element signature="e#0#29#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/interface/src/Piano.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2413">
-                  <caret line="136" column="46" selection-start-line="136" selection-start-column="46" selection-end-line="136" selection-end-column="46" />
-                  <folding>
-                    <element signature="e#0#29#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/util/midi_scratch.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="3242">
-                  <caret line="488" column="23" selection-start-line="488" selection-start-column="23" selection-end-line="488" selection-end-column="23" />
-                  <folding>
-                    <element signature="e#0#15#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
+        <leaf>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/models/models.py">
+            <entry file="file://$PROJECT_DIR$/music_transfer/module.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1406">
-                  <caret line="74" column="49" selection-start-line="74" selection-start-column="49" selection-end-line="74" selection-end-column="49" />
+                <state relative-caret-position="-3192">
+                  <caret line="45" column="14" selection-start-line="45" selection-start-column="14" selection-end-line="45" selection-end-column="14" />
                   <folding>
-                    <element signature="e#0#12#0" expanded="true" />
+                    <element signature="e#0#31#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/origin_util/html.py">
+            <entry file="file://$PROJECT_DIR$/music_transfer/ops.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="133">
-                  <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
+                <state>
+                  <folding>
+                    <element signature="e#0#11#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/interface/src/Key.py">
+            <entry file="file://$PROJECT_DIR$/music_transfer/utils.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="817">
-                  <caret line="47" column="22" selection-start-line="45" selection-start-column="12" selection-end-line="49" selection-end-column="13" />
-                  <folding>
-                    <element signature="e#0#29#0" expanded="true" />
-                  </folding>
-                </state>
+                <state relative-caret-position="-16" />
               </provider>
             </entry>
           </file>
@@ -241,17 +304,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/examples/vocal.py" />
-        <option value="$PROJECT_DIR$/examples/keys.py" />
-        <option value="$PROJECT_DIR$/examples/pygame_player.py" />
-        <option value="$PROJECT_DIR$/examples/pydub.py" />
-        <option value="D:/Users/lenovo/Anaconda3/Lib/site-packages/pydub/utils.py" />
-        <option value="$PROJECT_DIR$/examples/dub.py" />
-        <option value="$PROJECT_DIR$/examples/midiutil.py" />
-        <option value="$PROJECT_DIR$/examples/midi.py" />
-        <option value="$PROJECT_DIR$/midi/_init_.py" />
-        <option value="$PROJECT_DIR$/midi/midi.py" />
-        <option value="$PROJECT_DIR$/midi/basic.py" />
         <option value="$PROJECT_DIR$/markdown/ch2.harmony.md" />
         <option value="$PROJECT_DIR$/markdown/ch3.pitchwheel.md" />
         <option value="$PROJECT_DIR$/markdown/ch1.basic.md" />
@@ -292,10 +344,21 @@
         <option value="$PROJECT_DIR$/util/midi_scratch.py" />
         <option value="$PROJECT_DIR$/origin_models/cycle_gan_model.py" />
         <option value="$PROJECT_DIR$/models/models.py" />
+        <option value="$PROJECT_DIR$/origin_models/__init__.py" />
+        <option value="$PROJECT_DIR$/cyclegan/train.py" />
+        <option value="$PROJECT_DIR$/cyclegan/data/__init__.py" />
+        <option value="$PROJECT_DIR$/music_transfer/module.py" />
+        <option value="$PROJECT_DIR$/cyclegan/options/midinet.py" />
+        <option value="$PROJECT_DIR$/cyclegan/models/networks.py" />
+        <option value="$PROJECT_DIR$/midinet/ops.py" />
+        <option value="$PROJECT_DIR$/midinet/main.py" />
+        <option value="$PROJECT_DIR$/midinet/demo.py" />
+        <option value="$PROJECT_DIR$/midinet/model.py" />
+        <option value="$PROJECT_DIR$/midinet/get_data.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="952" />
     <option name="y" value="22" />
     <option name="width" value="976" />
@@ -319,77 +382,41 @@
             <path>
               <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
               <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="attempts" type="462c0819:PsiDirectoryNode" />
+              <item name="cyclegan" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
               <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="interface" type="462c0819:PsiDirectoryNode" />
+              <item name="cyclegan" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
               <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="interface" type="462c0819:PsiDirectoryNode" />
-              <item name="icon" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="interface" type="462c0819:PsiDirectoryNode" />
-              <item name="pic" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="interface" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="markdown" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="midi_extended" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="misc" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
+              <item name="cyclegan" type="462c0819:PsiDirectoryNode" />
               <item name="models" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
               <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="origin_models" type="462c0819:PsiDirectoryNode" />
+              <item name="cyclegan" type="462c0819:PsiDirectoryNode" />
+              <item name="options" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
               <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="origin_util" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
+              <item name="cyclegan" type="462c0819:PsiDirectoryNode" />
               <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
               <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="midinet" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
               <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-              <item name="text" type="462c0819:PsiDirectoryNode" />
+              <item name="music_transfer" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -410,10 +437,10 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\PycharmProjects\MusicCritique" />
+      <recent name="D:\PycharmProjects\MusicCritique\music_transfer" />
+      <recent name="D:\PycharmProjects\MusicCritique\cyclegan" />
       <recent name="D:\PycharmProjects\MusicCritique\models" />
       <recent name="D:\PycharmProjects\MusicCritique\data\midi\read\RATM" />
-      <recent name="D:\PycharmProjects\MusicCritique\markdown" />
-      <recent name="D:\PycharmProjects\MusicCritique\examples" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\PycharmProjects\MusicCritique\util" />
@@ -611,7 +638,10 @@
       <workItem from="1579570487882" duration="4286000" />
       <workItem from="1579743060933" duration="1278000" />
       <workItem from="1580089927868" duration="13070000" />
-      <workItem from="1580628672556" duration="5217000" />
+      <workItem from="1580628672556" duration="6434000" />
+      <workItem from="1580714549385" duration="4840000" />
+      <workItem from="1580798234770" duration="3513000" />
+      <workItem from="1580883975602" duration="6699000" />
     </task>
     <task id="LOCAL-00001" summary="pretty">
       <created>1578794444076</created>
@@ -634,11 +664,18 @@
       <option name="project" value="LOCAL" />
       <updated>1580108856476</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="implement cyclegan">
+      <created>1580633915280</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1580633915280</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="262286000" />
+    <option name="totallyTimeSpent" value="278555000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -650,9 +687,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="22" width="1936" height="1066" extended-state="6" />
+    <frame x="-8" y="22" width="1936" height="1066" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.78998387" visible="true" weight="0.051705755" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.78998387" visible="true" weight="0.21268657" />
       <window_info id="Structure" order="1" sideWeight="0.21001616" side_tool="true" weight="0.16490166" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -666,7 +704,7 @@
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="CSS-X-Fire" order="9" weight="0.32956383" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.49919742" side_tool="true" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.22961374" />
+      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.22961374" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.5008026" weight="0.2693133" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" weight="0.32956383" />
       <window_info anchor="bottom" auto_hide="true" x="-23" y="314" width="1846" height="932" id="Run" order="14" weight="0.42811158" />
@@ -713,118 +751,10 @@
     <MESSAGE value="pretty" />
     <MESSAGE value="guitartab" />
     <MESSAGE value="midi_converter" />
-    <option name="LAST_COMMIT_MESSAGE" value="midi_converter" />
+    <MESSAGE value="implement cyclegan" />
+    <option name="LAST_COMMIT_MESSAGE" value="implement cyclegan" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://D:/Users/lenovo/Anaconda3/Lib/site-packages/pydub/utils.py" />
-    <entry file="file://$PROJECT_DIR$/misc/test.py" />
-    <entry file="file://$PROJECT_DIR$/misc/hpss.py" />
-    <entry file="file://$PROJECT_DIR$/misc/presents.py" />
-    <entry file="file://$PROJECT_DIR$/misc/dub.py" />
-    <entry file="file://$PROJECT_DIR$/misc/vocal.py" />
-    <entry file="file://$PROJECT_DIR$/misc/keys.py" />
-    <entry file="file://$PROJECT_DIR$/attempts/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/markdown/ch4.drums.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/markdown/ch3.pitchwheel.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/markdown/ch2.harmony.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/markdown/ch1.basic.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="324">
-            <caret line="96" column="1" lean-forward="true" selection-start-line="96" selection-start-column="1" selection-end-line="96" selection-end-column="1" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/misc/pygame_player.py" />
-    <entry file="file://$PROJECT_DIR$/misc/midiutil.py" />
-    <entry file="file://$PROJECT_DIR$/midi_extended/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://D:/Users/lenovo/Anaconda3/Lib/site-packages/matplotlib/artist.py" />
-    <entry file="file://D:/Users/lenovo/Anaconda3/Lib/site-packages/mido/midifiles/midifiles.py" />
-    <entry file="file://$PROJECT_DIR$/data/plots/mother_ocean/melody.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/attempts/RATM.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="15" column="38" selection-start-line="15" selection-start-column="38" selection-end-line="15" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#59#0" expanded="true" />
-            <marker date="1570955521641" expanded="true" signature="525:775" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/attempt.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/cycle_gan_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="20" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/networks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2356">
-          <caret line="128" selection-start-line="128" selection-end-line="128" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/util/image_pool.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="29" column="21" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/misc/python/foxdot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="12" lean-forward="true" selection-start-column="12" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/interface/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/.PyCharm2018.3/system/python_stubs/-313451744/PyQt5/QtWidgets/QLayout.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="258">
@@ -905,20 +835,72 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/interface/src/Interface.py">
+    <entry file="file://$PROJECT_DIR$/models/base_model.py" />
+    <entry file="file://$PROJECT_DIR$/models/midi_convertion.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+        <state relative-caret-position="266">
+          <caret line="21" selection-start-line="21" selection-end-line="22" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interface/src/PianoRoll.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2375">
+          <caret line="134" column="21" selection-start-line="134" selection-start-column="21" selection-end-line="134" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interface/src/Piano.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2413">
+          <caret line="136" column="46" selection-start-line="136" selection-start-column="46" selection-end-line="136" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util/midi_scratch.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8987">
+          <caret line="488" column="23" selection-start-line="488" selection-start-column="23" selection-end-line="488" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/origin_util/html.py" />
+    <entry file="file://$PROJECT_DIR$/interface/src/Key.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="817">
+          <caret line="47" column="22" selection-start-line="45" selection-start-column="12" selection-end-line="49" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/interface/src/GuitarTab.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="950">
+        <state relative-caret-position="630">
           <caret line="56" column="21" selection-start-line="56" selection-start-column="21" selection-end-line="56" selection-end-column="21" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/interface/src/Interface.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="57">
+          <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -935,7 +917,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/models/midi_write.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2242">
+        <state relative-caret-position="630">
           <caret line="119" column="24" selection-start-line="119" selection-start-column="24" selection-end-line="119" selection-end-column="24" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
@@ -943,92 +925,198 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/interface/src/Piano.py">
+    <entry file="file://$PROJECT_DIR$/origin_models/networks.py" />
+    <entry file="file://$PROJECT_DIR$/origin_models/test_model.py" />
+    <entry file="file://$PROJECT_DIR$/origin_models/cycle_gan_model.py" />
+    <entry file="file://$PROJECT_DIR$/origin_models/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/cyclegan/pix2pix.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cyclegan/CycleGAN.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/music_transfer/imgs/Picture2.png" />
+    <entry file="file://$PROJECT_DIR$/models/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2413">
-          <caret line="136" column="46" selection-start-line="136" selection-start-column="46" selection-end-line="136" selection-end-column="46" />
+        <state relative-caret-position="19">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
           <folding>
-            <element signature="e#0#29#0" expanded="true" />
+            <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/interface/src/Key.py">
+    <entry file="file://$PROJECT_DIR$/cyclegan/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="817">
-          <caret line="47" column="22" selection-start-line="45" selection-start-column="12" selection-end-line="49" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="418">
+          <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/util/midi_scratch.py">
+    <entry file="file://$PROJECT_DIR$/music_transfer/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3242">
-          <caret line="488" column="23" selection-start-line="488" selection-start-column="23" selection-end-line="488" selection-end-column="23" />
+        <state>
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/base_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3895">
-          <caret line="205" column="17" selection-start-line="205" selection-start-column="17" selection-end-line="205" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/origin_models/__init__.py">
+    <entry file="file://$PROJECT_DIR$/cyclegan/options/train_options.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/origin_util/html.py">
+    <entry file="file://$PROJECT_DIR$/music_transfer/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cyclegan/data/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="48" selection-start-line="48" selection-end-line="48" />
+          <folding>
+            <element signature="e#793#809#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/music_transfer/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-16" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cyclegan/options/base_options.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2044">
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cyclegan/options/midinet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-171">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cyclegan/models/cycle_gan_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cyclegan/models/networks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/midinet/requirement.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/midinet/get_train_and_test_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/midinet/demo.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
-          <caret line="9" column="18" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/midi_convertion.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="21" selection-start-line="21" selection-end-line="22" />
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/interface/src/PianoRoll.py">
+    <entry file="file://$PROJECT_DIR$/midinet/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/midinet/ops.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="593">
-          <caret line="134" column="21" selection-start-line="134" selection-start-column="21" selection-end-line="134" selection-end-column="21" />
+        <state relative-caret-position="114">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
           <folding>
-            <element signature="e#0#29#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/origin_models/cycle_gan_model.py">
+    <entry file="file://$PROJECT_DIR$/midinet/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="140" selection-start-line="140" selection-end-line="193" selection-end-column="63" />
+        <state relative-caret-position="-795">
+          <caret line="89" column="38" selection-start-line="89" selection-start-column="38" selection-end-line="89" selection-end-column="38" />
           <folding>
-            <element signature="e#0#12#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/models.py">
+    <entry file="file://$PROJECT_DIR$/midinet/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1406">
-          <caret line="74" column="49" selection-start-line="74" selection-start-column="49" selection-end-line="74" selection-end-column="49" />
+        <state relative-caret-position="95">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/midinet/get_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-9967">
+          <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
           <folding>
-            <element signature="e#0#12#0" expanded="true" />
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/music_transfer/ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/music_transfer/module.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3192">
+          <caret line="45" column="14" selection-start-line="45" selection-start-column="14" selection-end-line="45" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
