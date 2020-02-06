@@ -614,3 +614,4 @@ class PixelDiscriminator(nn.Module):
         """Standard forward."""
         return self.net(input)
 
+
