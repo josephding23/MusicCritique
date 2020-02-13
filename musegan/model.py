@@ -125,6 +125,8 @@ class MuseDiscriminator(nn.Module):
             nn.LeakyReLU()
         )
 
+        self.dense = nn.Linear(self.n_tracks, 1)
+
     def forward(self, tensor_in):
         h = tensor_in
         n_beats = h.shape[2]
@@ -164,9 +166,9 @@ class MuseDiscriminator(nn.Module):
 
         o = self.on_off_set(on_off_set)
 
-        h = torch.cat((h, c, o))
+        h = torch.cat((h, c, o), -1)
         h = self.merged(h)
         h = torch.reshape(h, (-1, h.shape[-1]))
-        h = nn.Linear(self.n_tracks, 1)
+        h = self.dense(h)
 
         return h

@@ -184,7 +184,7 @@ def define_D(input_nc, ndf, netD, n_layers_D=3, norm='batch', init_type='normal'
         [n_layers]: With this mode, you cna specify the number of conv layers in the discriminator
         with the parameter <n_layers_D> (default=3 as used in [basic] (PatchGAN).)
 
-        [pixel]: 1x1 PixelGAN discriminator can classify whether a pixel is real or not.
+        [pixel]: 1x1 PixelGAN discriminator ca classify whether a pixel is real or not.
         It encourages greater color diversity but has no effect on spatial statistics.
 
     The discriminator has been initialized by <init_net>. It uses Leakly RELU for non-linearity.

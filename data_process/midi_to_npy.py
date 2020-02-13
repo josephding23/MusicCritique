@@ -1,11 +1,23 @@
 from pypianoroll import Multitrack, Track
+from pypianoroll.plot import plot_pianoroll
 import matplotlib.pyplot as plt
 from pretty_midi import PrettyMIDI
 import pypianoroll
 import os
 import errno
+import tqdm
+import json
+import numpy as np
+import pretty_midi
 import traceback
 from pymongo import MongoClient
+from data_process.util import *
+
+CONFIG = {
+    'multicore': 40, # the number of cores to use (1 to disable multiprocessing)
+    'beat_resolution': 24, # temporal resolution (in time step per beat)
+    'time_signatures': ['4/4'] # '3/4', '2/4'
+}
 
 def get_midi_collection():
     client = MongoClient(connect=False)
@@ -35,22 +47,13 @@ def get_merged(multitrack):
         if category_list[key]:
             merged = multitrack[category_list[key]].get_merged_pianoroll()
             track = Track(merged, program_dict[key], is_drum=is_drum, name=key)
-            track.plot()
+            # track.plot()
             multi.append_track(track)
         else:
             track = Track(None, program_dict[key], is_drum=is_drum, name=key)
             multi.append_track(track)
     return multi
 
-
-def make_sure_path_exists(path):
-    """Create all intermediate-level directories if the given path does not
-    exist"""
-    try:
-        os.makedirs(path)
-    except OSError as exception:
-        if exception.errno != errno.EEXIST:
-            raise
 
 get_genres = lambda : ['pop', 'rock', 'hip-hop-rap', 'jazz', 'blues', 'classical', 'rnb-soul',
                        'bluegrass',  'country', 'christian-gospel',  'dance-eletric', 'newage',
@@ -125,18 +128,116 @@ def get_midi_info(pm):
         'first_beat_time': first_beat_time,
         'num_time_signature_change': len(pm.time_signature_changes),
         'time_signature': time_sign,
-        'tempo': tempi[0] if len(tc_times) == 1 else None
+        'tempo': tempi.tolist()
     }
 
     return midi_info
 
-if __name__ == '__main__':
-   file_path = 'E:/free_MIDI/rock/21st Century Schizoid Man - King Crimson.mid'
-   multitrack = Multitrack(file_path)
-   merged = get_merged(multitrack)
-   merged.save('E:/MIDI_converted/rock/21st Century Schizoid Man - King Crimson.mid')
-   # merged.plot()
-   plt.show()
-   for track in merged.tracks:
-       print(track.name)
+def add_info_to_database():
+    root_dir = 'E:/free_midi_library/'
+    midi_collection = get_midi_collection()
+    for midi in midi_collection.find({'InfoAdded': False}, no_cursor_timeout = True):
+        path = os.path.join(root_dir, midi['Genre'] + '/', midi['md5'] + '.mid')
+        try:
+            info = get_midi_info(pretty_midi.PrettyMIDI(path))
 
+            midi_collection.update_one({'_id': midi['_id']}, {'$set': {
+                'Info': info,
+                'InfoAdded': True
+            }})
+            print('Progress: {:.2%}\n'.format(midi_collection.count({'InfoAdded': True}) / midi_collection.count()))
+        except:
+            print(path)
+            print(traceback.format_exc())
+
+def tempo_unify():
+    midi_collection = get_midi_collection()
+    root_dir = 'E:/free_midi_library/'
+    test_path = './test.mid'
+    unify_tempo = 90
+    original = Multitrack(test_path)
+    original_tempo = get_midi_info(original.to_pretty_midi())['tempo'][0]
+    merged_multi = get_merged(original)
+    tracks_dict = {}
+    length = 0
+    for track in merged_multi.tracks:
+        if track.pianoroll.shape[0] != 0:
+            length = track.pianoroll.shape[0]
+            old_pianoroll = track.pianoroll
+            for i in range(128):
+                for j in range(length):
+                    print(track.pianoroll[j][i], end=' ')
+                print()
+
+    '''
+    tracks_dict = {}
+    for midi in midi_collection.find({}, no_cursor_timeout = True):
+        path = os.path.join(root_dir, midi['Genre'] + '/', midi['md5'] + '.mid')
+        try:
+            multi = Multitrack(path)
+            merged_multi = get_merged(multi)
+            info = get_midi_info(merged_multi.to_pretty_midi())
+            print(info['tempo'])
+            length = 0
+            for track in merged_multi.tracks:
+                if track.pianoroll.shape[0] != 0:
+                    length = track.pianoroll.shape[0]
+            for track in merged_multi.tracks:
+                if track.name not in ['unknown']:
+                    if track.pianoroll.shape[0] == 0:
+                        tracks_dict[track.name] = np.zeros((length, 128))
+                    else:
+                        tracks_dict[track.name] = track.pianoroll
+            # track_path = os.path.join(converted_dir + '/', track.name + '.npy')
+        except:
+            print(path)
+            print(traceback.format_exc())
+    '''
+def merge_tracks():
+    root_dir = 'E:/free_midi_library/'
+    converted_root_dir = 'E:/converted_MIDI/'
+    midi_collection = get_midi_collection()
+    min_length = 10000
+    for midi in midi_collection.find({}, no_cursor_timeout = True):
+        path = os.path.join(root_dir, midi['Genre'] + '/', midi['md5'] + '.mid')
+        converted_dir = os.path.join(converted_root_dir, midi['Genre'] + '/', midi['md5'])
+        tracks_dict = {}
+        '''
+        if not os.path.exists(os.path.join(converted_root_dir, midi['Genre'])):
+            os.mkdir(os.path.join(converted_root_dir, midi['Genre']))
+        if not os.path.exists(converted_dir):
+            os.mkdir(converted_dir)
+            '''
+        try:
+
+            multi = Multitrack(path)
+            merged_multi = get_merged(multi)
+            # info = get_midi_info(pretty_midi.PrettyMIDI(path))
+
+            length = 0
+            for track in merged_multi.tracks:
+                if track.pianoroll.shape[0] != 0:
+                    length = track.pianoroll.shape[0]
+            print(length)
+
+            for track in merged_multi.tracks:
+
+                if track.name not in ['unknown']:
+                    if track.pianoroll.shape[0] == 0:
+                        tracks_dict[track.name] = np.zeros((length, 128))
+                    else:
+                        tracks_dict[track.name] = track.pianoroll
+            # track_path = os.path.join(converted_dir + '/', track.name + '.npy')
+            try:
+                tracks = np.dstack((tracks_dict['Guitar'], tracks_dict['Piano'], tracks_dict['Bass'], tracks_dict['Strings'], tracks_dict['Drums']))
+                print(tracks.shape)
+            except:
+                for _, track in tracks_dict.items():
+                    print(track.shape)
+
+        except:
+            print(path)
+            print(traceback.format_exc())
+
+if __name__ == '__main__':
+    tempo_unify()

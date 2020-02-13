@@ -14,6 +14,7 @@ import mido
 import http.cookiejar
 import shutil
 import re
+import hashlib
 
 myHeaders = ["Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; AcooBrowser; .NET CLR 1.1.4322; .NET CLR 2.0.50727)",
              "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Acoo Browser; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.0.04506)",
@@ -36,8 +37,8 @@ cookie_str = '_ga=GA1.2.279200440.1578048264; _GPSLSC=iUzgdaN6J2; PHPSESSID=9a6f
 cookie_dict = {
     '_ga': 'GA1.2.279200440.1578048264',
     '_GPSLSC': 'iUzgdaN6J2',
-    'PHPSESSID': 'khn2fnrekl17ddltb4hn4difn5',
-    '_gid': 'GA1.2.2121598550.1580628914',
+    'PHPSESSID': 'bvifnusjfcpuc0ofjoq3gvqil2',
+    '_gid': 'GA1.2.169812444.1581412040',
     '__gads': 'ID=50af6bd4cfb7ae9a:T=1580089970:S=ALNI_MaH_q30coeCPSuaKRG_o7Bv1sSUPg',
     '_gat': '1'
 }
@@ -477,13 +478,14 @@ def strip_space():
 def strip_name_space():
     midi_collection = get_midi_collection()
     for midi in midi_collection.find():
-        name = midi['Name']
+        name = midi['Performer']
         midi_collection.update_one(
             {'_id': midi['_id']},
-            {'$set': {'Name': name.strip()}}
+            {'$set': {'Performer': name.strip()}}
         )
         print(name.strip())
 
 
 if __name__ == '__main__':
-   download_free_midi()
+    get_performer_collection().update_many({}, {'$unset': {'Finished': ''}})
+
