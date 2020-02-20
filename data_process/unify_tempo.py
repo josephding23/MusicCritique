@@ -1,8 +1,8 @@
 from pymongo import MongoClient
 import pretty_midi
 import os
-from pypianoroll import Multitrack
 from pypianoroll import Multitrack, Track
+import pypianoroll
 import mido
 import music21
 
@@ -42,6 +42,38 @@ TRACK_INFO = (
     ('Strings', 48),
 )
 
+
+def get_merged_from_pm(pm):
+    new_pm = pretty_midi.PrettyMIDI()
+
+    drums = pretty_midi.Instrument(0, is_drum=True, name='Drums')
+    piano = pretty_midi.Instrument(0, name='Piano')
+    guitar = pretty_midi.Instrument(24, name='Guitar')
+    bass = pretty_midi.Instrument(32, name='Bass')
+    strings = pretty_midi.Instrument(48, name='Strings')
+
+    for instr in pm.instruments:
+        if instr.is_drum:
+            for note in instr.notes:
+                drums.notes.append(note)
+        elif instr.program//8 == 0:
+            for note in instr.notes:
+                piano.notes.append(note)
+        elif instr.program//8 == 3:
+            for note in instr.notes:
+                guitar.notes.append(note)
+        elif instr.program//8 == 4:
+            for note in instr.notes:
+                bass.notes.append(note)
+        elif instr.program < 96 or 104 <= instr.program < 112:
+            for note in instr.notes:
+                strings.notes.append(note)
+
+    for instr in [drums, piano, guitar, bass, strings]:
+        new_pm.instruments.append(instr)
+    return new_pm
+
+
 def get_merged(multitrack):
     """Merge the multitrack pianorolls into five instrument families and
     return the resulting multitrack pianoroll object."""
@@ -74,12 +106,59 @@ def get_midi_collection():
     client = MongoClient(connect=False)
     return client.free_midi.midi
 
+def get_music_with_tempo_changes():
+    root_dir = 'E:/free_midi_library/'
+    midi_collection = get_midi_collection()
+    for midi in midi_collection.find():
+        path = os.path.join(root_dir, midi['Genre'] + '/', midi['md5'] + '.mid')
+        midi_file = mido.MidiFile(path)
+        tempos = []
+        times = []
+        for msg in midi_file:
+            if msg.is_meta and msg.type == 'set_tempo':
+                tempo = mido.tempo2bpm(msg.tempo)
+                time = msg.time
+                tempos.append(tempo)
+                times.append(time)
+        print(tempos)
+        print(times)
+        print()
+        '''
+        pm = pretty_midi.PrettyMIDI(path)
+        tempo_change_times, tempo = pm.get_tempo_changes()
+        if len(tempo_change_times) > 1:
+            print(tempo_change_times.tolist(), '\n', tempo.tolist(), '\n', path, '\n')
+            '''
+
 def get_tempo(path):
     pm = pretty_midi.PrettyMIDI(path)
-    return get_midi_info(pm)['tempo']
+    # tempo_estimated = pm.estimate_tempo()
+    _, tempo = pm.get_tempo_changes()
+    return tempo.tolist()
+
+def tempo_unify_and_merge_test():
+    test_path = './test.mid'
+    original_tempo = get_tempo(test_path)[0]
+    changed_rate = original_tempo / 120
+
+    '''
+    score = music21.converter.parse(test_path)
+    new_score = score.scaleOffsets(changed_rate).scaleDurations(changed_rate)
+    new_score.write('midi', './test_merged.mid')
+    '''
+    pm = pretty_midi.PrettyMIDI(test_path)
+    for instr in pm.instruments:
+        for note in instr.notes:
+            note.start *= changed_rate
+            note.end *= changed_rate
+    merged_pm = get_merged_from_pm(pm)
+    # merged_multi = get_merged(mult)
+    merged_pm.write('./test_merged.mid')
+
+    # new_pm = pretty_midi.PrettyMIDI()
 
 
-def merge_then_tempo_unify():
+def tempo_unify_and_merge():
 
     midi_collection = get_midi_collection()
     root_dir = 'E:/free_midi_library/'
@@ -87,22 +166,29 @@ def merge_then_tempo_unify():
 
     for midi in midi_collection.find({'MergedAndScaled': False}, no_cursor_timeout = True):
         original_path = os.path.join(root_dir, midi['Genre'] + '/', midi['md5'] + '.mid')
-        original_tempo = get_tempo(original_path)[0]
-        changed_rate = original_tempo / 120
+        try:
+            original_tempo = get_tempo(original_path)[0]
+            changed_rate = original_tempo / 120
 
-        if not os.path.exists(os.path.join(merged_root_dir, midi['Genre'])):
-            os.mkdir(os.path.join(merged_root_dir, midi['Genre']))
-        merged_path = os.path.join(merged_root_dir, midi['Genre'] + '/', midi['md5'] + '.mid')
-        merged_multi = get_merged(Multitrack(original_path))
-        merged_multi.write(merged_path)
+            if not os.path.exists(os.path.join(merged_root_dir, midi['Genre'])):
+                os.mkdir(os.path.join(merged_root_dir, midi['Genre']))
 
-        score = music21.converter.parse(merged_path)
-        new_score = score.scaleOffsets(changed_rate).scaleDurations(changed_rate)
-        new_score.write('midi', merged_path)
+            pm = pretty_midi.PrettyMIDI(original_path)
+            for instr in pm.instruments:
+                for note in instr.notes:
+                    note.start *= changed_rate
+                    note.end *= changed_rate
 
-        midi_collection.update_one({'_id': midi['_id']}, {'$set': {'MergedAndScaled': True}})
+            merged_path = os.path.join(merged_root_dir, midi['Genre'] + '/', midi['md5'] + '.mid')
+            merged = get_merged_from_pm(pm)
+            merged.write(merged_path)
 
-        print('Progress: {:.2%}\n'.format(midi_collection.count({'MergedAndScaled': True}) / midi_collection.count()))
+            midi_collection.update_one({'_id': midi['_id']}, {'$set': {'MergedAndScaled': True}})
+
+            print('Progress: {:.2%}\n'.format(midi_collection.count({'MergedAndScaled': True}) / midi_collection.count()))
+            
+        except:
+            pass
 
 def change_tempo_in_metadata():
     test_path = './test4_changed_tempo_dirty.mid'
@@ -131,4 +217,4 @@ def change_tempo_in_metadata():
     print(get_tempo(test_path), get_tempo(dst_path))
 
 if __name__ == '__main__':
-    merge_then_tempo_unify()
+    tempo_unify_and_merge()
