@@ -95,49 +95,62 @@ def create_data_with_all_sparse_matrices(time_step=120, bar_length=4, note_valid
         print('Progress: {:.2%}\n'.format( processed / whole_num))
     np.savez('./rock_data.npz', whole_matrix)
 
-def merge_all_sparse_matrices(time_step=120, bar_length=4, note_valid_length=84):
+def merge_all_sparse_matrices(time_step=120, bar_length=4, note_valid_length=84, group_num=10):
     midi_collection = get_midi_collection()
     root_dir = 'E:/midi_matrix/'
     genre = 'rock'
-    data_group = 1
-    last_piece_num = 0
-
-    for midi in midi_collection.find({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}, 'DataGroup': 0}):
-        last_piece_num += midi['PiecesNum']
-    whole_num = midi_collection.count({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}, 'DataGroup': data_group})
-    print(last_piece_num)
 
     whole_length = 132700
-    processed = 0
     shape = np.array([whole_length, bar_length, time_step, note_valid_length, 5])
-    non_zeros = []
-    for midi in midi_collection.find({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}, 'DataGroup': data_group}, no_cursor_timeout=True):
-        path = root_dir + genre + '/' + midi['md5'] + '.npz'
-        pieces_num = midi['PiecesNum']
-        f = np.load(path)
-        matrix = f['arr_0'].copy().transpose()
-        print(pieces_num, matrix.shape[0])
-        for data in matrix:
-            try:
-                data = data.tolist()
-                piece_order = last_piece_num + data[0]
-                non_zeros.append([piece_order, data[1], data[2], data[3], data[4]])
-            except:
-                print(path)
-        # print(matrix['arr_0'].shape)
-        f.close()
-        last_piece_num += pieces_num
-        processed += 1
-        print('Progress: {:.2%}\n'.format(processed / whole_num))
-    non_zeros = np.array(non_zeros)
-    np.savez_compressed('d:/rock_data_sparse_' + str(data_group) + '.npz', shape=shape, nonzeros=non_zeros)
+
+    processed = 0
+    last_piece_num = 0
+    whole_num = midi_collection.count({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}})
+
+    for group in range(group_num):
+        non_zeros = []
+        for midi in midi_collection.find({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}, 'DataGroup': group}, no_cursor_timeout=True):
+
+            path = root_dir + genre + '/' + midi['md5'] + '.npz'
+            pieces_num = midi['PiecesNum']
+
+            f = np.load(path)
+            matrix = f['arr_0'].copy().transpose()
+            print(pieces_num, matrix.shape[0])
+            for data in matrix:
+                try:
+                    data = data.tolist()
+                    piece_order = last_piece_num + data[0]
+                    non_zeros.append([piece_order, data[1], data[2], data[3], data[4]])
+                except:
+                    print(path)
+            # print(matrix['arr_0'].shape)
+
+            # f.close()
+            last_piece_num += pieces_num
+            processed += 1
+            print('Progress: {:.2%}\n'.format(processed / whole_num))
+        non_zeros = np.array(non_zeros)
+        print(last_piece_num)
+        np.savez_compressed('d:/data/rock_data_sparse_part' + str(group) + '.npz', nonzeros=non_zeros)
+    np.save('d:/data/shape.npy', shape)
 
 
-def get_separate_song_discrete_matrix():
-    dir = 'E:/midi_matrix/rock'
-    os.chdir(dir)
-    for file in os.listdir(dir):
-        os.rename(file, file[:-7] + '.npz')
+def generate_data_from_sparse_data():
+    shape = [132700, 4, 120, 84, 5]
+    result = np.zeros(shape, np.bool_)
+    paths = ['d:/data/rock_data_sparse_part' + str(num) + '.npz' for num in range(10)]
+
+    for path in paths:
+        with np.load(path) as npfile:
+            print(path)
+            sparse = npfile['nonzeros']
+            for data in sparse:
+                # print(data)
+                sparse[data] = True
+
+    print(result.shape)
+
 
 def divide_track_test(time_step=120, bar_length=4, note_valid_length=84):
     paths = ['./test.mid']
@@ -340,21 +353,16 @@ def get_music_with_no_empty_tracks():
     midi_collection = get_midi_collection()
     print(midi_collection.count({'Genre': 'rock', 'NotEmptyTracksNum': {'$gte': 4}}), midi_collection.count())
 
-def divide_into_two_groups(genre='rock'):
+def divide_into_groups(genre='rock', group_num=10):
     midi_collection = get_midi_collection()
     total_amount = midi_collection.count({'Genre': 'rock', 'NotEmptyTracksNum': {'$gte': 4}})
-    divide_point = total_amount // 2
+    num_per_group = total_amount // group_num + 1
     current_num = 0
     for midi in midi_collection.find({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}}, no_cursor_timeout=True):
-        print(current_num)
-        if current_num < divide_point:
-            print(0)
-            midi_collection.update_one({'_id': midi['_id']}, {'$set': {'DataGroup': 0}})
-        else:
-            print(1)
-            midi_collection.update_one({'_id': midi['_id']}, {'$set': {'DataGroup': 1}})
+        group = current_num // num_per_group
+        midi_collection.update_one({'_id': midi['_id']}, {'$set': {'DataGroup': group}})
         current_num += 1
 
 
 if __name__ == '__main__':
-    merge_all_sparse_matrices()
+    generate_data_from_sparse_data()
