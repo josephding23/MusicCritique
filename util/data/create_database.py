@@ -48,7 +48,7 @@ def get_whole_genre_numpy(time_step=120, bar_length=4, note_valid_length=84, gen
         merged_instr_matrix = np.dstack((instr_tracks['Drums'], instr_tracks['Piano'],
                                          instr_tracks['Guitar'], instr_tracks['Bass'],
                                          instr_tracks['Strings']))
-        whole_paragraphs = length // (time_step * bar_length)
+        whole_paragraphs = length // (time_step * bar_length) + 1
         try:
             for track_num in range(5):
                 instr_track = merged_instr_matrix[:, :, track_num]
@@ -369,7 +369,83 @@ def get_music_with_no_empty_tracks():
     midi_collection = get_midi_collection()
     print(midi_collection.count({'Genre': 'rock', 'NotEmptyTracksNum': {'$gte': 4}}), midi_collection.count())
 
+def build_single_tensor_from_sparse(path):
+    midi_collection = get_midi_collection()
+    nonzeros = np.load(path)['arr_0']
+    midi = midi_collection.find_one({'md5': path[:-4]})
+    result = np.zeros((midi['PiecesNum'] + 1, 4, 120, 84, 5))
+    result[[data for data in nonzeros]] = True
+    return result
+
+def get_original_tempo(md5):
+    midi = get_midi_collection().find_one({'md5': md5})
+    print(midi['Info']['tempo'][0])
+    return midi['Info']['tempo'][0]
+
+def build_midi_from_tensor(src_path, save_path, time_step=120, bar_length=4, note_valid_length=84):
+    data = build_single_tensor_from_sparse(src_path)
+    piece_num = data.shape[0]
+    instr_list = ['Drums', 'Piano', 'Guitar', 'Bass', 'Strings']
+    program_list = [0, 0, 24, 32, 48]
+    pm = pretty_midi.PrettyMIDI()
+    for i in range(5):
+        instr = instr_list[i]
+        is_drum = (instr == 'Drums')
+        instr_track = pretty_midi.Instrument(program_list[i], is_drum=is_drum, name=instr)
+        track_data = data[:, :, :, :, i]
+
+        for piece in range(piece_num):
+            for bar in range(bar_length):
+                init_time = piece * (bar_length * time_step) + bar * time_step
+                print(init_time)
+                for note in range(note_valid_length):
+
+                    during_note = False
+                    note_begin = init_time
+
+                    for time in range(time_step):
+                        has_note = track_data[piece, bar, time, note]
+                        if has_note:
+                            if not during_note:
+                                during_note = True
+                                note_begin = time + init_time
+                            else:
+                                if time != time_step-1:
+                                    continue
+                                else:
+                                    note_end = time + init_time
+                                    print(note_begin / 60, note_end / 60)
+                                    instr_track.notes.append(pretty_midi.Note(64, note + 12,
+                                                                              note_begin / 48,
+                                                                              note_end / 48))
+                        else:
+                            if not during_note:
+                                continue
+                            else:
+                                note_end = time + init_time
+                                print(note_begin / 60, note_end / 60)
+                                instr_track.notes.append(pretty_midi.Note(64, note + 12,
+                                                                          note_begin / 48,
+                                                                          note_end / 48))
+                                during_note = False
+
+        pm.instruments.append(instr_track)
+
+    pm.write(save_path)
+
+def pretty_midi_test():
+    pm = pretty_midi.PrettyMIDI()
+    instr = pretty_midi.Instrument(0)
+    instr.notes.append(pretty_midi.Note(64, 64, 0, 2))
+    pm.instruments.append(instr)
+    pm.write('./pm_test.mid')
+
+def test_build_midi():
+    test_path = '4e074b1b1470a0f4b58a94272f1f06fa.npz'
+    data = build_single_tensor_from_sparse(test_path)
+    save_path = 'test.mid'
+    build_midi_from_tensor(test_path, save_path)
 
 
 if __name__ == '__main__':
-    print_all_genres_num()
+    test_build_midi()

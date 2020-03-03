@@ -2,96 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b77e5dfc-4c90-42b0-97d0-a4afd2ccd659" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/process/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/process/train.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/dataset.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/data/4e074b1b1470a0f4b58a94272f1f06fa.mid" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/data/4e074b1b1470a0f4b58a94272f1f06fa.npz" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/data/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/data/e56b7b3e51ee03bab6fedbebcc90ed00.mid" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/data/e56b7b3e51ee03bab6fedbebcc90ed00.npz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/CycleGAN.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/data/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/data/aligned_dataset.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/data/base_dataset.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/data/colorization_dataset.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/data/image_folder.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/data/single_dataset.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/data/template_dataset.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/data/unaligned_dataset.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/datasets/bibtex/cityscapes.tex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/datasets/bibtex/facades.tex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/datasets/bibtex/handbags.tex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/datasets/bibtex/shoes.tex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/datasets/bibtex/transattr.tex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/datasets/combine_A_and_B.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/datasets/download_cyclegan_dataset.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/datasets/download_pix2pix_dataset.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/datasets/make_dataset_aligned.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/datasets/prepare_cityscapes_dataset.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/docs/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/docs/README_es.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/docs/datasets.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/docs/docker.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/docs/overview.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/docs/qa.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/docs/tips.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/environment.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/imgs/edges2cats.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/imgs/horse2zebra.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/models/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/models/base_model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/models/colorization_model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/models/cycle_gan_model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/models/networks.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/models/pix2pix_model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/models/template_model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/models/test_model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/options/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/options/base_options.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/options/midinet.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/options/test_options.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/options/train_options.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/pix2pix.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/conda_deps.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/download_cyclegan_model.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/download_pix2pix_model.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/edges/PostprocessHED.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/edges/batch_hed.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/eval_cityscapes/caffemodel/deploy.prototxt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/eval_cityscapes/cityscapes.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/eval_cityscapes/download_fcn8s.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/eval_cityscapes/evaluate.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/eval_cityscapes/util.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/install_deps.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/test_before_push.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/test_colorization.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/test_cyclegan.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/test_pix2pix.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/test_single.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/train_colorization.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/train_cyclegan.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/scripts/train_pix2pix.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/train.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/util/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/util/get_data.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/util/html.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/util/image_pool.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/util/util.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/util/visualizer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_process/create_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/create_database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_process/save_test.npy" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_process/save_test.npz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_process/test.mid" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/midinet/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/midinet/demo.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/midinet/get_data.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/midinet/get_train_and_test_data.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/midinet/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/midinet/model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/midinet/ops.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/midinet/result/generation_300.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/midinet/result/generation_600.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/And We Die Young - Alice In Chains.mid" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/create_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/data/create_database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/data/dataset.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -100,6 +18,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/MusicCritique$pytest_in_create_database_py.coverage" NAME="pytest in create_database.py Coverage Results" MODIFIED="1583215053457" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
     <SUITE FILE_PATH="coverage/MusicCritique$Interface.coverage" NAME="Interface Coverage Results" MODIFIED="1582007162587" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interface/src" />
     <SUITE FILE_PATH="coverage/MusicCritique$keys.coverage" NAME="keys Coverage Results" MODIFIED="1569661967857" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
     <SUITE FILE_PATH="coverage/MusicCritique$torch.coverage" NAME="torch Coverage Results" MODIFIED="1571217768074" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/network" />
@@ -113,7 +32,7 @@
     <SUITE FILE_PATH="coverage/MusicCritique$data.coverage" NAME="data Coverage Results" MODIFIED="1581409279484" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/musegan" />
     <SUITE FILE_PATH="coverage/MusicCritique$midi_to_npy.coverage" NAME="midi_to_npy Coverage Results" MODIFIED="1581690808906" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
     <SUITE FILE_PATH="coverage/MusicCritique$presents.coverage" NAME="presents Coverage Results" MODIFIED="1569567881122" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
-    <SUITE FILE_PATH="coverage/MusicCritique$create_database.coverage" NAME="create_database Coverage Results" MODIFIED="1583200512705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
+    <SUITE FILE_PATH="coverage/MusicCritique$create_database.coverage" NAME="create_database Coverage Results" MODIFIED="1583230107102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
     <SUITE FILE_PATH="coverage/MusicCritique$organize.coverage" NAME="organize Coverage Results" MODIFIED="1581412028717" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
     <SUITE FILE_PATH="coverage/MusicCritique$mother_ocean.coverage" NAME="mother_ocean Coverage Results" MODIFIED="1570950927307" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/write" />
     <SUITE FILE_PATH="coverage/MusicCritique$midi_convertion__1_.coverage" NAME="midi_convertion (1) Coverage Results" MODIFIED="1581223504461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
@@ -157,13 +76,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="64">
-                <caret line="4" column="146" selection-start-line="4" selection-start-column="146" selection-end-line="4" selection-end-column="146" />
-              </first_editor>
-              <second_editor />
+        <entry file="file://$PROJECT_DIR$/util/data/create_database.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="213">
+              <caret line="428" column="87" selection-start-line="428" selection-start-column="87" selection-end-line="428" selection-end-column="87" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -171,8 +90,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/cycle_gan_model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="688">
-              <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
+            <state relative-caret-position="880">
+              <caret line="55" selection-start-line="55" selection-end-line="55" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -190,6 +109,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Python Unit Test" />
         <option value="Python Script" />
       </list>
     </option>
@@ -226,10 +146,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/util/cookies.txt" />
-        <option value="$PROJECT_DIR$/guitar_tab/src/Interface.py" />
-        <option value="$PROJECT_DIR$/interface/src/PianoRoll.py" />
-        <option value="$PROJECT_DIR$/interface/src/Interface.py" />
         <option value="$PROJECT_DIR$/midi_extended/UtilityBox.py" />
         <option value="$PROJECT_DIR$/interface/src/GuitarTab.py" />
         <option value="$PROJECT_DIR$/models/midi_write.py" />
@@ -277,6 +193,10 @@
         <option value="$PROJECT_DIR$/process/train.py" />
         <option value="$PROJECT_DIR$/pytorch_tutorial/load_and_normalize.py" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/util/text/data_preprossess.py" />
+        <option value="$PROJECT_DIR$/util/create_database.py" />
+        <option value="$PROJECT_DIR$/util/data_preprocess.py" />
+        <option value="$PROJECT_DIR$/util/data/create_database.py" />
       </list>
     </option>
   </component>
@@ -336,6 +256,12 @@
               <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
               <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -353,19 +279,19 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\PycharmProjects\MusicCritique\util" />
-      <recent name="D:\PycharmProjects\MusicCritique\data_process" />
-      <recent name="D:\PycharmProjects\MusicCritique\scratch" />
-      <recent name="D:\PycharmProjects\MusicCritique\musegan" />
-      <recent name="D:\PycharmProjects\MusicCritique\interface\src" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\PycharmProjects\MusicCritique\util\data" />
       <recent name="D:\PycharmProjects\MusicCritique\data_process" />
       <recent name="D:\PycharmProjects\MusicCritique\misc\GuitarPro\data" />
       <recent name="D:\PycharmProjects\MusicCritique" />
       <recent name="D:\PycharmProjects\MusicCritique\music_transfer" />
-      <recent name="D:\PycharmProjects\MusicCritique\cyclegan" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\PycharmProjects\MusicCritique\util\data" />
+      <recent name="D:\PycharmProjects\MusicCritique\util" />
+      <recent name="D:\PycharmProjects\MusicCritique\data_process" />
+      <recent name="D:\PycharmProjects\MusicCritique\scratch" />
+      <recent name="D:\PycharmProjects\MusicCritique\musegan" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -380,8 +306,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.dataset">
-    <configuration name="Interface" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.create_database">
+    <configuration name="create_database" type="PythonConfigurationType" factoryName="Python">
       <module name="MusicCritique" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -389,34 +315,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/interface/src" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/util/data" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/interface/src/Interface.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="create_database" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="MusicCritique" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/data_process" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="D:\PycharmProjects\MusicCritique\util\create_database.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/util/data/create_database.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -438,7 +342,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/util/dataset.py" />
+      <option name="SCRIPT_NAME" value="D:\PycharmProjects\MusicCritique\util\data\dataset.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -491,20 +395,35 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="pytest in create_database.py" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="MusicCritique" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/util/data" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/util/data/create_database.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
     <list>
-      <item itemvalue="Python.unify_tempo" />
-      <item itemvalue="Python.Interface" />
-      <item itemvalue="Python.transpose_tone" />
       <item itemvalue="Python.create_database" />
       <item itemvalue="Python.dataset" />
+      <item itemvalue="Python.unify_tempo" />
+      <item itemvalue="Python.transpose_tone" />
+      <item itemvalue="Python tests.pytest in create_database.py" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.pytest in create_database.py" />
         <item itemvalue="Python.dataset" />
-        <item itemvalue="Python.create_database" />
         <item itemvalue="Python.transpose_tone" />
         <item itemvalue="Python.unify_tempo" />
-        <item itemvalue="Python.Interface" />
       </list>
     </recent_temporary>
   </component>
@@ -597,7 +516,8 @@
       <workItem from="1583062823546" duration="7274000" />
       <workItem from="1583080449272" duration="1272000" />
       <workItem from="1583111125184" duration="3386000" />
-      <workItem from="1583198721106" duration="8873000" />
+      <workItem from="1583198721106" duration="17980000" />
+      <workItem from="1583227992050" duration="1678000" />
     </task>
     <task id="LOCAL-00001" summary="pretty">
       <created>1578794444076</created>
@@ -630,8 +550,16 @@
     <option name="localTasksCounter" value="5" />
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="pytest_in_create_database_py - 2020.03.03 at 13h 57m 12s.xml">
+      <configuration name="pytest in create_database.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="pytest_in_create_database_py - 2020.03.03 at 13h 57m 35s.xml">
+      <configuration name="pytest in create_database.py" configurationId="tests" />
+    </history-entry>
+  </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="516724000" />
+    <option name="totallyTimeSpent" value="527509000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -646,11 +574,11 @@
     <frame x="-8" y="22" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.7801147" visible="true" weight="0.17590618" />
-      <window_info id="Structure" order="1" sideWeight="0.21988527" side_tool="true" visible="true" weight="0.17590618" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7793904" visible="true" weight="0.18070363" />
+      <window_info id="Structure" order="1" sideWeight="0.22060958" side_tool="true" visible="true" weight="0.18070363" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.036480688" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.21137339" />
       <window_info anchor="bottom" id="Debug" order="2" weight="0.39806867" />
       <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
@@ -661,9 +589,9 @@
       <window_info anchor="bottom" id="CSS-X-Fire" order="9" weight="0.32956383" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.49919742" side_tool="true" weight="0.3289689" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.9581545" />
-      <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.5008026" visible="true" weight="0.4388412" />
+      <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.5008026" weight="0.4388412" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" weight="0.32936078" />
-      <window_info anchor="bottom" auto_hide="true" x="-23" y="314" width="1846" height="932" id="Run" order="14" weight="0.065450646" />
+      <window_info active="true" anchor="bottom" auto_hide="true" x="-23" y="314" width="1846" height="932" id="Run" order="14" visible="true" weight="0.2607296" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -711,28 +639,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="implement cyclegan" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cyclegan/options/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cyclegan/options/base_options.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-285">
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cyclegan/models/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="589">
-          <caret line="31" column="31" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
-          <folding>
-            <element signature="e#1510#1526#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/cyclegan/models/__init__.py" />
     <entry file="file://$PROJECT_DIR$/data_process.py" />
     <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/scipy/sparse/csc.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -741,16 +648,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/midinet/get_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9226">
-          <caret line="25" column="39" lean-forward="true" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/midinet/get_data.py" />
     <entry file="file://$PROJECT_DIR$/musegan/data.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="437">
@@ -784,15 +682,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/midinet/get_train_and_test_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/midinet/get_train_and_test_data.py" />
     <entry file="file://$PROJECT_DIR$/../FreeMidiLibrary/src/util.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="416">
@@ -931,24 +821,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cyclegan/datasets/combine_A_and_B.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cyclegan/datasets/make_dataset_aligned.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-222">
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/cyclegan/datasets/combine_A_and_B.py" />
+    <entry file="file://$PROJECT_DIR$/cyclegan/datasets/make_dataset_aligned.py" />
     <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/pymongo/collection.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="538">
@@ -963,26 +837,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/util/create_database.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="174" selection-start-line="174" selection-end-line="174" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/models/models.py" />
     <entry file="file://$PROJECT_DIR$/musegan/model.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-384">
@@ -992,7 +847,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/util/dataset.py">
+    <entry file="file://$PROJECT_DIR$/util/data/dataset.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
@@ -1002,67 +857,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cyclegan/data/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="64" column="8" selection-start-line="64" selection-start-column="8" selection-end-line="64" selection-end-column="8" />
-          <folding>
-            <element signature="e#793#809#0" expanded="true" />
-          </folding>
+    <entry file="file://$PROJECT_DIR$/cyclegan/data/__init__.py" />
+    <entry file="file://$PROJECT_DIR$/cyclegan/models/pix2pix_model.py" />
+    <entry file="file://$PROJECT_DIR$/cyclegan/models/template_model.py" />
+    <entry file="file://$PROJECT_DIR$/cyclegan/train.py" />
+    <entry file="file://$PROJECT_DIR$/cyclegan/models/base_model.py" />
+    <entry file="file://$PROJECT_DIR$/cyclegan/models/networks.py" />
+    <entry file="file://$PROJECT_DIR$/pytorch_tutorial/load_and_normalize.py" />
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="256">
+            <caret line="16" column="8" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="8" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cyclegan/models/pix2pix_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cyclegan/models/template_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-192" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cyclegan/train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="33" column="12" lean-forward="true" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="12" />
-          <folding>
-            <element signature="e#1259#1270#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cyclegan/models/base_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="84" column="47" selection-start-line="84" selection-start-column="47" selection-end-line="84" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cyclegan/models/networks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="37" column="4" selection-start-line="37" selection-start-column="4" selection-end-line="37" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/util/text/data_preprossess.py" />
+    <entry file="file://$PROJECT_DIR$/util/data_preprocess.py" />
     <entry file="file://$PROJECT_DIR$/process/train.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/pytorch_tutorial/load_and_normalize.py">
+    <entry file="file://$PROJECT_DIR$/models/cycle_gan_model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        <state relative-caret-position="880">
+          <caret line="55" selection-start-line="55" selection-end-line="55" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>
@@ -1072,23 +892,13 @@
     <entry file="file://$PROJECT_DIR$/models/attempt.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/cycle_gan_model.py">
+    <entry file="file://$PROJECT_DIR$/util/data/create_database.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="688">
-          <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
+        <state relative-caret-position="213">
+          <caret line="428" column="87" selection-start-line="428" selection-start-column="87" selection-end-line="428" selection-end-column="87" />
           <folding>
-            <element signature="e#0#12#0" expanded="true" />
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="64">
-            <caret line="4" column="146" selection-start-line="4" selection-start-column="146" selection-end-line="4" selection-end-column="146" />
-          </first_editor>
-          <second_editor />
         </state>
       </provider>
     </entry>

@@ -1,5 +1,5 @@
 import torch.utils.data as data
-from util.create_database import generate_data_from_sparse_data, get_genre_pieces
+from util.data.create_database import generate_data_from_sparse_data, get_genre_pieces
 
 class SteelyDataset(data.Dataset):
     def __init__(self, data_path, genre, parts_num=10):
