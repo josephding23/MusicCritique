@@ -5,6 +5,7 @@ import pypianoroll
 import traceback
 import numpy as np
 import matplotlib.pyplot as plt
+import math
 import scipy.sparse as ss
 
 def get_midi_collection():
@@ -15,11 +16,10 @@ def get_genre_collection():
     client = MongoClient(connect=False)
     return client.free_midi.genres
 
-def get_whole_genre_numpy(time_step=120, bar_length=4, note_valid_length=84, genre='rock'):
+def get_whole_genre_numpy(time_step=120, bar_length=4, valid_range = (24, 108), genre='rock'):
 
     root_dir = 'E:/merged_midi/'
     npy_file_root_Dir = 'E:/midi_matrix/' + genre + '/'
-    valid_range = ((108 - note_valid_length) // 2, 108 - (108 - note_valid_length) // 2)
 
     last_segment_number = 0
 
@@ -42,7 +42,7 @@ def get_whole_genre_numpy(time_step=120, bar_length=4, note_valid_length=84, gen
             instr_tracks[track.name] = valid_matrix
         for name, content in instr_tracks.items():
             if content is None:
-                instr_tracks[name] = np.zeros((length, note_valid_length))
+                instr_tracks[name] = np.zeros((length, valid_range[1]-valid_range[0]))
 
 
         merged_instr_matrix = np.dstack((instr_tracks['Drums'], instr_tracks['Piano'],
@@ -53,7 +53,7 @@ def get_whole_genre_numpy(time_step=120, bar_length=4, note_valid_length=84, gen
             for track_num in range(5):
                 instr_track = merged_instr_matrix[:, :, track_num]
                 for current_time in range(length):
-                    for note in range(note_valid_length):
+                    for note in range(valid_range[1]-valid_range[0]):
                         if instr_track[current_time][note] != 0:
                             paragraph_num = current_time // (time_step * bar_length)
                             bar_num = current_time % (time_step * bar_length) // time_step
@@ -67,7 +67,7 @@ def get_whole_genre_numpy(time_step=120, bar_length=4, note_valid_length=84, gen
             np.savez_compressed(save_path, non_zero_temp_matrix)
             # last_segment_number += whole_paragraphs
             print(last_segment_number)
-            midi_collection.update_one({'_id': midi['_id']}, {'$set': {'NpyGenerated': True, 'PiecesNum': whole_paragraphs}})
+            midi_collection.update_one({'_id': midi['_id']}, {'$set': {'NpyGenerated': True}})
             # prossed += 1
             print('Progress: {:.2%}\n'.format(midi_collection.count({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}, 'NpyGenerated': True}) / midi_collection.count({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}})))
         except:
@@ -87,12 +87,12 @@ def divide_into_groups(genre='rock', group_num=10):
         current_num += 1
 
 
-def merge_all_sparse_matrices(root_dir='E:/midi_matrix/', genre='rock', group_num=10, save_dir='d:/data/', time_step=120, bar_length=4, note_valid_length=84):
+def merge_all_sparse_matrices(root_dir='E:/midi_matrix/', genre='rock', group_num=10, save_dir='d:/data/', time_step=120, bar_length=4, valid_range = (24, 108)):
     midi_collection = get_midi_collection()
     divide_into_groups(genre, group_num)
 
     whole_length = 132700
-    shape = np.array([whole_length, bar_length, time_step, note_valid_length, 5])
+    shape = np.array([whole_length, bar_length, time_step, valid_range[1]-valid_range[0], 5])
 
     processed = 0
     last_piece_num = 0
@@ -169,9 +169,8 @@ def generate_data_from_sparse_data(root_dir='d:/data', genre='rock', parts_num=1
     return result
 
 
-def divide_track_test(time_step=120, bar_length=4, note_valid_length=84):
+def divide_track_test(time_step=120, bar_length=4, valid_range = (24, 108)):
     paths = ['./test.mid']
-    valid_range = ((108 - note_valid_length) // 2, 108 - (108 - note_valid_length) // 2)
     for path in paths:
         mult = pypianoroll.parse(path)
         instr_tracks = {
@@ -188,7 +187,7 @@ def divide_track_test(time_step=120, bar_length=4, note_valid_length=84):
             instr_tracks[track.name] = valid_matrix
         for name, content in instr_tracks.items():
             if content is None:
-                instr_tracks[name] = np.zeros((length, note_valid_length))
+                instr_tracks[name] = np.zeros((length, valid_range[1]-valid_range[0]))
         merged_instr_matrix = np.dstack((instr_tracks['Drums'], instr_tracks['Piano'],
                                         instr_tracks['Guitar'], instr_tracks['Bass'],
                                         instr_tracks['Strings']))
@@ -197,7 +196,7 @@ def divide_track_test(time_step=120, bar_length=4, note_valid_length=84):
         for track_num in range(5):
             instr_track = merged_instr_matrix[:, :, track_num]
             for current_time in range(length):
-                for note in range(note_valid_length):
+                for note in range(valid_range[1]-valid_range[0]):
                     if instr_track[current_time][note] != 0:
                         paragraph_num = current_time // (time_step * bar_length)
                         bar_num = current_time % (time_step * bar_length) // time_step
@@ -206,7 +205,7 @@ def divide_track_test(time_step=120, bar_length=4, note_valid_length=84):
                         nonzeros.append([paragraph_num, bar_num, time_node, note, track_num])
                         # print(paragraph_num, bar_num, time_node, note, track_num)
 
-        reconstruct = np.zeros([whole_paragraphs, bar_length, time_step, note_valid_length, 5], np.bool_)
+        reconstruct = np.zeros([whole_paragraphs, bar_length, time_step, valid_range[1]-valid_range[0], 5], np.bool_)
         print(reconstruct.shape)
         nonzeros_matrix = np.array(nonzeros).transpose()
         # print(nonzeros_matrix.transpose().shape)
@@ -248,7 +247,8 @@ def divide_track_test(time_step=120, bar_length=4, note_valid_length=84):
 
 def test_notes_range_in_single_file():
     valid_range_length = 84
-    valid_range = ((108 - 84) / 2, 108 - (108 - 84) / 2)
+    # valid_range = ((108 - 84) / 2, 108 - (108 - 84) / 2)
+    valid_range = (24, 108)
     print(valid_range)
     midi = pretty_midi.PrettyMIDI('./test.mid')
     for instr in midi.instruments:
@@ -261,7 +261,8 @@ def test_notes_range_in_all():
     midi_collection = get_midi_collection()
 
     valid_range_length = 84
-    valid_range = ((108 - 84) / 2, 108 - (108 - 84) / 2)
+    # valid_range = ((108 - 84) / 2, 108 - (108 - 84) / 2)
+    valid_range = (24, 108)
     root_dir = 'E:/merged_midi/'
     for midi in midi_collection.find():
         total_notes_num = 0
@@ -304,9 +305,8 @@ def find_data_with_no_empty_tracks():
             # midi_collection.delete_one({'_id': midi['_id']})
     print(total)
 
-def add_paragraph_num_info(time_step=120, bar_length=4, note_valid_length=84):
+def add_paragraph_num_info(time_step=120, bar_length=4, valid_range = (24, 108)):
     root_dir = 'E:/merged_midi/'
-    valid_range = ((108 - note_valid_length) // 2, 108 - (108 - note_valid_length) // 2)
 
     midi_collection = get_midi_collection()
     for midi in midi_collection.find({'PiecesNum': {'$exists': False}}, no_cursor_timeout = True):
@@ -326,10 +326,9 @@ def add_paragraph_num_info(time_step=120, bar_length=4, note_valid_length=84):
             instr_tracks[track.name] = valid_matrix
         for name, content in instr_tracks.items():
             if content is None:
-                instr_tracks[name] = np.zeros((length, note_valid_length))
+                instr_tracks[name] = np.zeros((length, valid_range[1]-valid_range[0]))
 
-        segment_num = length // time_step
-        piece_num = segment_num // bar_length
+        piece_num = math.ceil(length / (time_step * bar_length) + 1)
         print(piece_num)
 
         midi_collection.update_one({'_id': midi['_id']}, {'$set': {'PiecesNum': piece_num}})
@@ -382,7 +381,7 @@ def get_original_tempo(md5):
     print(midi['Info']['tempo'][0])
     return midi['Info']['tempo'][0]
 
-def build_midi_from_tensor(src_path, save_path, time_step=120, bar_length=4, note_valid_length=84):
+def build_midi_from_tensor(src_path, save_path, time_step=120, bar_length=4, valid_range = (24, 108)):
     data = build_single_tensor_from_sparse(src_path)
     piece_num = data.shape[0]
     instr_list = ['Drums', 'Piano', 'Guitar', 'Bass', 'Strings']
@@ -398,7 +397,7 @@ def build_midi_from_tensor(src_path, save_path, time_step=120, bar_length=4, not
             for bar in range(bar_length):
                 init_time = piece * (bar_length * time_step) + bar * time_step
                 print(init_time)
-                for note in range(note_valid_length):
+                for note in range(valid_range[1]-valid_range[0]):
 
                     during_note = False
                     note_begin = init_time
@@ -448,4 +447,5 @@ def test_build_midi():
 
 
 if __name__ == '__main__':
-    test_build_midi()
+    get_whole_genre_numpy()
+    merge_all_sparse_matrices()
