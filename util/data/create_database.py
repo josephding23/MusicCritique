@@ -447,5 +447,6 @@ def test_build_midi():
 
 
 if __name__ == '__main__':
+    get_midi_collection().update_many({}, {'$set': {'NpyGenerated': False}})
     get_whole_genre_numpy()
     merge_all_sparse_matrices()
