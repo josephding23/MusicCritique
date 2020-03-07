@@ -4,65 +4,13 @@ import itertools
 import numpy as np
 import torch
 import os
-from util.data.dataset import SteelyDataset
+from util.data.dataset import SteelyDataset, get_dataset
 import torch.nn as nn
 import torchvision as tv
 from torchsummary import summary
 from torchnet.meter import MovingAverageValueMeter
-from musegan.model import MuseDiscriminator, MuseGenerator, GANLoss
-
-class Config(object):
-    def __init__(self):
-        self.name = 'steely_gan'
-        self.dataset_name = 'free_midi_library'
-
-        self.data_root = 'd:/data'
-        self.genre = 'rock'
-        self.save_path = './checkpoints/' + self.name
-        self.model_path = self.save_path + '/models'
-        self.checkpoint_path = self.save_path + '/checkpoints'
-        self.test_path = self.save_path + '/test_results'
-
-        self.max_dataset_size = 10000
-        self.dataset_mode = 'unaligned'
-        self.direction = 'AtoB'
-
-        self.n_tracks = 10000
-        self.beat_resolution = 1
-
-        self.time_step = 120
-        self.bar_length = 4
-        self.valid_range = (24, 108)
-        self.valid_length = 84
-        self.instr_num = 5
-        self.data_shape = (self.bar_length, self.time_step, self.valid_length, self.instr_num)
-
-        self.gpu = True
-        '''
-        self.preprocess = 'resize_and_crop'
-        self.load_size = 320
-        self.crop_size = 220
-        self.no_flip = True
-        self.num_threads = 4
-        '''
-        self.beta1 = 0.5                     # Adam optimizer beta1
-
-        self.g_lr = 2e-4                     # generator learning rate
-        self.d_lr = 2e-4                     # discriminator learning rate
-
-        self.phase = 'train'
-        self.no_flip = True
-        self.num_threads = 4
-        self.batch_size = 1
-        self.max_epochs = 100
-
-        self.plot_every = 100  # iterations
-        self.save_every = 10  # epochs
-
-        os.makedirs(self.save_path, exist_ok=True)
-        os.makedirs(self.model_path, exist_ok=True)
-        os.makedirs(self.checkpoint_path, exist_ok=True)
-        os.makedirs(self.test_path, exist_ok=True)
+from networks.musegan import MuseDiscriminator, MuseGenerator, GANLoss
+from process.config import Config
 
 def train():
     torch.cuda.empty_cache()
@@ -133,6 +81,8 @@ def train():
             real_x = data['A'].to(device)
             real_y = data['B'].to(device)
 
+            gaussian_noise = np.random.normal(loc=0, scale=opt.sigma_d, size=opt.data_shape)
+
             ######################
             # X -> Y' -> X^ cycle
             ######################
@@ -141,6 +91,9 @@ def train():
 
             fake_y = netG_x(real_x)       # X -> Y'
             prediction = netD_x(fake_y)  #netD_x provide feedback to netG_x
+            '''
+            to_binary
+            '''
             loss_G_X = criterionGAN(prediction, True)
 
             # cycle_consistence
@@ -161,6 +114,7 @@ def train():
             optimizer_g.step()
 
             loss_X_meter.add(loss_X.item())
+
 
             ######################
             # Y -> X' -> Y^ cycle
@@ -191,6 +145,7 @@ def train():
 
             loss_Y_meter.add(loss_Y.item())
 
+
             ######################
             # netD_x
             ######################
@@ -212,6 +167,7 @@ def train():
 
             loss_D_x.backward()
             optimizer_d.step()
+
 
             ######################
             # netD_y
@@ -275,7 +231,7 @@ def test():
 
     device = torch.device('cuda') if opt.gpu else torch.device('cpu')
 
-    dataset = SteelyDataset(opt)
+    dataset = get_dataset(opt)
     dataset_size = len(dataset)
     print(f'loaded {dataset_size} images for test.')
 

@@ -16,15 +16,12 @@ def get_genre_collection():
     client = MongoClient(connect=False)
     return client.free_midi.genres
 
-def get_whole_genre_numpy(time_step=120, bar_length=4, valid_range = (24, 108), genre='rock'):
-
+def generate_multi_instr_numpy(time_step=120, bar_length=4, valid_range = (24, 108), genre='rock'):
     root_dir = 'E:/merged_midi/'
     npy_file_root_Dir = 'E:/midi_matrix/' + genre + '/'
 
-    last_segment_number = 0
-
     midi_collection = get_midi_collection()
-    for midi in midi_collection.find({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}, 'NpyGenerated': False}, no_cursor_timeout = True):
+    for midi in midi_collection.find({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}, 'MultiInstrNpyGenerated': False}, no_cursor_timeout = True):
         non_zeros = []
         path = root_dir + genre + '/' + midi['md5'] + '.mid'
         mult = pypianoroll.parse(path)
@@ -66,10 +63,10 @@ def get_whole_genre_numpy(time_step=120, bar_length=4, valid_range = (24, 108), 
             save_path = npy_file_root_Dir + midi['md5'] + '.npz'
             np.savez_compressed(save_path, non_zero_temp_matrix)
             # last_segment_number += whole_paragraphs
-            print(last_segment_number)
-            midi_collection.update_one({'_id': midi['_id']}, {'$set': {'NpyGenerated': True}})
+            # print(last_segment_number)
+            midi_collection.update_one({'_id': midi['_id']}, {'$set': {'MultiInstrNpyGenerated': True}})
             # prossed += 1
-            print('Progress: {:.2%}\n'.format(midi_collection.count({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}, 'NpyGenerated': True}) / midi_collection.count({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}})))
+            print('Progress: {:.2%}\n'.format(midi_collection.count({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}, 'MultiInstrNpyGenerated': True}) / midi_collection.count({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}})))
         except:
             pass
         # print(merged.shape)
@@ -445,8 +442,12 @@ def test_build_midi():
     save_path = 'test.mid'
     build_midi_from_tensor(test_path, save_path)
 
+def label_all_numpy_existed():
+    root_dir = 'e:/midi_matrix/rock'
+    for file in os.listdir(root_dir):
+        md5 = file[:-4]
+        get_midi_collection().update_one({'md5': md5, 'Genre': 'rock'}, {'$set': {'MultiInstrNpyGenerated': True}})
 
 if __name__ == '__main__':
-    get_midi_collection().update_many({}, {'$set': {'NpyGenerated': False}})
-    get_whole_genre_numpy()
-    merge_all_sparse_matrices()
+    # label_all_numpy_existed()
+    generate_multi_instr_numpy()

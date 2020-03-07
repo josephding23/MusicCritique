@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from torch.nn import init
 import functools
+import numpy as np
 from torch.optim import lr_scheduler
 import torch.nn.functional as F
 
@@ -244,3 +245,7 @@ class GANLoss(nn.Module):
             else:
                 loss = prediction.mean()
         return loss
+
+
+def test():
+    zeros = np.zeros((4, 120, 84, 5), dtype=np.bool_)
