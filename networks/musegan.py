@@ -246,6 +246,26 @@ class GANLoss(nn.Module):
                 loss = prediction.mean()
         return loss
 
+def test_generator():
+    x = torch.zeros([5, 4, 48, 84])
+    # x = torch.unsqueeze(torch.unsqueeze(torch.unsqueeze(x, 1), 1), 1)
+    shared = nn.Sequential(
+        nn.ConvTranspose3d(in_channels=5, out_channels=5, kernel_size=(4, 1, 1), stride=(4, 1, 1)),
+        # 4, 1, 1
+        nn.BatchNorm3d(512),
+        nn.ReLU(),
+        nn.ConvTranspose3d(in_channels=5, out_channels=5, kernel_size=(1, 4, 3), stride=(1, 4, 3)),
+        # 4, 4, 3
+        nn.BatchNorm3d(256),
+        nn.ReLU(),
+        nn.ConvTranspose3d(in_channels=5, out_channels=5, kernel_size=(1, 4, 3), stride=(1, 4, 2)),
+        # 4, 16, 7
+        nn.BatchNorm3d(128),
+        nn.ReLU()
+    )
+    x = shared(x)
+    print(x.shape)
 
-def test():
-    zeros = np.zeros((4, 120, 84, 5), dtype=np.bool_)
+
+if __name__ == '__main__':
+    test_generator()

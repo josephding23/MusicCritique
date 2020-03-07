@@ -166,114 +166,6 @@ def generate_data_from_sparse_data(root_dir='d:/data', genre='rock', parts_num=1
     return result
 
 
-def divide_track_test(time_step=120, bar_length=4, valid_range = (24, 108)):
-    paths = ['./test.mid']
-    for path in paths:
-        mult = pypianoroll.parse(path)
-        instr_tracks = {
-            'Drums': None,
-            'Piano': None,
-            'Guitar': None,
-            'Bass': None,
-            'Strings': None
-        }
-        length = 0
-        for track in mult.tracks:
-            length = track.pianoroll.shape[0]
-            valid_matrix = track.pianoroll[:, valid_range[0]:valid_range[1]]
-            instr_tracks[track.name] = valid_matrix
-        for name, content in instr_tracks.items():
-            if content is None:
-                instr_tracks[name] = np.zeros((length, valid_range[1]-valid_range[0]))
-        merged_instr_matrix = np.dstack((instr_tracks['Drums'], instr_tracks['Piano'],
-                                        instr_tracks['Guitar'], instr_tracks['Bass'],
-                                        instr_tracks['Strings']))
-        whole_paragraphs = length // (time_step * bar_length)
-        nonzeros = []
-        for track_num in range(5):
-            instr_track = merged_instr_matrix[:, :, track_num]
-            for current_time in range(length):
-                for note in range(valid_range[1]-valid_range[0]):
-                    if instr_track[current_time][note] != 0:
-                        paragraph_num = current_time // (time_step * bar_length)
-                        bar_num = current_time % (time_step * bar_length) // time_step
-                        time_node = current_time % time_step
-
-                        nonzeros.append([paragraph_num, bar_num, time_node, note, track_num])
-                        # print(paragraph_num, bar_num, time_node, note, track_num)
-
-        reconstruct = np.zeros([whole_paragraphs, bar_length, time_step, valid_range[1]-valid_range[0], 5], np.bool_)
-        print(reconstruct.shape)
-        nonzeros_matrix = np.array(nonzeros).transpose()
-        # print(nonzeros_matrix.transpose().shape)
-        reconstruct[[x for x in nonzeros_matrix]] = True
-        for i in reconstruct[2, 1, :, :, 2]:
-            print(i)
-        '''
-        divided_in_time_step_list = []
-        for index in range(segment_num):
-            time_step_slice = merged_instr_matrix[index*time_step:(index+1)*time_step, :, :]
-            divided_in_time_step_list.append(time_step_slice)
-        divided_in_time_step = np.array(divided_in_time_step_list)
-
-        divided_in_bar_list = []
-        for index in range(bar_num):
-            bar_slice = divided_in_time_step[index*bar_length:(index+1)*bar_length, :, :, :]
-            divided_in_bar_list.append(bar_slice)
-        divided_in_bar = np.array(divided_in_bar_list)
-        first_dim = divided_in_bar.shape[0]
-        print(divided_in_bar.shape)
-
-        nonzeros = []
-
-        final_shape = divided_in_bar.shape
-        for a in range(final_shape[0]):
-            for b in range(final_shape[1]):
-                for c in range(final_shape[2]):
-                    for d in range(final_shape[3]):
-                        for e in range(final_shape[4]):
-                            if divided_in_bar[a][b][c][d][e] != 0:
-                                nonzeros.append([a, b, c, d, e])
-
-        nonzeros = np.array(nonzeros)
-        np.save('./save_test.npy', nonzeros)
-        print(nonzeros.shape)
-        '''
-
-
-
-def test_notes_range_in_single_file():
-    valid_range_length = 84
-    # valid_range = ((108 - 84) / 2, 108 - (108 - 84) / 2)
-    valid_range = (24, 108)
-    print(valid_range)
-    midi = pretty_midi.PrettyMIDI('./test.mid')
-    for instr in midi.instruments:
-        if not instr.is_drum:
-            for note in instr.notes:
-                if note.pitch > valid_range[1] or note.pitch < valid_range[0]:
-                    print(note.pitch)
-
-def test_notes_range_in_all():
-    midi_collection = get_midi_collection()
-
-    valid_range_length = 84
-    # valid_range = ((108 - 84) / 2, 108 - (108 - 84) / 2)
-    valid_range = (24, 108)
-    root_dir = 'E:/merged_midi/'
-    for midi in midi_collection.find():
-        total_notes_num = 0
-        outta_range_num = 0
-        path = root_dir + midi['Genre'] + '/' + midi['md5'] + '.mid'
-        pm = pretty_midi.PrettyMIDI(path)
-        for instr in pm.instruments:
-            if not instr.is_drum:
-                for note in instr.notes:
-                    total_notes_num += 1
-                    if note.pitch > valid_range[1] or note.pitch < valid_range[0]:
-                        outta_range_num += 1
-        print(round(outta_range_num / total_notes_num, 5))
-
 def find_data_with_no_empty_tracks():
     root_dir = 'E:/merged_midi/'
     total = 0
@@ -330,6 +222,22 @@ def add_paragraph_num_info(time_step=120, bar_length=4, valid_range = (24, 108))
 
         midi_collection.update_one({'_id': midi['_id']}, {'$set': {'PiecesNum': piece_num}})
         print('Progress: {:.2%}\n'.format( midi_collection.count({'PiecesNum': {'$exists': True}}) / midi_collection.count()))
+
+
+def reset_paragraph_num_info():
+    midi_collection = get_midi_collection()
+    root_dir = 'E:/merged_midi/'
+    for midi in midi_collection.find({'PiecesNum': {'$exists': False}}, no_cursor_timeout = True):
+        path = root_dir + midi['Genre'] + '/' + midi['md5'] + '.mid'
+        pm = pretty_midi.PrettyMIDI(path)
+        length = pm.get_end_time()
+
+        piece_num = math.ceil(length / 8)
+        print(piece_num)
+
+        midi_collection.update_one({'_id': midi['_id']}, {'$set': {'PiecesNum': piece_num}})
+        print('Progress: {:.2%}\n'.format( midi_collection.count({'PiecesNum': {'$exists': True}}) / midi_collection.count()))
+
 
 def find_music_with_multiple_genres():
     root_dir = 'E:/merged_midi/'
@@ -429,6 +337,111 @@ def build_midi_from_tensor(src_path, save_path, time_step=120, bar_length=4, val
 
     pm.write(save_path)
 
+def generate_nonzeros_by_notes(genre='rock'):
+    root_dir = 'E:/merged_midi/'
+    npy_file_root_dir = 'E:/midi_matrix/one_instr/' + genre + '/'
+
+    midi_collection = get_midi_collection()
+    for midi in midi_collection.find({'Genre': genre, 'OneInstrNpyGenerated': False}, no_cursor_timeout = True):
+        non_zeros = []
+        path = root_dir + genre + '/' + midi['md5'] + '.mid'
+        save_path = npy_file_root_dir + midi['md5'] + '.npz'
+        pm = pretty_midi.PrettyMIDI(path)
+        segment_num = math.ceil(pm.get_end_time() / 8)
+        note_range = (24, 108)
+
+        # data = np.zeros((segment_num, 64, 84), np.bool_)
+        nonzeros = []
+
+        quarter_length = 60 / 120 / 4
+        for instr in pm.instruments:
+            print(instr.name)
+            if not instr.is_drum:
+                for note in instr.notes:
+                    start = int(note.start / quarter_length)
+                    end = int(note.end / quarter_length)
+                    pitch = note.pitch
+                    if pitch < note_range[0] or pitch >= note_range[1]:
+                        continue
+                    else:
+                        pitch -= 24
+                        for time_raw in range(start, end):
+                            segment = int(time_raw / 64)
+                            time = time_raw % 64
+                            nonzeros.append([segment, time, pitch])
+
+        nonzeros = np.array(nonzeros)
+        print(nonzeros.shape)
+        np.savez_compressed(save_path, nonzeros)
+
+def test_build_numpy_by_note_length():
+    path = './e56b7b3e51ee03bab6fedbebcc90ed00.mid'
+    pm = pretty_midi.PrettyMIDI(path)
+    segment_num = math.ceil(pm.get_end_time() / 8)
+    note_range = (24, 108)
+
+    npy_path = './data.npz'
+
+    data = np.zeros((segment_num, 64, 84), np.bool_)
+    nonzeros = []
+
+    quarter_length = (60 / 120) / 4
+    for instr in pm.instruments:
+        print(instr.name)
+        if not instr.is_drum:
+            for note in instr.notes:
+                start = int(note.start / quarter_length)
+                end = int(note.end / quarter_length)
+                pitch = note.pitch
+                if pitch < 24 or pitch >= 108:
+                    continue
+                else:
+                    pitch -= 24
+                    for time_raw in range(start, end):
+                        segment = int(time_raw / 64)
+                        time = time_raw % 64
+                        data[segment, time, pitch] = True
+                        nonzeros.append([segment, time, pitch])
+
+    nonzeros = np.array(nonzeros)
+    print(nonzeros.shape)
+    np.savez_compressed(npy_path, nonzeros)
+
+    '''
+    sample_data = data[1, :, :]
+    dataX = []
+    dataY = []
+    for time in range(64):
+        for pitch in range(84):
+            if sample_data[time][pitch]:
+                dataX.append(time)
+                dataY.append(pitch)
+    plt.scatter(x=dataX, y=dataY)
+    plt.show()
+    '''
+
+def generate_sparse_matrix_from_nonzeros():
+    npy_path = './data.npz'
+
+    segment_num = 29
+    data = np.zeros((segment_num, 64, 84), np.bool_)
+    with np.load(npy_path) as f:
+        nonzeros = f['arr_0']
+        for x in nonzeros:
+            print(x[2])
+            data[(x[0], x[1], x[2])] = True
+
+    sample_data = data[-1, :, :]
+    dataX = []
+    dataY = []
+    for time in range(64):
+        for pitch in range(84):
+            if sample_data[time][pitch]:
+                dataX.append(time)
+                dataY.append(pitch)
+    plt.scatter(x=dataX, y=dataY)
+    plt.show()
+
 def pretty_midi_test():
     pm = pretty_midi.PrettyMIDI()
     instr = pretty_midi.Instrument(0)
@@ -448,6 +461,6 @@ def label_all_numpy_existed():
         md5 = file[:-4]
         get_midi_collection().update_one({'md5': md5, 'Genre': 'rock'}, {'$set': {'MultiInstrNpyGenerated': True}})
 
+
 if __name__ == '__main__':
-    # label_all_numpy_existed()
-    generate_multi_instr_numpy()
+    generate_sparse_matrix_from_nonzeros()
