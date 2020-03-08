@@ -1,34 +1,45 @@
 import torch.utils.data as data
-from util.data.create_database import generate_data_from_sparse_data, get_genre_pieces
+from pymongo import MongoClient
+import numpy as np
+
+from util.data.create_database import generate_sparse_matrix_from_nonzeros, get_genre_collection
 
 
-def get_dataset(opt):
-    data_path = opt.data_path
-    genreA = opt.genreA
-    genreB = opt.genreB
+def get_dataset(genreA, genreB):
+    genre_collection = get_genre_collection()
+    data_path = 'D:/data'
+    numA = genre_collection.find_one({'Name': genreA})['PiecesNum']
+    numB = genre_collection.find_one({'Name': genreB})['PiecesNum']
+    print(numA, numB)
     # limit_num = get_smaller
 
 
 
 class SteelyDataset(data.Dataset):
-    def __init__(self, data_path, genre, limit_num):
-        self.data_path = data_path
-        self.genre = genre
-        self.parts_num = 10
-        self.limit_num = limit_num
+    def __init__(self, genreA, genreB):
+        genre_collection = get_genre_collection()
 
-        self.pieces_num = get_genre_pieces(self.genre)
+        self.data_path = 'D:/data/'
 
-        self.data = generate_data_from_sparse_data(self.data_path, self.genre, self.parts_num)
+        numA = genre_collection.find_one({'Name': genreA})['PiecesNum']
+        numB = genre_collection.find_one({'Name': genreB})['PiecesNum']
+        self.length = min(numA, numB)
+
+
+        dataA = np.expand_dims(generate_sparse_matrix_from_nonzeros(genreA)[:self.length], 1)
+        dataB = np.expand_dims(generate_sparse_matrix_from_nonzeros(genreB)[:self.length], 1)
+
+        self.data = np.concatenate((dataA, dataB), axis=1)
+        print(self.data.shape)
+
 
     def __getitem__(self, index):
-        return self.data[index, :, :, :, :]
+        return self.data[index, :, :, :]
 
     def __len__(self):
-        return self.pieces_num
+        return self.length
+
 
 if __name__ == '__main__':
-    pass
-    # dataset = SteelyDataset('d:/data', 'rock', parts_num=1)
-    # print(dataset[4].shape)
-    # print(len(dataset))
+    dataset = SteelyDataset('rock', 'jazz')
+    print(dataset[0].shape)

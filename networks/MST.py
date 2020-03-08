@@ -18,7 +18,7 @@ class Discriminator(nn.Module):
                                stride=2,
                                padding='same',
                                bias=False)
-        init.normal(conv1.weight, mean=0.0, std=0.02)
+        init.normal_(conv1.weight, mean=0.0, std=0.02)
         self.net1 = nn.Sequential(conv1, leaky)
 
         conv2 = nn.Conv2d(in_channels=64,
@@ -27,7 +27,7 @@ class Discriminator(nn.Module):
                                stride=2,
                                padding='same',
                                bias=False)
-        init.normal(conv2.weight, mean=0.0, std=0.02)
+        init.normal_(conv2.weight, mean=0.0, std=0.02)
         instance_norm = nn.InstanceNorm2d(256, eps=1e-5)
         self.net2 = nn.Sequential(conv2, instance_norm, leaky)
 
@@ -37,7 +37,7 @@ class Discriminator(nn.Module):
                                stride=1,
                                padding='same',
                                bias=False)
-        init.normal(conv3.weight, mean=0.0, std=0.02)
+        init.normal_(conv3.weight, mean=0.0, std=0.02)
         self.net3 = nn.Sequential(conv3, leaky)
 
     def forward(self, tensor_in):
@@ -67,7 +67,7 @@ class Generator(nn.Module):
                           stride=1,
                           padding=0,
                           bias=False)
-        init.normal(conv1.weight)
+        init.normal_(conv1.weight)
         instance_norm = nn.InstanceNorm2d(64, eps=1e-5)
         self.cnet1 = nn.Sequential(padding, conv1, instance_norm, relu)
 
@@ -77,7 +77,7 @@ class Generator(nn.Module):
                           stride=2,
                           padding=1,
                           bias=False)
-        init.normal(conv2.weight)
+        init.normal_(conv2.weight)
         instance_norm = nn.InstanceNorm2d(128, eps=1e-5)
         self.cnet2 = nn.Sequential(conv2, instance_norm, relu)
 
@@ -87,7 +87,7 @@ class Generator(nn.Module):
                           stride=2,
                           padding=1,
                           bias=False)
-        init.normal(conv3.weight)
+        init.normal_(conv3.weight)
         instance_norm = nn.InstanceNorm2d(256, eps=1e-5)
         self.cnet3 = nn.Sequential(conv3, instance_norm, relu)
 
@@ -107,7 +107,7 @@ class Generator(nn.Module):
                                     padding=1,
                                     bias=False)
 
-        init.normal(tconv1.weight)
+        init.normal_(tconv1.weight)
         self.tcnet1 = nn.Sequential(tconv1, extra_padding, instance_norm, relu)
 
         tconv2 = nn.ConvTranspose2d(in_channels=128,
@@ -116,7 +116,7 @@ class Generator(nn.Module):
                                     stride=2,
                                     padding=1,
                                     bias=False)
-        init.normal(tconv2.weight)
+        init.normal_(tconv2.weight)
         self.tcnet2 = nn.Sequential(tconv2, extra_padding, instance_norm, relu)
 
         conv4 = nn.Conv2d(in_channels=64,
@@ -124,7 +124,7 @@ class Generator(nn.Module):
                           kernel_size=7,
                           stride=1,
                           padding=0)
-        init.normal(conv4.weight)
+        init.normal_(conv4.weight)
         sigmoid = nn.Sigmoid()
 
         self.cnet4 = nn.Sequential(padding, conv4, sigmoid)

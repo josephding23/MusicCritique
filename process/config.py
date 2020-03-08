@@ -30,10 +30,7 @@ class Config(object):
         self.note_valid_length = 84
         self.instr_num = 5
 
-        if not self.track_merged:
-            self.data_shape = (self.bar_length, self.time_step, self.note_valid_length, self.instr_num)
-        else:
-            self.data_shape = (self.bar_length, self.time_step, self.note_valid_length)
+        self.data_shape = (1, 64, 84)
 
         self.gpu = True
         '''

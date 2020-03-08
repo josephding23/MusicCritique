@@ -10,6 +10,7 @@ import torchvision as tv
 from torchsummary import summary
 from torchnet.meter import MovingAverageValueMeter
 from networks.musegan import MuseDiscriminator, MuseGenerator, GANLoss
+from networks.MST import Discriminator, Generator
 from process.config import Config
 
 def train():
@@ -27,11 +28,11 @@ def train():
 
     model_names = ['netG_x', 'netG_y', 'netD_x', 'netD_y']
 
-    netG_x = MuseGenerator(opt)
-    netG_y = MuseGenerator(opt)
+    netG_x = Generator()
+    netG_y = Generator()
 
-    netD_x = MuseDiscriminator(opt)
-    netD_y = MuseDiscriminator(opt)
+    netD_x = Discriminator()
+    netD_y = Discriminator()
 
     if opt.gpu:
         netG_x.to(device)
@@ -42,13 +43,16 @@ def train():
         summary(netD_x, input_size=opt.data_shape)
         netD_y.to(device)
 
-    optimizer_g = torch.optim.Adam(itertools.chain(netG_x.parameters(), netG_y.parameters()),
-                               lr=opt.g_lr,
-                               betas=(opt.beta1, 0.999))
-    optimizer_d = torch.optim.Adam(itertools.chain(netD_x.parameters(), netD_y.parameters()),
-                               lr=opt.d_lr,
-                               betas=(opt.beta1, 0.999))
-    optimizers = [optimizer_g, optimizer_d]
+    '''
+    optimizer_GA2B = torch.optim.Adam(params=netG_x.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
+    optimizer_GB2A = torch.optim.Adam(params=netG_y.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
+    optimizer_DA = torch.optim.Adam(params=netG_y.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
+    optimizer_DB = torch.optim.Adam(params=netG_y.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
+    '''
+    optimizer_g = torch.optim.Adam(params=netG_x.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
+    optimizer_d = torch.optim.Adam(params=netD_x.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
+
+    # optimizers = [optimizer_g, optimizer_d]
 
     lambda_X = 10.0  # weight for cycle loss (A -> B -> A^)
     lambda_Y = 10.0  # weight for cycle loss (B -> A -> B^)
@@ -80,6 +84,9 @@ def train():
 
             real_x = data['A'].to(device)
             real_y = data['B'].to(device)
+
+            np.random.shuffle(real_x)
+            np.random.shuffle(real_y)
 
             gaussian_noise = np.random.normal(loc=0, scale=opt.sigma_d, size=opt.data_shape)
 

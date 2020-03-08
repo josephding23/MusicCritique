@@ -72,56 +72,75 @@ def generate_multi_instr_numpy(time_step=120, bar_length=4, valid_range = (24, 1
         # print(merged.shape)
 
 
-def divide_into_groups(genre='rock', group_num=10):
+def divide_into_groups(group_num=10):
     midi_collection = get_midi_collection()
-    total_amount = midi_collection.count({'Genre': 'rock', 'NotEmptyTracksNum': {'$gte': 4}})
-    num_per_group = total_amount // group_num + 1
-    current_num = 0
-    for midi in midi_collection.find({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}},
-                                     no_cursor_timeout=True):
-        group = current_num // num_per_group
-        midi_collection.update_one({'_id': midi['_id']}, {'$set': {'DataGroup': group}})
-        current_num += 1
+    genre_collection = get_genre_collection()
+    for genre in genre_collection.find():
+        total_amount = midi_collection.count({'Genre': genre['Name']})
+        num_per_group = math.ceil(total_amount // group_num)
+        current_num = 0
+        for midi in midi_collection.find({'Genre': genre['Name']},
+                                         no_cursor_timeout=True):
+            group = current_num // num_per_group
+            midi_collection.update_one({'_id': midi['_id']}, {'$set': {'DataGroup': group}})
+            current_num += 1
 
-
-def merge_all_sparse_matrices(root_dir='E:/midi_matrix/', genre='rock', group_num=10, save_dir='d:/data/', time_step=120, bar_length=4, valid_range = (24, 108)):
+def test_multiple_genres_midi():
     midi_collection = get_midi_collection()
-    divide_into_groups(genre, group_num)
+    genre_collection = get_genre_collection()
+    one_genre_num = midi_collection.count({'TotalGenres': ['pop', 'rock']})
+    print(one_genre_num / midi_collection.count())
 
-    whole_length = 132700
-    shape = np.array([whole_length, bar_length, time_step, valid_range[1]-valid_range[0], 5])
 
-    processed = 0
-    last_piece_num = 0
-    whole_num = midi_collection.count({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}})
 
-    for group in range(group_num):
+def merge_all_sparse_matrices():
+    midi_collection = get_midi_collection()
+    genre_collection = get_genre_collection()
+    root_dir = 'E:/midi_matrix/one_instr/'
+
+    time_step = 64
+    valid_range = (24, 108)
+
+
+    for genre in genre_collection.find({'DatasetGenerated': False}):
+        save_dir = 'd:/data/' + genre['Name']
+        if not os.path.exists(save_dir):
+            os.mkdir(save_dir)
+        print(genre['Name'])
+        whole_length = genre['PiecesNum']
+        shape = np.array([whole_length, time_step, valid_range[1]-valid_range[0]])
+
+        processed = 0
+        last_piece_num = 0
+        whole_num = midi_collection.count({'Genre': genre['Name']})
+
         non_zeros = []
-        for midi in midi_collection.find({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}, 'DataGroup': group}, no_cursor_timeout=True):
+        for midi in midi_collection.find({'Genre': genre['Name']}, no_cursor_timeout=True):
 
-            path = root_dir + genre + '/' + midi['md5'] + '.npz'
+            path = root_dir + genre['Name'] + '/' + midi['md5'] + '.npz'
             pieces_num = midi['PiecesNum']
 
             f = np.load(path)
-            matrix = f['arr_0'].copy().transpose()
+            matrix = f['arr_0'].copy()
             print(pieces_num, matrix.shape[0])
             for data in matrix:
                 try:
                     data = data.tolist()
                     piece_order = last_piece_num + data[0]
-                    non_zeros.append([piece_order, data[1], data[2], data[3], data[4]])
+                    non_zeros.append([piece_order, data[1], data[2]])
                 except:
                     print(path)
-            # print(matrix['arr_0'].shape)
 
-            # f.close()
             last_piece_num += pieces_num
             processed += 1
+
             print('Progress: {:.2%}\n'.format(processed / whole_num))
+
         non_zeros = np.array(non_zeros)
-        print(last_piece_num)
-        np.savez_compressed(save_dir + genre + '/data_sparse_part' + str(group) + '.npz', nonzeros=non_zeros)
-    np.save(save_dir + genre + '/shape.npy', shape)
+        print(non_zeros.shape)
+        np.savez_compressed(save_dir + '/data_sparse' + '.npz', nonzeros=non_zeros, shape=shape)
+
+        genre_collection.update_one({'_id': genre['_id']}, {'$set': {'DatasetGenerated': True}})
 
 
 
@@ -130,16 +149,14 @@ def print_all_genres_num():
     midi_collection = get_midi_collection()
 
     for genre in genres_collection.find():
-        pieces_num = {'IgnoreLessThan3': 0, 'IgnoreLessThan4': 0}
-        for midi in midi_collection.find({'Genre': genre['Name'], 'NotEmptyTracksNum': {'$gte': 4}}):
-            pieces_num['IgnoreLessThan4'] += midi['PiecesNum']
-        for midi in midi_collection.find({'Genre': genre['Name'], 'NotEmptyTracksNum': {'$gte': 3}}):
-            pieces_num['IgnoreLessThan3'] += midi['PiecesNum']
+        whole_num = 0
+        for midi in midi_collection.find({'Genre': genre['Name']}):
+           whole_num += midi['PiecesNum']
         genres_collection.update_one(
             {'_id': genre['_id']},
-            {'$set': {'PiecesNum': pieces_num}}
+            {'$set': {'PiecesNum': whole_num}}
         )
-        print(genre['Name'], pieces_num)
+        print(genre['Name'], whole_num)
 
 def get_genre_pieces(genre):
     genres_collection = get_genre_collection()
@@ -161,8 +178,8 @@ def generate_data_from_sparse_data(root_dir='d:/data', genre='rock', parts_num=1
             sparse = npfile['nonzeros']
             for data in sparse:
                 # print(data)
-                sparse[data] = True
-
+                result[data] = True
+    print(result.shape)
     return result
 
 
@@ -337,42 +354,54 @@ def build_midi_from_tensor(src_path, save_path, time_step=120, bar_length=4, val
 
     pm.write(save_path)
 
-def generate_nonzeros_by_notes(genre='rock'):
+def generate_nonzeros_by_notes():
     root_dir = 'E:/merged_midi/'
-    npy_file_root_dir = 'E:/midi_matrix/one_instr/' + genre + '/'
 
     midi_collection = get_midi_collection()
-    for midi in midi_collection.find({'Genre': genre, 'OneInstrNpyGenerated': False}, no_cursor_timeout = True):
-        non_zeros = []
-        path = root_dir + genre + '/' + midi['md5'] + '.mid'
-        save_path = npy_file_root_dir + midi['md5'] + '.npz'
-        pm = pretty_midi.PrettyMIDI(path)
-        segment_num = math.ceil(pm.get_end_time() / 8)
-        note_range = (24, 108)
+    genre_collection = get_genre_collection()
+    for genre in genre_collection.find():
+        genre_name = genre['Name']
+        print(genre_name)
+        npy_file_root_dir = 'E:/midi_matrix/one_instr/' + genre_name + '/'
+        if not os.path.exists(npy_file_root_dir):
+            os.mkdir(npy_file_root_dir)
+        print('Progress: {:.2%}'.format(
+            midi_collection.count({'Genre': genre_name, 'OneInstrNpyGenerated': True}) / midi_collection.count({'Genre': genre_name})),
+            end='\n')
 
-        # data = np.zeros((segment_num, 64, 84), np.bool_)
-        nonzeros = []
+        for midi in midi_collection.find({'Genre': genre_name, 'OneInstrNpyGenerated': False}, no_cursor_timeout = True):
+            path = root_dir + genre_name + '/' + midi['md5'] + '.mid'
+            save_path = npy_file_root_dir + midi['md5'] + '.npz'
+            pm = pretty_midi.PrettyMIDI(path)
+            segment_num = math.ceil(pm.get_end_time() / 8)
+            note_range = (24, 108)
 
-        quarter_length = 60 / 120 / 4
-        for instr in pm.instruments:
-            print(instr.name)
-            if not instr.is_drum:
-                for note in instr.notes:
-                    start = int(note.start / quarter_length)
-                    end = int(note.end / quarter_length)
-                    pitch = note.pitch
-                    if pitch < note_range[0] or pitch >= note_range[1]:
-                        continue
-                    else:
-                        pitch -= 24
-                        for time_raw in range(start, end):
-                            segment = int(time_raw / 64)
-                            time = time_raw % 64
-                            nonzeros.append([segment, time, pitch])
+            # data = np.zeros((segment_num, 64, 84), np.bool_)
+            nonzeros = []
 
-        nonzeros = np.array(nonzeros)
-        print(nonzeros.shape)
-        np.savez_compressed(save_path, nonzeros)
+            quarter_length = 60 / 120 / 4
+            for instr in pm.instruments:
+                if not instr.is_drum:
+                    for note in instr.notes:
+                        start = int(note.start / quarter_length)
+                        end = int(note.end / quarter_length)
+                        pitch = note.pitch
+                        if pitch < note_range[0] or pitch >= note_range[1]:
+                            continue
+                        else:
+                            pitch -= 24
+                            for time_raw in range(start, end):
+                                segment = int(time_raw / 64)
+                                time = time_raw % 64
+                                nonzeros.append([segment, time, pitch])
+
+            nonzeros = np.array(nonzeros)
+            np.savez_compressed(save_path, nonzeros)
+            midi_collection.update_one({'_id': midi['_id']}, {'$set': {'OneInstrNpyGenerated': True}})
+            print('Progress: {:.2%}'.format(
+                midi_collection.count({'Genre': genre_name, 'OneInstrNpyGenerated': True}) / midi_collection.count()), end='\n')
+
+
 
 def test_build_numpy_by_note_length():
     path = './e56b7b3e51ee03bab6fedbebcc90ed00.mid'
@@ -420,18 +449,19 @@ def test_build_numpy_by_note_length():
     plt.show()
     '''
 
-def generate_sparse_matrix_from_nonzeros():
-    npy_path = './data.npz'
+def generate_sparse_matrix_from_nonzeros(genre):
+    npy_path = 'D:/data/' + genre + '/data_sparse.npz'
 
-    segment_num = 29
-    data = np.zeros((segment_num, 64, 84), np.bool_)
+
     with np.load(npy_path) as f:
-        nonzeros = f['arr_0']
+        data = np.zeros(f['shape'], np.bool_)
+        nonzeros = f['nonzeros']
         for x in nonzeros:
-            print(x[2])
             data[(x[0], x[1], x[2])] = True
+    # data = np.expand_dims(data, axis=1)
+    '''
 
-    sample_data = data[-1, :, :]
+    sample_data = data[1, :, :]
     dataX = []
     dataY = []
     for time in range(64):
@@ -441,6 +471,10 @@ def generate_sparse_matrix_from_nonzeros():
                 dataY.append(pitch)
     plt.scatter(x=dataX, y=dataY)
     plt.show()
+    '''
+    return data
+
+
 
 def pretty_midi_test():
     pm = pretty_midi.PrettyMIDI()
@@ -461,6 +495,10 @@ def label_all_numpy_existed():
         md5 = file[:-4]
         get_midi_collection().update_one({'md5': md5, 'Genre': 'rock'}, {'$set': {'MultiInstrNpyGenerated': True}})
 
+def test_sample_data():
+    path = './classic_piano_train_1.npy'
+    data = np.load(path)
+    print(data.shape)
 
 if __name__ == '__main__':
-    generate_sparse_matrix_from_nonzeros()
+    generate_sparse_matrix_from_nonzeros('rock')
