@@ -42,6 +42,8 @@ class Config(object):
         '''
         self.beta1 = 0.5                     # Adam optimizer beta1
 
+        self.lr = 0.0002
+
         self.g_lr = 2e-4                     # generator learning rate
         self.d_lr = 2e-4                     # discriminator learning rate
 
@@ -49,10 +51,13 @@ class Config(object):
         self.no_flip = True
         self.num_threads = 4
         self.batch_size = 1
-        self.max_epochs = 100
+        self.epoch = 100
+        self.epoch_step = 10
 
         self.plot_every = 100  # iterations
-        self.save_every = 10  # epochs
+        self.save_every = 5  # epochs
+
+        self.model = 'full' # three different models, base, partial, full
 
         os.makedirs(self.save_path, exist_ok=True)
         os.makedirs(self.model_path, exist_ok=True)

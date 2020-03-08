@@ -1,8 +1,9 @@
 import time
 import datetime
 import itertools
-import numpy as np
 import torch
+import numpy as np
+from torch.utils.data import DataLoader
 import os
 from util.data.dataset import SteelyDataset, get_dataset
 import torch.nn as nn
@@ -20,42 +21,51 @@ def train():
 
     device = torch.device('cuda') if opt.gpu else torch.device('cpu')
 
-    dataset = SteelyDataset(opt)
+    dataset = SteelyDataset(opt.genreA, opt.genreB, 'train')
     dataset_size = len(dataset)
+    loader = DataLoader(dataset, batch_size=opt.batch_size, shuffle=True, num_workers=1)
     iter_per_epoch = int(dataset_size / opt.batch_size)
 
     print(f'loaded {dataset_size} images for training')
 
     model_names = ['netG_x', 'netG_y', 'netD_x', 'netD_y']
 
-    netG_x = Generator()
-    netG_y = Generator()
+    generator_A2B = Generator()
+    generator_B2A = Generator()
 
-    netD_x = Discriminator()
-    netD_y = Discriminator()
+    discriminator_A = Discriminator()
+    discriminator_B = Discriminator()
+
+    if opt.model != 'base':
+        discriminator_A_all = Discriminator()
+        discriminator_B_all = Discriminator()
 
     if opt.gpu:
-        netG_x.to(device)
-        summary(netG_x, input_size=opt.data_shape)
-        netG_y.to(device)
+        generator_A2B.to(device)
+        summary(generator_A2B, input_size=opt.data_shape)
+        generator_B2A.to(device)
 
-        netD_x.to(device)
-        summary(netD_x, input_size=opt.data_shape)
-        netD_y.to(device)
+        discriminator_A.to(device)
+        summary(discriminator_A, input_size=opt.data_shape)
+        discriminator_B.to(device)
 
-    '''
-    optimizer_GA2B = torch.optim.Adam(params=netG_x.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
-    optimizer_GB2A = torch.optim.Adam(params=netG_y.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
-    optimizer_DA = torch.optim.Adam(params=netG_y.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
-    optimizer_DB = torch.optim.Adam(params=netG_y.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
-    '''
-    optimizer_g = torch.optim.Adam(params=netG_x.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
-    optimizer_d = torch.optim.Adam(params=netD_x.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
+
+    DA_optimizer = torch.optim.Adam(params=discriminator_A.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
+    DB_optimizer = torch.optim.Adam(params=discriminator_B.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
+    GA2B_optimizer = torch.optim.Adam(params=generator_A2B.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
+    GB2A_optimizer = torch.optim.Adam(params=generator_B2A.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
+
+    if opt.model != 'base':
+        optimizer_g = torch.optim.Adam(params=generator_A2B.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
+        optimizer_d = torch.optim.Adam(params=discriminator_A.parameters(), lr=opt.g_lr, betas=(opt.beta1, 0.999))
+
 
     # optimizers = [optimizer_g, optimizer_d]
 
-    lambda_X = 10.0  # weight for cycle loss (A -> B -> A^)
-    lambda_Y = 10.0  # weight for cycle loss (B -> A -> B^)
+    lambda_A = 10.0  # weight for cycle loss (A -> B -> A^)
+    lambda_B = 10.0  # weight for cycle loss (B -> A -> B^)
+
+    L1_lambda = 10.0
     lambda_identity = 0.5
 
     # it's a MSELoss() when initialized, only calculate later during iteration
@@ -68,156 +78,159 @@ def train():
     # identical loss
     criterionIdt = nn.L1Loss()
 
-    loss_X_meter = MovingAverageValueMeter(opt.plot_every)
-    loss_Y_meter = MovingAverageValueMeter(opt.plot_every)
-    score_Dx_real_y = MovingAverageValueMeter(opt.plot_every)
-    score_Dx_fake_y = MovingAverageValueMeter(opt.plot_every)
+    loss_A_meter = MovingAverageValueMeter(opt.plot_every)
+    loss_B_meter = MovingAverageValueMeter(opt.plot_every)
+    score_DA_real_B = MovingAverageValueMeter(opt.plot_every)
+    score_DA_fake_B = MovingAverageValueMeter(opt.plot_every)
 
     # loss meters
     losses = {}
     scores = {}
 
-    for epoch in range(opt.max_epochs):
+    lr = opt.lr
+
+    for epoch in range(opt.epoch):
+
         epoch_start_time = time.time()
 
-        for i, data in enumerate(dataset):
+        lr = lr if epoch < opt.epoch_step else lr * (opt.epoch-epoch) / (opt.epoch-opt.epoch_step)
 
-            real_x = data['A'].to(device)
-            real_y = data['B'].to(device)
+        for i, data in enumerate(loader):
 
-            np.random.shuffle(real_x)
-            np.random.shuffle(real_y)
+            real_A = torch.unsqueeze(data[:, 0, :, :], 0).to(device, dtype=torch.float)
+            real_B = torch.unsqueeze(data[:, 1, :, :], 0).to(device, dtype=torch.float)
 
-            gaussian_noise = np.random.normal(loc=0, scale=opt.sigma_d, size=opt.data_shape)
+            gaussian_noise = (torch.randn(opt.data_shape) * 1. + 0).to(device, dtype=torch.float)
+            # gaussian_noise = torch.random.(loc=0, scale=opt.sigma_d, size=opt.data_shape).to(device)
 
             ######################
             # X -> Y' -> X^ cycle
             ######################
 
-            optimizer_g.zero_grad()   # set g_x and g_y gradients to zero
+            GA2B_optimizer.zero_grad()   # set g_x and g_y gradients to zero
 
-            fake_y = netG_x(real_x)       # X -> Y'
-            prediction = netD_x(fake_y)  #netD_x provide feedback to netG_x
+            fake_B = generator_A2B(real_A)       # X -> Y'
+            prediction = discriminator_A(fake_B + gaussian_noise)  #netD_x provide feedback to netG_x
             '''
             to_binary
             '''
-            loss_G_X = criterionGAN(prediction, True)
+            loss_G_A = criterionGAN(prediction, True)
 
             # cycle_consistence
-            x_hat = netG_y(fake_y)         # Y' -> X^
+            cycle_A = generator_B2A(fake_B)         # Y' -> X^
             # Forward cycle loss x^ = || G_y(G_x(real_x)) ||
-            loss_cycle_X = criterionCycle(x_hat, real_x) * lambda_X
+            loss_cycle_A = criterionCycle(cycle_A, real_A) * lambda_A
 
             # identity loss
             if lambda_identity > 0:
                 # netG_x should be identity if real_y is fed: ||netG_x(real_y) - real_y||
-                idt_x = netG_x(real_y)
-                loss_idt_x = criterionIdt(idt_x, real_y) * lambda_Y * lambda_identity
+                idt_A = generator_A2B(real_B)
+                loss_idt_A = criterionIdt(idt_A, real_B) * lambda_A * lambda_identity
             else:
-                loss_idt_x = 0.
+                loss_idt_A = 0.
 
-            loss_X = loss_G_X + loss_cycle_X + loss_idt_x
-            loss_X.backward(retain_graph=True)
-            optimizer_g.step()
+            loss_A = loss_G_A + loss_cycle_A + loss_idt_A
+            loss_A.backward(retain_graph=True)
+            GA2B_optimizer.step()
 
-            loss_X_meter.add(loss_X.item())
+            loss_A_meter.add(loss_A.item())
 
 
             ######################
             # Y -> X' -> Y^ cycle
             ######################
 
-            optimizer_g.zero_grad()   # set g_x and g_y gradients to zero
+            GB2A_optimizer.zero_grad()   # set g_x and g_y gradients to zero
 
-            fake_x = netG_y(real_y)   # Y -> X'
-            prediction = netD_y(fake_y)
-            loss_G_Y = criterionGAN(prediction, True)
+            fake_A = generator_B2A(real_B)   # Y -> X'
+            prediction = discriminator_B(fake_A + gaussian_noise)
+            loss_G_B = criterionGAN(prediction, True)
             # print(f'loss_G_Y = {round(float(loss_G_Y), 3)}')
 
-            y_hat = netG_x(fake_x)   # Y -> X' -> Y^
+            y_hat = generator_A2B(fake_A)   # Y -> X' -> Y^
             # Forward cycle loss y^ = || G_x(G_y(real_y)) ||
-            loss_cycle_Y = criterionCycle(y_hat, real_y) * lambda_Y
+            loss_cycle_B = criterionCycle(y_hat, real_B) * lambda_B
 
             # identity loss
             if lambda_identity > 0:
             # netG_y should be identiy if real_x is fed: ||netG_y(real_x) - real_x||
-                idt_y = netG_y(real_x)
-                loss_idt_y = criterionIdt(idt_y, real_x) * lambda_X * lambda_identity
+                idt_B = generator_B2A(real_A)
+                loss_idt_B = criterionIdt(idt_B, real_A) * lambda_A * lambda_identity
             else:
-                loss_idt_y = 0.
+                loss_idt_B = 0.
 
-            loss_Y = loss_G_Y + loss_cycle_Y + loss_idt_y
-            loss_Y.backward(retain_graph=True)
-            optimizer_g.step()
+            loss_B = loss_G_B + loss_cycle_B + loss_idt_B
+            loss_B.backward(retain_graph=True)
+            GB2A_optimizer.step()
 
-            loss_Y_meter.add(loss_Y.item())
+            loss_B_meter.add(loss_B.item())
 
 
             ######################
             # netD_x
             ######################
 
-            optimizer_d.zero_grad()
+            DA_optimizer.zero_grad()
 
             # loss_real
-            pred_real = netD_x(real_y)
-            loss_D_x_real = criterionGAN(pred_real, True)
-            score_Dx_real_y.add(float(pred_real.data.mean()))
+            pred_real = discriminator_A(real_B + gaussian_noise)
+            loss_D_A_real = criterionGAN(pred_real, True)
+            score_DA_real_B.add(float(pred_real.data.mean()))
 
             # loss fake
-            pred_fake = netD_x(fake_y)
-            loss_D_x_fake = criterionGAN(pred_fake, False)
-            score_Dx_fake_y.add(float(pred_fake.data.mean()))
+            pred_fake = discriminator_A(fake_B + gaussian_noise)
+            loss_D_A_fake = criterionGAN(pred_fake, False)
+            score_DA_fake_B.add(float(pred_fake.data.mean()))
 
             # loss and backward
-            loss_D_x = (loss_D_x_real + loss_D_x_fake) * 0.5
+            loss_D_A = (loss_D_A_real + loss_D_A_fake) * 0.5
 
-            loss_D_x.backward()
-            optimizer_d.step()
+            loss_D_A.backward()
+            DA_optimizer.step()
 
 
             ######################
             # netD_y
             ######################
 
-            optimizer_d.zero_grad()
+            DB_optimizer.zero_grad()
 
             # loss_real
-            pred_real = netD_y(real_x)
-            loss_D_y_real = criterionGAN(pred_real, True)
+            pred_real = discriminator_B(real_A + gaussian_noise)
+            loss_D_B_real = criterionGAN(pred_real, True)
 
             # loss_fake
-            pred_fake = netD_y(fake_x)
-            loss_D_y_fake = criterionGAN(pred_fake, False)
+            pred_fake = discriminator_B(fake_A + gaussian_noise)
+            loss_D_B_fake = criterionGAN(pred_fake, False)
 
             # loss and backward
-            loss_D_y = (loss_D_y_real + loss_D_y_fake) * 0.5
+            loss_D_B = (loss_D_B_real + loss_D_B_fake) * 0.5
 
-            loss_D_y.backward()
-            optimizer_d.step()
+            loss_D_B.backward()
+            DB_optimizer.step()
 
 
             # save snapshot
             if i % opt.plot_every == 0:
                 file_name = opt.name + '_snap_%03d_%05d.png' % (epoch, i,)
                 test_path = os.path.join(opt.checkpoint_path, file_name)
-                tv.utils.save_image(fake_y, test_path, normalize=True)
+                tv.utils.save_image(fake_B, test_path, normalize=True)
                 print(f'{file_name} saved.')
 
-                losses['loss_X'] = loss_X_meter.value()[0]
-                losses['loss_Y'] = loss_Y_meter.value()[0]
-                scores['score_Dx_real_y'] = score_Dx_real_y.value()[0]
-                scores['score_Dx_fake_y'] = score_Dx_fake_y.value()[0]
+                losses['loss_A'] = loss_A_meter.value()[0]
+                losses['loss_B'] = loss_B_meter.value()[0]
+                scores['score_DA_real_B'] = score_DA_real_B.value()[0]
+                scores['score_DA_fake_B'] = score_DA_fake_B.value()[0]
                 print(losses)
                 print(scores)
 
-            # print(f'iteration {i} finished')
+            print(f'iteration {i} finished')
 
         # save model
-        if epoch % opt.save_every == 0 or epoch == opt.max_epochs - 1:
+        if epoch % opt.save_every == 0 or epoch == opt.epoch - 1:
             save_filename = f'{opt.name}_netG_{epoch}.pth'
             save_filepath = os.path.join(opt.model_path, save_filename)
-            torch.save(netG_x.state_dict(), save_filepath)
+            torch.save(generator_A2B.state_dict(), save_filepath)
             print(f'model saved as {save_filename}')
 
 
@@ -301,3 +314,7 @@ def print_options(opt, epoch_log = False, epoch=0, time=0, losses=None, scores=N
     with open(file_name, 'wt') as opt_file:
         opt_file.write(message)
         opt_file.write('\n')
+
+
+if __name__ == '__main__':
+    train()
