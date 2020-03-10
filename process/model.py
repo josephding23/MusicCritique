@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader
 from torch.optim import lr_scheduler, Adam
 import os
-from util.data.dataset import SteelyDataset, get_dataset
+from util.data.dataset import SteelyDataset, get_dataset, MixedSourceDataset
 import torch.nn as nn
 import torchvision as tv
 from torchsummary import summary
@@ -37,6 +37,8 @@ class CycleGAN(object):
         self.G_B2A_save_path = self.opt.G_B2A_save_path
         self.D_A_save_path = self.opt.D_A_save_path
         self.D_B_save_path = self.opt.D_B_save_path
+        self.D_A_all_save_path = self.opt.D_A_all_save_path
+        self.D_B_all_save_path = self.opt.D_B_all_save_path
 
         self.data_shape = self.opt.data_shape
         self.input_shape = self.opt.input_shape
@@ -74,10 +76,13 @@ class CycleGAN(object):
         self.discriminator_A = Discriminator()
         self.discriminator_B = Discriminator()
 
+        self.discriminator_A_all = None
+        self.discriminator_B_all = None
 
         if self.model != 'base':
             self.discriminator_A_all = Discriminator()
             self.discriminator_B_all = Discriminator()
+
 
         if self.gpu:
             self.generator_A2B.to(self.device)
@@ -88,7 +93,11 @@ class CycleGAN(object):
             summary(self.discriminator_A, input_size=self.input_shape)
             self.discriminator_B.to(self.device)
 
-        # decay_lr = lambda epoch: self.lr if epoch < self.epoch_step else self.lr * (self.max_epoch - epoch) / (self.max_epoch - self.epoch_step)
+            if self.model != 'base':
+                self.discriminator_A_all.to(self.device)
+                self.discriminator_B_all.to(self.device)
+
+        decay_lr = lambda epoch: self.lr if epoch < self.epoch_step else self.lr * (self.max_epoch - epoch) / (self.max_epoch - self.epoch_step)
 
         self.DA_optimizer = Adam(params=self.discriminator_A.parameters(), lr=self.lr, betas=(self.beta1, self.beta2))
         self.DB_optimizer = Adam(params=self.discriminator_B.parameters(), lr=self.lr, betas=(self.beta1, self.beta2))
@@ -102,21 +111,29 @@ class CycleGAN(object):
         self.GB2A_scheduler = lr_scheduler.LambdaLR(self.GB2A_optimizer, lr_lambda=decay_lr)
         '''
 
+        self.DA_scheduler = lr_scheduler.StepLR(self.DA_optimizer, step_size=5, gamma=0.8)
+        self.DB_scheduler = lr_scheduler.StepLR(self.DB_optimizer, step_size=5, gamma=0.8)
+        self.GA2B_scheduler = lr_scheduler.StepLR(self.GA2B_optimizer, step_size=5, gamma=0.8)
+        self.GB2A_scheduler = lr_scheduler.StepLR(self.GB2A_optimizer, step_size=5, gamma=0.8)
+
+
         if self.model != 'base':
             self.DA_all_optimizer = torch.optim.Adam(params=self.discriminator_A_all.parameters(), lr=self.lr, betas=(self.beta1, self.beta2))
             self.DB_all_optimizer = torch.optim.Adam(params=self.discriminator_B_all.parameters(), lr=self.lr, betas=(self.beta1, self.beta2))
 
-        '''
-        CHECKPOINT
-        '''
-
-
+            self.DA_all_scheduler = lr_scheduler.StepLR(self.DA_all_optimizer, step_size=5, gamma=0.8)
+            self.DB_all_scheduler = lr_scheduler.StepLR(self.DB_all_optimizer, step_size=5, gamma=0.8)
 
     def train(self):
         torch.cuda.empty_cache()
 
-        dataset = SteelyDataset(self.genreA, self.genreB, 'train')
-        dataset_size = len(dataset)
+        if self.model == 'base':
+            dataset = SteelyDataset(self.genreA, self.genreB, 'train', use_mix=False)
+            dataset_size = len(dataset)
+
+        else:
+            dataset = SteelyDataset(self.genreA, self.genreB, 'train', use_mix=True)
+            dataset_size = len(dataset)
 
         if self.continue_train:
             latest_checked_epoch = self.find_latest_checkpoint()
@@ -131,6 +148,13 @@ class CycleGAN(object):
             self.generator_B2A.load_state_dict(torch.load(G_B2A_path))
             self.discriminator_A.load_state_dict(torch.load(D_A_path))
             self.discriminator_B.load_state_dict(torch.load(D_B_path))
+
+            if self.model != 'base':
+                D_A_all_path = self.D_A_all_save_path + 'steely_gan_D_A_all_' + str(latest_checked_epoch) + '.pth'
+                D_B_all_path = self.D_B_all_save_path + 'steely_gan_D_B_all_' + str(latest_checked_epoch) + '.pth'
+
+                self.discriminator_A_all.load_state_dict(torch.load(D_A_all_path))
+                self.discriminator_B_all.load_state_dict(torch.load(D_B_all_path))
 
             print(f'Loaded model from epoch {self.start_epoch}')
 
@@ -167,12 +191,12 @@ class CycleGAN(object):
         scores = {}
 
 
-        for epoch in range(self.start_epoch, self.max_epoch):
+        for epoch in range(self.start_epoch+1, self.max_epoch):
             loader = DataLoader(dataset, batch_size=self.batch_size, shuffle=True, num_workers=1, drop_last=True)
             epoch_start_time = time.time()
 
-
             for i, data in enumerate(loader):
+
 
                 real_A = torch.unsqueeze(data[:, 0, :, :], 1).to(self.device, dtype=torch.float)
                 real_B = torch.unsqueeze(data[:, 1, :, :], 1).to(self.device, dtype=torch.float)
@@ -180,7 +204,7 @@ class CycleGAN(object):
                 gaussian_noise = torch.abs(torch.normal(mean=torch.zeros(self.data_shape), std=0.01)).to(self.device, dtype=torch.float)
 
                 ######################
-                # X -> Y' -> X^ cycle
+                # A -> B' -> A^ cycle
                 ######################
 
                 self.GA2B_optimizer.zero_grad()   # set g_x and g_y gradients to zero
@@ -205,7 +229,7 @@ class CycleGAN(object):
                 else:
                     loss_idt_A = 0.
 
-                loss_A = loss_G_A2B + loss_cycle_A2B + loss_idt_A
+                loss_A = loss_G_A2B + 10. * loss_cycle_A2B + loss_idt_A
                 loss_A.backward(retain_graph=True)
                 self.GA2B_optimizer.step()
 
@@ -213,7 +237,7 @@ class CycleGAN(object):
 
 
                 ######################
-                # Y -> X' -> Y^ cycle
+                # B -> A' -> B^ cycle
                 ######################
 
                 self.GB2A_optimizer.zero_grad()   # set g_x and g_y gradients to zero
@@ -235,7 +259,7 @@ class CycleGAN(object):
                 else:
                     loss_idt_B = 0.
 
-                loss_B = loss_G_B2A + loss_cycle_B2A + loss_idt_B
+                loss_B = loss_G_B2A + 10. * loss_cycle_B2A + loss_idt_B
                 loss_B.backward(retain_graph=True)
                 self.GB2A_optimizer.step()
 
@@ -243,7 +267,15 @@ class CycleGAN(object):
 
 
                 ######################
-                # netD_x
+                # sample
+                ######################
+
+                [fake_A_sample, fake_B_sample] = self.pool([fake_A, fake_B])
+
+                DB_fake_sample = self.discriminator_B(fake_B_sample + gaussian_noise)
+
+                ######################
+                # netD_A
                 ######################
 
                 self.DA_optimizer.zero_grad()
@@ -254,9 +286,12 @@ class CycleGAN(object):
                 score_DA_real_B.add(float(DA_real.data.mean()))
 
                 # loss fake
-                DA_fake = self.discriminator_B(fake_A + gaussian_noise)
-                loss_DA_fake = criterionGAN(DA_fake, False)
-                score_DA_fake_B.add(float(DA_fake.data.mean()))
+                DA_fake_sample = self.discriminator_A(fake_A_sample + gaussian_noise)
+                loss_DA_fake = criterionGAN(DA_fake_sample, False)
+                score_DA_fake_B.add(float(DA_fake_sample.data.mean()))
+
+                # loss_DA_fake = criterionGAN(DA_fake, False)
+                # score_DA_fake_B.add(float(DA_fake.data.mean()))
 
                 # loss and backward
                 loss_DA = (loss_DA_real + loss_DA_fake) * 0.5
@@ -266,7 +301,7 @@ class CycleGAN(object):
 
 
                 ######################
-                # netD_y
+                # netD_B
                 ######################
 
                 self.DB_optimizer.zero_grad()
@@ -276,14 +311,55 @@ class CycleGAN(object):
                 loss_DB_real = criterionGAN(DB_real, True)
 
                 # loss_fake
-                DB_fake = self.discriminator_B(fake_B + gaussian_noise)
-                loss_DB_fake = criterionGAN(DB_fake, False)
+                DB_fake_sample = self.discriminator_B(fake_B_sample + gaussian_noise)
+                loss_DB_fake = criterionGAN(DB_fake_sample, False)
+                # loss_DB_fake = criterionGAN(DB_fake, False)
 
                 # loss and backward
                 loss_DB = (loss_DB_real + loss_DB_fake) * 0.5
 
                 loss_DB.backward()
                 self.DB_optimizer.step()
+
+
+                if self.model != 'base':
+                    real_mixed = torch.unsqueeze(data[:, 2, :, :], 1).to(self.device, dtype=torch.float)
+
+                    ######################
+                    # netD_A_all
+                    ######################
+
+                    self.DA_all_optimizer.zero_grad()
+
+                    # loss_real
+                    DA_real_all = self.discriminator_A_all(real_mixed + gaussian_noise)
+                    loss_DA_all_real = criterionGAN(DA_real_all, True)
+
+                    # loss fake
+                    DA_fake_sample_all = self.discriminator_A_all(fake_A_sample + gaussian_noise)
+                    loss_DA_all_fake = criterionGAN(DA_fake_sample_all, False)
+
+                    loss_DA_all = (loss_DA_all_real + loss_DA_all_fake) * 0.5
+                    loss_DA_all.backward()
+                    self.DA_all_optimizer.step()
+
+                    ######################
+                    # netD_B_all
+                    ######################
+
+                    self.DB_all_optimizer.zero_grad()
+
+                    # loss_real
+                    DB_real_all = self.discriminator_B_all(real_mixed + gaussian_noise)
+                    loss_DB_all_real = criterionGAN(DB_real_all, True)
+
+                    # loss fake
+                    DB_fake_sample_all = self.discriminator_B_all(fake_B_sample + gaussian_noise)
+                    loss_DB_all_fake = criterionGAN(DB_fake_sample_all, False)
+
+                    loss_DB_all = (loss_DB_all_real + loss_DB_all_fake) * 0.5
+                    loss_DB_all.backward()
+                    self.DB_all_optimizer.step()
 
 
                 # save snapshot
@@ -318,14 +394,24 @@ class CycleGAN(object):
                 torch.save(self.discriminator_A.state_dict(), D_A_filepath)
                 torch.save(self.discriminator_B.state_dict(), D_B_filepath)
 
+                if self.model != 'base':
+                    D_A_all_filename = f'{self.name}_D_A_all_{epoch}.pth'
+                    D_B_all_filename = f'{self.name}_D_B_all_{epoch}.pth'
+
+                    D_A_all_filepath = os.path.join(self.D_A_all_save_path, D_A_all_filename)
+                    D_B_all_filepath = os.path.join(self.D_B_all_save_path, D_B_all_filename)
+
+                    torch.save(self.discriminator_A_all.state_dict(), D_A_all_filepath)
+                    torch.save(self.discriminator_B_all.state_dict(), D_B_all_filepath)
+
                 print(f'model saved')
 
-            '''
+
             self.DA_scheduler.step(epoch)
             self.DB_scheduler.step(epoch)
             self.GA2B_scheduler.step(epoch)
             self.GB2A_scheduler.step(epoch)
-            '''
+
 
             epoch_time = int(time.time() - epoch_start_time)
 

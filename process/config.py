@@ -4,10 +4,12 @@ class Config(object):
     def __init__(self):
         self.name = 'steely_gan'
         self.dataset_name = 'free_midi_library'
+        self.model = 'base' # three different models, base, partial, full
+
 
         self.genreA = 'rock'
         self.genreB = 'jazz'
-        self.save_path = 'd:/checkpoints/' + self.name
+        self.save_path = 'd:/checkpoints/' + self.name + '/' + self.model
         self.model_path = self.save_path + '/models'
         self.checkpoint_path = self.save_path + '/checkpoints'
         self.test_path = self.save_path + '/test_results'
@@ -16,6 +18,9 @@ class Config(object):
         self.G_B2A_save_path = self.model_path + '/G_B2A/'
         self.D_A_save_path = self.model_path + '/D_A/'
         self.D_B_save_path = self.model_path + '/D_B/'
+
+        self.D_A_all_save_path = self.model_path + '/D_A_all/'
+        self.D_B_all_save_path = self.model_path + '/D_B_all/'
 
         self.image_pool_max_size = 50
 
@@ -56,12 +61,10 @@ class Config(object):
         self.num_threads = 4
         self.batch_size = 16
         self.max_epoch = 30
-        self.epoch_step = 10
+        self.epoch_step = 5
 
         self.plot_every = 100  # iterations
         self.save_every = 5  # epochs
-
-        self.model = 'full' # three different models, base, partial, full
 
         self.continue_train = False
         self.start_epoch = 0
@@ -70,3 +73,10 @@ class Config(object):
         os.makedirs(self.model_path, exist_ok=True)
         os.makedirs(self.checkpoint_path, exist_ok=True)
         os.makedirs(self.test_path, exist_ok=True)
+
+        os.makedirs(self.G_A2B_save_path, exist_ok=True)
+        os.makedirs(self.G_B2A_save_path, exist_ok=True)
+        os.makedirs(self.D_A_save_path, exist_ok=True)
+        os.makedirs(self.D_B_save_path, exist_ok=True)
+        os.makedirs(self.D_A_all_save_path, exist_ok=True)
+        os.makedirs(self.D_B_all_save_path, exist_ok=True)
