@@ -4,6 +4,7 @@ import itertools
 import torch
 import re
 import numpy as np
+import copy
 import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader
 from torch.optim import lr_scheduler, Adam
@@ -61,6 +62,8 @@ class CycleGAN(object):
         self.save_every = 5 # epochs
 
         self.model = self.opt.model
+
+        self.use_image_poll = self.opt.use_image_pool
 
         self.pool = ImagePool(self.opt.image_pool_max_size)
 
@@ -137,7 +140,7 @@ class CycleGAN(object):
 
         if self.continue_train:
             latest_checked_epoch = self.find_latest_checkpoint()
-            self.start_epoch = latest_checked_epoch
+            self.start_epoch = latest_checked_epoch + 1
 
             G_A2B_path = self.G_A2B_save_path + 'steely_gan_G_A2B_' + str(latest_checked_epoch) + '.pth'
             G_B2A_path = self.G_B2A_save_path + 'steely_gan_G_B2A_' + str(latest_checked_epoch) + '.pth'
@@ -173,7 +176,7 @@ class CycleGAN(object):
 
         # it's a MSELoss() when initialized, only calculate later during iteration
         # criterionGAN = nn.MSELoss().to(device)
-        criterionGAN = GANLoss(gan_mode='lsgan')
+        criterionGAN = GANLoss(gan_mode='vanilla')
 
         # cycle loss
         criterionCycle = nn.L1Loss()
@@ -191,7 +194,7 @@ class CycleGAN(object):
         scores = {}
 
 
-        for epoch in range(self.start_epoch+1, self.max_epoch):
+        for epoch in range(self.start_epoch, self.max_epoch):
             loader = DataLoader(dataset, batch_size=self.batch_size, shuffle=True, num_workers=1, drop_last=True)
             epoch_start_time = time.time()
 
@@ -203,128 +206,236 @@ class CycleGAN(object):
 
                 gaussian_noise = torch.abs(torch.normal(mean=torch.zeros(self.data_shape), std=0.01)).to(self.device, dtype=torch.float)
 
-                ######################
-                # A -> B' -> A^ cycle
-                ######################
+                if self.model == 'base':
 
-                self.GA2B_optimizer.zero_grad()   # set g_x and g_y gradients to zero
+                    ######################
+                    # A -> B' -> A^ cycle
+                    ######################
 
-                fake_B = self.generator_A2B(real_A)       # X -> Y'
-                DB_fake = self.discriminator_B(fake_B + gaussian_noise)  #netD_x provide feedback to netG_x
-                '''
-                to_binary
-                '''
-                loss_G_A2B = criterionGAN(DB_fake, True)
+                    self.GA2B_optimizer.zero_grad()   # set g_x and g_y gradients to zero
 
-                # cycle_consistence
-                cycle_A = self.generator_B2A(fake_B)         # Y' -> X^
-                # Forward cycle loss x^ = || G_y(G_x(real_x)) ||
-                loss_cycle_A2B = criterionCycle(cycle_A, real_A) * lambda_A
+                    fake_B = self.generator_A2B(real_A)       # X -> Y'
+                    DB_fake = self.discriminator_B(fake_B + gaussian_noise)  #netD_x provide feedback to netG_x
+                    '''
+                    to_binary
+                    '''
+                    loss_G_A2B = criterionGAN(DB_fake, True)
 
-                # identity loss
-                if lambda_identity > 0:
-                    # netG_x should be identity if real_y is fed: ||netG_x(real_y) - real_y||
-                    idt_A = self.generator_A2B(real_B)
-                    loss_idt_A = criterionIdt(idt_A, real_B) * lambda_A * lambda_identity
+                    # cycle_consistence
+                    cycle_A = self.generator_B2A(fake_B)         # Y' -> X^
+                    # Forward cycle loss x^ = || G_y(G_x(real_x)) ||
+                    loss_cycle_A2B = criterionCycle(cycle_A, real_A) * lambda_A
+
+                    # identity loss
+                    if lambda_identity > 0:
+                        # netG_x should be identity if real_y is fed: ||netG_x(real_y) - real_y||
+                        idt_A = self.generator_A2B(real_B)
+                        loss_idt_A = criterionIdt(idt_A, real_B) * lambda_A * lambda_identity
+                    else:
+                        loss_idt_A = 0.
+
+                    loss_A = loss_G_A2B + 10. * loss_cycle_A2B + loss_idt_A
+                    loss_A.backward(retain_graph=True)
+                    self.GA2B_optimizer.step()
+
+                    loss_A_meter.add(loss_A.item())
+
+                    ######################
+                    # B -> A' -> B^ cycle
+                    ######################
+
+                    self.GB2A_optimizer.zero_grad()   # set g_x and g_y gradients to zero
+
+                    fake_A = self.generator_B2A(real_B)   # Y -> X'
+                    DA_fake = self.discriminator_A(fake_A + gaussian_noise)
+                    loss_G_B2A = criterionGAN(DA_fake, True)
+                    # print(f'loss_G_Y = {round(float(loss_G_Y), 3)}')
+
+                    cycle_B = self.generator_A2B(fake_A)   # Y -> X' -> Y^
+                    # Forward cycle loss y^ = || G_x(G_y(real_y)) ||
+                    loss_cycle_B2A = criterionCycle(cycle_B, real_B) * lambda_B
+
+                    # identity loss
+                    if lambda_identity > 0:
+                    # netG_y should be identiy if real_x is fed: ||netG_y(real_x) - real_x||
+                        idt_B = self.generator_B2A(real_A)
+                        loss_idt_B = criterionIdt(idt_B, real_A) * lambda_A * lambda_identity
+                    else:
+                        loss_idt_B = 0.
+
+                    loss_B = loss_G_B2A + 10. * loss_cycle_B2A + loss_idt_B
+                    loss_B.backward(retain_graph=True)
+                    self.GB2A_optimizer.step()
+
+                    loss_B_meter.add(loss_B.item())
+
+
+                    ######################
+                    # sample
+                    ######################
+
+                    if self.use_image_poll:
+                        [fake_A_sample, fake_B_sample] = self.pool([fake_A, fake_B])
+
+                    ######################
+                    # netD_A
+                    ######################
+
+                    # loss_real
+                    DA_real = self.discriminator_A(real_A + gaussian_noise)
+                    loss_DA_real = criterionGAN(DA_real, True)
+                    score_DA_real_B.add(float(DA_real.data.mean()))
+
+                    # loss fake
+                    if self.use_image_poll:
+                        DA_fake_sample = self.discriminator_A(fake_A_sample + gaussian_noise)
+                        loss_DA_fake = criterionGAN(DA_fake_sample, False)
+                        score_DA_fake_B.add(float(DA_fake_sample.data.mean()))
+
+                    else:
+                        loss_DA_fake = criterionGAN(DA_fake, False)
+                        score_DA_fake_B.add(float(DA_fake.data.mean()))
+
+                    # loss and backward
+                    self.DA_optimizer.zero_grad()
+                    loss_DA = (loss_DA_real + loss_DA_fake) * 0.5
+
+                    loss_DA.backward()
+                    self.DA_optimizer.step()
+
+                    ######################
+                    # netD_B
+                    ######################
+
+                    # loss_real
+                    DB_real = self.discriminator_B(real_B + gaussian_noise)
+                    loss_DB_real = criterionGAN(DB_real, True)
+
+                    # loss_fake
+                    if self.use_image_poll:
+                        DB_fake_sample = self.discriminator_B(fake_B_sample + gaussian_noise)
+                        loss_DB_fake = criterionGAN(DB_fake_sample, False)
+                    else:
+                        loss_DB_fake = criterionGAN(DB_fake, False)
+
+                    # loss and backward
+                    self.DB_optimizer.zero_grad()
+                    loss_DB = (loss_DB_real + loss_DB_fake) * 0.5
+
+                    loss_DB.backward()
+                    self.DB_optimizer.step()
+
                 else:
-                    loss_idt_A = 0.
-
-                loss_A = loss_G_A2B + 10. * loss_cycle_A2B + loss_idt_A
-                loss_A.backward(retain_graph=True)
-                self.GA2B_optimizer.step()
-
-                loss_A_meter.add(loss_A.item())
-
-
-                ######################
-                # B -> A' -> B^ cycle
-                ######################
-
-                self.GB2A_optimizer.zero_grad()   # set g_x and g_y gradients to zero
-
-                fake_A = self.generator_B2A(real_B)   # Y -> X'
-                DA_fake = self.discriminator_A(fake_A + gaussian_noise)
-                loss_G_B2A = criterionGAN(DA_fake, True)
-                # print(f'loss_G_Y = {round(float(loss_G_Y), 3)}')
-
-                cycle_B = self.generator_A2B(fake_A)   # Y -> X' -> Y^
-                # Forward cycle loss y^ = || G_x(G_y(real_y)) ||
-                loss_cycle_B2A = criterionCycle(cycle_B, real_B) * lambda_B
-
-                # identity loss
-                if lambda_identity > 0:
-                # netG_y should be identiy if real_x is fed: ||netG_y(real_x) - real_x||
-                    idt_B = self.generator_B2A(real_A)
-                    loss_idt_B = criterionIdt(idt_B, real_A) * lambda_A * lambda_identity
-                else:
-                    loss_idt_B = 0.
-
-                loss_B = loss_G_B2A + 10. * loss_cycle_B2A + loss_idt_B
-                loss_B.backward(retain_graph=True)
-                self.GB2A_optimizer.step()
-
-                loss_B_meter.add(loss_B.item())
-
-
-                ######################
-                # sample
-                ######################
-
-                [fake_A_sample, fake_B_sample] = self.pool([fake_A, fake_B])
-
-                DB_fake_sample = self.discriminator_B(fake_B_sample + gaussian_noise)
-
-                ######################
-                # netD_A
-                ######################
-
-                self.DA_optimizer.zero_grad()
-
-                # loss_real
-                DA_real = self.discriminator_A(real_A + gaussian_noise)
-                loss_DA_real = criterionGAN(DA_real, True)
-                score_DA_real_B.add(float(DA_real.data.mean()))
-
-                # loss fake
-                DA_fake_sample = self.discriminator_A(fake_A_sample + gaussian_noise)
-                loss_DA_fake = criterionGAN(DA_fake_sample, False)
-                score_DA_fake_B.add(float(DA_fake_sample.data.mean()))
-
-                # loss_DA_fake = criterionGAN(DA_fake, False)
-                # score_DA_fake_B.add(float(DA_fake.data.mean()))
-
-                # loss and backward
-                loss_DA = (loss_DA_real + loss_DA_fake) * 0.5
-
-                loss_DA.backward()
-                self.DA_optimizer.step()
-
-
-                ######################
-                # netD_B
-                ######################
-
-                self.DB_optimizer.zero_grad()
-
-                # loss_real
-                DB_real = self.discriminator_B(real_B + gaussian_noise)
-                loss_DB_real = criterionGAN(DB_real, True)
-
-                # loss_fake
-                DB_fake_sample = self.discriminator_B(fake_B_sample + gaussian_noise)
-                loss_DB_fake = criterionGAN(DB_fake_sample, False)
-                # loss_DB_fake = criterionGAN(DB_fake, False)
-
-                # loss and backward
-                loss_DB = (loss_DB_real + loss_DB_fake) * 0.5
-
-                loss_DB.backward()
-                self.DB_optimizer.step()
-
-
-                if self.model != 'base':
                     real_mixed = torch.unsqueeze(data[:, 2, :, :], 1).to(self.device, dtype=torch.float)
 
+                    ######################
+                    # A -> B' -> A^ cycle
+                    ######################
+
+                    self.GA2B_optimizer.zero_grad()  # set g_x and g_y gradients to zero
+
+                    fake_B = self.generator_A2B(real_A)  # X -> Y'
+                    fake_B_copy = copy.copy(fake_B)
+                    DB_fake = self.discriminator_B(fake_B + gaussian_noise)  # netD_x provide feedback to netG_x
+                    '''
+                    to_binary
+                    '''
+                    loss_G_A2B = criterionGAN(DB_fake, True)
+
+                    # cycle_consistence
+                    cycle_A = self.generator_B2A(fake_B)  # Y' -> X^
+                    # Forward cycle loss x^ = || G_y(G_x(real_x)) ||
+                    loss_cycle_A2B = criterionCycle(cycle_A, real_A) * lambda_A
+
+                    # identity loss
+                    if lambda_identity > 0:
+                        # netG_x should be identity if real_y is fed: ||netG_x(real_y) - real_y||
+                        idt_A = self.generator_A2B(real_B)
+                        loss_idt_A = criterionIdt(idt_A, real_B) * lambda_A * lambda_identity
+                    else:
+                        loss_idt_A = 0.
+
+                    loss_A = loss_G_A2B + 10. * loss_cycle_A2B + loss_idt_A
+                    loss_A.backward(retain_graph=True)
+                    self.GA2B_optimizer.step()
+
+                    loss_A_meter.add(loss_A.item())
+
+                    ######################
+                    # B -> A' -> B^ cycle
+                    ######################
+
+                    self.GB2A_optimizer.zero_grad()  # set g_x and g_y gradients to zero
+
+                    fake_A = self.generator_B2A(real_B)  # Y -> X'
+                    fake_A_copy = copy.copy(fake_A)
+                    DA_fake = self.discriminator_A(fake_A + gaussian_noise)
+                    loss_G_B2A = criterionGAN(DA_fake, True)
+                    # print(f'loss_G_Y = {round(float(loss_G_Y), 3)}')
+
+                    cycle_B = self.generator_A2B(fake_A)  # Y -> X' -> Y^
+                    # Forward cycle loss y^ = || G_x(G_y(real_y)) ||
+                    loss_cycle_B2A = criterionCycle(cycle_B, real_B) * lambda_B
+
+                    # identity loss
+                    if lambda_identity > 0:
+                        # netG_y should be identiy if real_x is fed: ||netG_y(real_x) - real_x||
+                        idt_B = self.generator_B2A(real_A)
+                        loss_idt_B = criterionIdt(idt_B, real_A) * lambda_A * lambda_identity
+                    else:
+                        loss_idt_B = 0.
+
+                    loss_B = loss_G_B2A + 10. * loss_cycle_B2A + loss_idt_B
+                    loss_B.backward(retain_graph=True)
+                    self.GB2A_optimizer.step()
+
+                    loss_B_meter.add(loss_B.item())
+
+                    ######################
+                    # sample
+                    ######################
+
+                    if self.use_image_poll:
+                        [fake_A_sample, fake_B_sample] = self.pool([fake_A_copy, fake_B_copy])
+
+                    ######################
+                    # netD_A $ netD_A_all
+                    ######################
+
+                    # loss_real
+                    DA_real = self.discriminator_A(real_A + gaussian_noise)
+                    loss_DA_real = criterionGAN(DA_real, True)
+                    score_DA_real_B.add(float(DA_real.data.mean()))
+
+                    DA_real_all = self.discriminator_A_all(real_mixed + gaussian_noise)
+                    loss_DA_all_real = criterionGAN(DA_real_all, True)
+
+                    # loss fake
+                    if self.use_image_poll:
+                        DA_fake_sample = self.discriminator_A(fake_A_sample + gaussian_noise)
+                        loss_DA_fake = criterionGAN(DA_fake_sample, False)
+                        score_DA_fake_B.add(float(DA_fake_sample.data.mean()))
+                        DA_fake_sample_all = self.discriminator_A_all(fake_A_sample + gaussian_noise)
+                        loss_DA_all_fake = criterionGAN(DA_fake_sample_all, False)
+
+                    else:
+                        loss_DA_fake = criterionGAN(DA_fake, False)
+                        score_DA_fake_B.add(float(DA_fake.data.mean()))
+                        DA_fake_all = self.discriminator_A_all(fake_A_copy + gaussian_noise)
+                        loss_DA_all_fake = criterionGAN(DA_fake_all, False)
+
+                    # loss and backward
+                    self.DA_optimizer.zero_grad()
+                    loss_DA = (loss_DA_real + loss_DA_fake) * 0.5
+                    loss_DA.backward()
+                    self.DA_optimizer.step()
+
+                    self.DA_all_optimizer.zero_grad()
+                    loss_DA_all = (loss_DA_all_real + loss_DA_all_fake) * 0.5
+                    loss_DA_all.backward()
+                    self.DA_all_optimizer.step()
+
+                    '''
                     ######################
                     # netD_A_all
                     ######################
@@ -342,7 +453,48 @@ class CycleGAN(object):
                     loss_DA_all = (loss_DA_all_real + loss_DA_all_fake) * 0.5
                     loss_DA_all.backward()
                     self.DA_all_optimizer.step()
+                    '''
 
+                    ######################
+                    # netD_B & netD_B_all
+                    ######################
+
+                    # loss_real
+                    DB_real = self.discriminator_B(real_B + gaussian_noise)
+                    loss_DB_real = criterionGAN(DB_real, True)
+                    DB_real_all = self.discriminator_B_all(real_mixed + gaussian_noise)
+                    loss_DB_all_real = criterionGAN(DB_real_all, True)
+
+                    # loss_fake
+                    if self.use_image_poll:
+                        DB_fake_sample = self.discriminator_B(fake_B_sample + gaussian_noise)
+                        loss_DB_fake = criterionGAN(DB_fake_sample, False)
+                        DB_fake_sample_all = self.discriminator_B_all(fake_B_sample + gaussian_noise)
+                        loss_DB_all_fake = criterionGAN(DB_fake_sample_all, False)
+                    else:
+                        loss_DB_fake = criterionGAN(DB_fake, False)
+                        DB_fake_all = self.discriminator_B_all(fake_B_copy + gaussian_noise)
+                        loss_DB_all_fake = criterionGAN(DB_fake_all, False)
+
+                    # loss and backward
+                    self.DB_optimizer.zero_grad()
+                    loss_DB = (loss_DB_real + loss_DB_fake) * 0.5
+                    loss_DB.backward()
+                    self.DB_optimizer.step()
+
+                    self.DB_all_optimizer.zero_grad()
+                    loss_DB_all = (loss_DB_all_real + loss_DB_all_fake) * 0.5
+                    loss_DB_all.backward()
+                    self.DB_all_optimizer.step()
+
+                    ######################
+                    # netD_all
+                    ######################
+
+                    # loss_D_all = loss_DB_all + loss_DA_all
+                    # loss_D_all.backward(retain_graph=True)
+
+                    '''
                     ######################
                     # netD_B_all
                     ######################
@@ -360,6 +512,7 @@ class CycleGAN(object):
                     loss_DB_all = (loss_DB_all_real + loss_DB_all_fake) * 0.5
                     loss_DB_all.backward()
                     self.DB_all_optimizer.step()
+                    '''
 
 
                 # save snapshot

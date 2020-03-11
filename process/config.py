@@ -4,7 +4,7 @@ class Config(object):
     def __init__(self):
         self.name = 'steely_gan'
         self.dataset_name = 'free_midi_library'
-        self.model = 'base' # three different models, base, partial, full
+        self.model = 'full' # three different models, base, partial, full
 
 
         self.genreA = 'rock'
@@ -62,6 +62,8 @@ class Config(object):
         self.batch_size = 16
         self.max_epoch = 30
         self.epoch_step = 5
+
+        self.use_image_pool = True
 
         self.plot_every = 100  # iterations
         self.save_every = 5  # epochs
