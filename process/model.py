@@ -9,7 +9,8 @@ import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader
 from torch.optim import lr_scheduler, Adam
 import os
-from util.data.dataset import SteelyDataset, get_dataset, MixedSourceDataset
+from util.data.dataset import SteelyDataset, get_dataset
+from util.toolkit import plot_data
 import torch.nn as nn
 import torchvision as tv
 from torchsummary import summary
@@ -17,6 +18,7 @@ from torchnet.meter import MovingAverageValueMeter
 from networks.musegan import MuseDiscriminator, MuseGenerator, GANLoss
 from networks.MST import Discriminator, Generator
 from process.config import Config
+from util.toolkit import generate_midi_from_data, plot_data
 from util.image_pool import ImagePool
 
 
@@ -127,6 +129,31 @@ class CycleGAN(object):
             self.DA_all_scheduler = lr_scheduler.StepLR(self.DA_all_optimizer, step_size=5, gamma=0.8)
             self.DB_all_scheduler = lr_scheduler.StepLR(self.DB_all_optimizer, step_size=5, gamma=0.8)
 
+
+    def continue_from_latest_checkpoint(self):
+        latest_checked_epoch = self.find_latest_checkpoint()
+        self.start_epoch = latest_checked_epoch + 1
+
+        G_A2B_path = self.G_A2B_save_path + 'steely_gan_G_A2B_' + str(latest_checked_epoch) + '.pth'
+        G_B2A_path = self.G_B2A_save_path + 'steely_gan_G_B2A_' + str(latest_checked_epoch) + '.pth'
+        D_A_path = self.D_A_save_path + 'steely_gan_D_A_' + str(latest_checked_epoch) + '.pth'
+        D_B_path = self.D_B_save_path + 'steely_gan_D_B_' + str(latest_checked_epoch) + '.pth'
+
+        self.generator_A2B.load_state_dict(torch.load(G_A2B_path))
+        self.generator_B2A.load_state_dict(torch.load(G_B2A_path))
+        self.discriminator_A.load_state_dict(torch.load(D_A_path))
+        self.discriminator_B.load_state_dict(torch.load(D_B_path))
+
+        if self.model != 'base':
+            D_A_all_path = self.D_A_all_save_path + 'steely_gan_D_A_all_' + str(latest_checked_epoch) + '.pth'
+            D_B_all_path = self.D_B_all_save_path + 'steely_gan_D_B_all_' + str(latest_checked_epoch) + '.pth'
+
+            self.discriminator_A_all.load_state_dict(torch.load(D_A_all_path))
+            self.discriminator_B_all.load_state_dict(torch.load(D_B_all_path))
+
+        print(f'Loaded model from epoch {self.start_epoch}')
+
+
     def train(self):
         torch.cuda.empty_cache()
 
@@ -139,32 +166,11 @@ class CycleGAN(object):
             dataset_size = len(dataset)
 
         if self.continue_train:
-            latest_checked_epoch = self.find_latest_checkpoint()
-            self.start_epoch = latest_checked_epoch + 1
-
-            G_A2B_path = self.G_A2B_save_path + 'steely_gan_G_A2B_' + str(latest_checked_epoch) + '.pth'
-            G_B2A_path = self.G_B2A_save_path + 'steely_gan_G_B2A_' + str(latest_checked_epoch) + '.pth'
-            D_A_path = self.D_A_save_path + 'steely_gan_D_A_' + str(latest_checked_epoch) + '.pth'
-            D_B_path = self.D_B_save_path + 'steely_gan_D_B_' + str(latest_checked_epoch) + '.pth'
-
-            self.generator_A2B.load_state_dict(torch.load(G_A2B_path))
-            self.generator_B2A.load_state_dict(torch.load(G_B2A_path))
-            self.discriminator_A.load_state_dict(torch.load(D_A_path))
-            self.discriminator_B.load_state_dict(torch.load(D_B_path))
-
-            if self.model != 'base':
-                D_A_all_path = self.D_A_all_save_path + 'steely_gan_D_A_all_' + str(latest_checked_epoch) + '.pth'
-                D_B_all_path = self.D_B_all_save_path + 'steely_gan_D_B_all_' + str(latest_checked_epoch) + '.pth'
-
-                self.discriminator_A_all.load_state_dict(torch.load(D_A_all_path))
-                self.discriminator_B_all.load_state_dict(torch.load(D_B_all_path))
-
-            print(f'Loaded model from epoch {self.start_epoch}')
+            self.continue_from_latest_checkpoint()
 
         iter_num = int(dataset_size / self.batch_size)
 
         print(f'loaded {dataset_size} images for training')
-
 
         # optimizers = [optimizer_g, optimizer_d]
 
@@ -686,6 +692,29 @@ def load_model_test():
     print(params1['cnet1.1.weight'])
     print(params2['cnet1.1.weight'])
 
-if __name__ == '__main__':
+
+def test_sample_song():
+    dataset = SteelyDataset('rock', 'jazz', 'test', False)
+
     cyclegan = CycleGAN()
-    cyclegan.train()
+    cyclegan.continue_from_latest_checkpoint()
+
+
+    data = dataset[2]
+    dataA, dataB = data[0, :, :], data[1, :, :]
+    # print(torch.unsqueeze(torch.from_numpy(dataA), 0).shape)
+    dataA2B = cyclegan.generator_A2B(torch.unsqueeze(torch.unsqueeze(torch.from_numpy(dataA), 0), 0).to(device='cuda', dtype=torch.float)).cpu().detach().numpy()[0, 0, :, :]
+
+    midi_A_path = '../util/midi_A.mid'
+    midi_A2B_path = '../util/midi_A2B.mid'
+
+    plot_data(dataA)
+    plot_data(dataA2B)
+
+    generate_midi_from_data(dataA, midi_A_path)
+    generate_midi_from_data(dataA2B, midi_A2B_path)
+
+
+
+if __name__ == '__main__':
+    test_sample_song()
