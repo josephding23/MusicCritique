@@ -4,7 +4,7 @@ class Config(object):
     def __init__(self):
         self.name = 'steely_gan'
         self.dataset_name = 'free_midi_library'
-        self.model = 'full' # three different models, base, partial, full
+        self.model = 'base' # three different models, base, partial, full
 
 
         self.genreA = 'rock'
@@ -71,14 +71,3 @@ class Config(object):
         self.continue_train = False
         self.start_epoch = 0
 
-        os.makedirs(self.save_path, exist_ok=True)
-        os.makedirs(self.model_path, exist_ok=True)
-        os.makedirs(self.checkpoint_path, exist_ok=True)
-        os.makedirs(self.test_path, exist_ok=True)
-
-        os.makedirs(self.G_A2B_save_path, exist_ok=True)
-        os.makedirs(self.G_B2A_save_path, exist_ok=True)
-        os.makedirs(self.D_A_save_path, exist_ok=True)
-        os.makedirs(self.D_B_save_path, exist_ok=True)
-        os.makedirs(self.D_A_all_save_path, exist_ok=True)
-        os.makedirs(self.D_B_all_save_path, exist_ok=True)
