@@ -20,6 +20,9 @@ from networks.MST import Discriminator, Generator
 from cyclegan.config import Config
 from util.toolkit import generate_midi_from_data, plot_data, evaluate_tonal_scale
 from util.image_pool import ImagePool
+import logging
+import colorlog
+import json
 
 
 class CycleGAN(object):
@@ -102,12 +105,13 @@ class CycleGAN(object):
             self.discriminator_A_all.load_state_dict(torch.load(D_A_all_path))
             self.discriminator_B_all.load_state_dict(torch.load(D_B_all_path))
 
-        print(f'Loaded model from epoch {self.opt.start_epoch}')
+        print(f'Loaded model from epoch {self.opt.start_epoch-1}')
 
     def reset_save(self):
         import shutil
         if os.path.exists(self.opt.save_path):
             shutil.rmtree(self.opt.save_path)
+
         os.makedirs(self.opt.save_path, exist_ok=True)
         os.makedirs(self.opt.model_path, exist_ok=True)
         os.makedirs(self.opt.checkpoint_path, exist_ok=True)
@@ -119,6 +123,36 @@ class CycleGAN(object):
         os.makedirs(self.opt.D_B_save_path, exist_ok=True)
         os.makedirs(self.opt.D_A_all_save_path, exist_ok=True)
         os.makedirs(self.opt.D_B_all_save_path, exist_ok=True)
+
+    def set_up_logger(self):
+
+        self.logger = logging.getLogger()
+        self.logger.setLevel(logging.INFO)
+
+        fh = logging.FileHandler(filename=self.opt.log_path, mode='w')
+        ch = colorlog.StreamHandler()
+
+        color_formatter = colorlog.ColoredFormatter(
+            "%(log_color)s%(levelname)-8s%(reset)s %(fg_cyan)s%(message)s",
+            datefmt=None,
+            reset=True,
+            log_colors={
+                'DEBUG': 'cyan',
+                'INFO': 'green',
+                'WARNING': 'yellow',
+                'ERROR': 'red',
+                'CRITICAL': 'red,bg_white',
+            },
+            secondary_log_colors={},
+            style='%'
+        )
+
+        fh.setFormatter(logging.Formatter('%(asctime)s - %(message)s'))
+        ch.setFormatter(color_formatter)
+
+        self.logger.addHandler(fh)
+        self.logger.addHandler(ch)
+
 
     def save_model(self, epoch):
         G_A2B_filename = f'{self.opt.name}_G_A2B_{epoch}.pth'
@@ -146,7 +180,7 @@ class CycleGAN(object):
             torch.save(self.discriminator_A_all.state_dict(), D_A_all_filepath)
             torch.save(self.discriminator_B_all.state_dict(), D_B_all_filepath)
 
-        print(f'model saved')
+        self.logger.info(f'model saved')
 
     def train(self):
         torch.cuda.empty_cache()
@@ -165,9 +199,11 @@ class CycleGAN(object):
         else:
             self.reset_save()
 
+        self.set_up_logger()
+
         iter_num = int(dataset_size / self.opt.batch_size)
 
-        print(f'loaded {dataset_size} images for training')
+        self.logger.info(f'loaded {dataset_size} images for training')
 
 
         lambda_A = 10.0  # weight for cycle loss (A -> B -> A^)
@@ -189,8 +225,14 @@ class CycleGAN(object):
         losses = {}
         scores = {}
 
+        losses_dict = {
+            'generator_loss': [],
+            'discriminator_loss': [],
+            'cycle_loss': []
+        }
+
         for epoch in range(self.opt.start_epoch, self.opt.max_epoch):
-            loader = DataLoader(dataset, batch_size=self.opt.batch_size, shuffle=True, num_workers=1, drop_last=True)
+            loader = DataLoader(dataset, batch_size=self.opt.batch_size, shuffle=True, num_workers=self.opt.num_threads, drop_last=True)
             epoch_start_time = time.time()
 
             for i, data in enumerate(loader):
@@ -251,9 +293,11 @@ class CycleGAN(object):
 
                     cycle_loss = loss_cycle_A2B + loss_cycle_B2A
                     CycleLoss_meter.add(cycle_loss.item())
+                    losses_dict['cycle_loss'].append(cycle_loss.item())
 
                     loss_G = loss_G_A2B + loss_G_B2A + loss_idt
                     GLoss_meter.add(loss_G.item())
+                    losses_dict['generator_loss'].append(loss_G.item())
 
                     ######################
                     # sample
@@ -298,6 +342,7 @@ class CycleGAN(object):
 
                     loss_D = loss_DA + loss_DB
                     DLoss_meter.add(loss_D.item())
+                    losses_dict['discriminator_loss'].append(loss_D.item())
 
 
                 else:
@@ -349,11 +394,14 @@ class CycleGAN(object):
                     loss_B2A = loss_G_B2A + loss_cycle_B2A + loss_idt_B
                     loss_B2A.backward(retain_graph=True)
                     self.GB2A_optimizer.step()
+
                     cycle_loss = loss_cycle_A2B + loss_cycle_B2A
                     CycleLoss_meter.add(cycle_loss.item())
+                    losses_dict['cycle_loss'].append(cycle_loss.item())
 
                     loss_G = loss_G_A2B + loss_G_B2A + loss_idt
                     GLoss_meter.add(loss_G.item())
+                    losses_dict['generator_loss'].append(loss_G.item())
 
                     ######################
                     # sample
@@ -427,26 +475,26 @@ class CycleGAN(object):
 
                     loss_D = loss_DA + loss_DB + loss_DB_all + loss_DA_all
                     DLoss_meter.add(loss_D.item())
+                    losses_dict['discriminator_loss'].append(loss_D.item())
 
                 # save snapshot
                 if i % self.opt.plot_every == 0:
                     file_name = self.opt.name + '_snap_%03d_%05d.png' % (epoch, i,)
                     test_path = os.path.join(self.opt.checkpoint_path, file_name)
                     tv.utils.save_image(fake_B, test_path, normalize=True)
-                    print(f'{file_name} saved.')
+                    self.logger.info(f'{file_name} saved.')
 
                     losses['loss_c'] = CycleLoss_meter.value()[0]
                     losses['loss_G'] = GLoss_meter.value()[0]
                     losses['loss_D'] = DLoss_meter.value()[0]
 
-                    print(losses)
+                    self.logger.info(str(losses))
 
-                    print('Epoch {} progress: {:.2%}\n'.format(epoch, i / iter_num))
+                    self.logger.info('Epoch {} progress: {:.2%}\n'.format(epoch, i / iter_num))
 
             # save model
             if epoch % self.opt.save_every == 0 or epoch == self.opt.max_epoch - 1:
                 self.save_model(epoch)
-                print(f'model saved')
 
             self.GA2B_scheduler.step(epoch)
             self.GB2A_scheduler.step(epoch)
@@ -459,7 +507,11 @@ class CycleGAN(object):
 
             epoch_time = int(time.time() - epoch_start_time)
 
-            print_options(self.opt, epoch_log=True, epoch=epoch, time=epoch_time, losses=losses, scores=scores)
+            self.logger.info(f'Epoch {epoch} finished, cost time {epoch_time}\n')
+            self.logger.info(str(losses) + '\n\n')
+
+            with open(self.opt.loss_save_path, 'w') as f:
+                json.dump(losses_dict, f)
 
     def test(self):
         torch.cuda.empty_cache()
@@ -629,5 +681,33 @@ def run():
     elif cyclegan.opt.phase == 'test':
         cyclegan.test()
 
+
+def test_logger():
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+
+    color_formatter = colorlog.ColoredFormatter(
+        "%(log_color)s%(levelname)-8s%(reset)s %(fg_cyan)s%(message)s",
+        datefmt=None,
+        reset=True,
+        log_colors={
+            'DEBUG': 'cyan',
+            'INFO': 'green',
+            'WARNING': 'yellow',
+            'ERROR': 'red',
+            'CRITICAL': 'red,bg_white',
+        },
+        secondary_log_colors={},
+        style='%'
+    )
+
+    ch = colorlog.StreamHandler()
+
+    ch.setFormatter(color_formatter)
+
+    logger.addHandler(ch)
+
+    logger.info('ok')
+
 if __name__ == '__main__':
-    run()
+    test_logger()

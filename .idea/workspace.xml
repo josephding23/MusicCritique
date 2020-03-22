@@ -2,21 +2,49 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b77e5dfc-4c90-42b0-97d0-a4afd2ccd659" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/MusicCritique.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MusicCritique.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/attempt.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/cycle_gan_model.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/midi_write.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/networks/MST.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/MST.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/process/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/process/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/process/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/process/older_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/older_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/data/create_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/data/create_database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/data/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/data/dataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/image_pool.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/image_pool.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/toolkit.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/toolkit.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cyclegan/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cyclegan/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A2B_0.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A2B_1.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A2B_2.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A2B_3.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A2B_4.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A2B_5.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A2B_6.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A2B_7.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A2B_8.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A2B_9.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A_0.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A_1.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A_2.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A_3.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A_4.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A_5.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A_6.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A_7.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A_8.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_A_9.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B2A_0.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B2A_1.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B2A_2.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B2A_3.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B2A_4.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B2A_5.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B2A_6.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B2A_7.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B2A_8.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B2A_9.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B_0.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B_1.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B_2.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B_3.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B_4.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B_5.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B_6.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B_7.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B_8.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/midi_B_9.mid" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +86,7 @@
     <SUITE FILE_PATH="coverage/MusicCritique$hpss.coverage" NAME="hpss Coverage Results" MODIFIED="1569565075791" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
     <SUITE FILE_PATH="coverage/MusicCritique$midiutil.coverage" NAME="midiutil Coverage Results" MODIFIED="1569814037244" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
     <SUITE FILE_PATH="coverage/MusicCritique$md5_reorganize.coverage" NAME="md5_reorganize Coverage Results" MODIFIED="1581478579447" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
-    <SUITE FILE_PATH="coverage/MusicCritique$model__2_.coverage" NAME="model (2) Coverage Results" MODIFIED="1584857405477" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
+    <SUITE FILE_PATH="coverage/MusicCritique$model__2_.coverage" NAME="model (2) Coverage Results" MODIFIED="1584896598394" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
     <SUITE FILE_PATH="coverage/MusicCritique$MusicSegment.coverage" NAME="MusicSegment Coverage Results" MODIFIED="1576392007714" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interface/src" />
     <SUITE FILE_PATH="coverage/MusicCritique$midi_scratch.coverage" NAME="midi_scratch Coverage Results" MODIFIED="1581476739146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
     <SUITE FILE_PATH="coverage/MusicCritique$pytest_in_musegan_py.coverage" NAME="pytest in musegan.py Coverage Results" MODIFIED="1583594309147" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/networks" />
@@ -88,65 +116,85 @@
     <select />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cyclegan/model.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="497" column="52" selection-start-line="497" selection-start-column="52" selection-end-line="497" selection-end-column="52" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/util/data/create_database.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="344" column="19" selection-start-line="344" selection-start-column="19" selection-end-line="344" selection-end-column="19" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cyclegan/config.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/util/image_pool.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/util/data/dataset.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1200">
-              <caret line="75" selection-start-line="75" selection-end-line="75" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5359086">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/cyclegan/model.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="78">
+                  <caret line="674" column="56" selection-start-line="674" selection-start-column="56" selection-end-line="674" selection-end-column="56" />
+                  <folding>
+                    <element signature="e#0#11#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/util/data/create_database.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="5360">
+                  <caret line="344" column="19" selection-start-line="344" selection-start-column="19" selection-end-line="344" selection-end-column="19" />
+                  <folding>
+                    <element signature="e#0#31#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/cyclegan/config.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="336">
+                  <caret line="21" selection-start-line="21" selection-end-line="21" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/util/image_pool.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="64">
+                  <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
+                  <folding>
+                    <element signature="e#0#18#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/util/data/dataset.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1104">
+                  <caret line="75" selection-start-line="75" selection-end-line="75" />
+                  <folding>
+                    <element signature="e#0#31#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/cyclegan/model.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="246">
+                  <caret line="544" selection-start-line="544" selection-end-line="544" />
+                  <folding>
+                    <element signature="e#0#11#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -259,10 +307,10 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="30" />
-    <option name="width" value="1423" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="952" />
+    <option name="y" value="22" />
+    <option name="width" value="976" />
     <option name="height" value="1066" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -284,6 +332,17 @@
               <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
               <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
               <item name="cyclegan" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="midi" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
@@ -613,7 +672,11 @@
       <workItem from="1584149420698" duration="31030000" />
       <workItem from="1584237445533" duration="6198000" />
       <workItem from="1584841261088" duration="5439000" />
-      <workItem from="1584846712203" duration="5459000" />
+      <workItem from="1584846712203" duration="5921000" />
+      <workItem from="1584868036610" duration="1833000" />
+      <workItem from="1584874674145" duration="3164000" />
+      <workItem from="1584890957694" duration="4284000" />
+      <workItem from="1584895431229" duration="1199000" />
     </task>
     <task id="LOCAL-00001" summary="pretty">
       <created>1578794444076</created>
@@ -670,7 +733,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="723437000" />
+    <option name="totallyTimeSpent" value="734379000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -682,10 +745,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="30" width="1423" height="1066" extended-state="0" />
+    <frame x="-8" y="22" width="1936" height="1066" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7735849" visible="true" weight="0.07997065" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.7735849" visible="true" weight="0.020255864" />
       <window_info id="Structure" order="1" sideWeight="0.2264151" side_tool="true" weight="0.14978679" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -699,10 +762,10 @@
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="CSS-X-Fire" order="9" weight="0.32956383" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.14410481" side_tool="true" weight="0.84871244" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4989083" weight="0.22854078" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4989083" weight="0.3583691" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.5008026" weight="0.2446352" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" auto_hide="true" x="-23" y="314" width="1846" height="932" id="Run" order="14" sideWeight="0.8558952" visible="true" weight="0.24678111" />
+      <window_info active="true" anchor="bottom" auto_hide="true" x="-23" y="314" width="1846" height="932" id="Run" order="14" sideWeight="0.8558952" visible="true" weight="0.36695278" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -750,7 +813,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="implement cyclegan" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/interface/src/Piano.py" />
     <entry file="file://$PROJECT_DIR$/../FreeMidiLibrary/src/md5_reorganize.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="784">
@@ -982,9 +1044,33 @@
     <entry file="file://$PROJECT_DIR$/models/cycle_gan_model.py" />
     <entry file="file://$PROJECT_DIR$/models/attempt.py" />
     <entry file="file://$PROJECT_DIR$/models/__init__.py" />
+    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/torchnet/meter/movingaveragevaluemeter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="5" column="29" lean-forward="true" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/util/data/create_database.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5360">
+          <caret line="344" column="19" selection-start-line="344" selection-start-column="19" selection-end-line="344" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cyclegan/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/util/image_pool.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
+        <state relative-caret-position="64">
           <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
@@ -994,25 +1080,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/util/data/dataset.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1200">
+        <state relative-caret-position="1104">
           <caret line="75" selection-start-line="75" selection-end-line="75" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cyclegan/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/util/data/create_database.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="344" column="19" selection-start-line="344" selection-start-column="19" selection-end-line="344" selection-end-column="19" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
@@ -1021,8 +1090,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cyclegan/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="497" column="52" selection-start-line="497" selection-start-column="52" selection-end-line="497" selection-end-column="52" />
+        <state relative-caret-position="78">
+          <caret line="674" column="56" selection-start-line="674" selection-start-column="56" selection-end-line="674" selection-end-column="56" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
