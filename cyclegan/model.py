@@ -17,7 +17,7 @@ from torchsummary import summary
 from torchnet.meter import MovingAverageValueMeter
 from networks.musegan import MuseDiscriminator, MuseGenerator, GANLoss
 from networks.MST import Discriminator, Generator
-from process.config import Config
+from cyclegan.config import Config
 from util.toolkit import generate_midi_from_data, plot_data, evaluate_tonal_scale
 from util.image_pool import ImagePool
 
@@ -152,11 +152,11 @@ class CycleGAN(object):
         torch.cuda.empty_cache()
 
         if self.opt.model == 'base':
-            dataset = SteelyDataset(self.opt.genreA, self.opt.genreB, 'train', use_mix=False)
+            dataset = SteelyDataset(self.opt.genreA, self.opt.genreB, self.opt.phase, use_mix=False)
             dataset_size = len(dataset)
 
         else:
-            dataset = SteelyDataset(self.opt.genreA, self.opt.genreB, 'train', use_mix=True)
+            dataset = SteelyDataset(self.opt.genreA, self.opt.genreB, self.opt.phase, use_mix=True)
             dataset_size = len(dataset)
 
         if self.opt.continue_train:
@@ -462,52 +462,49 @@ class CycleGAN(object):
             print_options(self.opt, epoch_log=True, epoch=epoch, time=epoch_time, losses=losses, scores=scores)
 
     def test(self):
-        opt = Config()
-        opt.phase = 'test'
-        opt.num_threads = 1
-        opt.batch_size = 1
-        opt.serial_batches = True
-        opt.no_flip = True
-        opt.no_dropout = True
-        opt.mode = 'test'
+        torch.cuda.empty_cache()
 
-        device = torch.device('cuda') if opt.gpu else torch.device('cpu')
+        os.makedirs(self.opt.test_save_path, exist_ok=True)
 
-        dataset = get_dataset(opt)
-        dataset_size = len(dataset)
-        print(f'loaded {dataset_size} images for test.')
+        npy_save_dir = self.opt.test_save_path + '/npy'
+        midi_save_dir = self.opt.test_save_path + '/midi'
 
-        netG_x = MuseGenerator(opt)
-        netG_x.to(device)
-        print(netG_x)
-        summary(netG_x, opt.data_shape)
+        '''
+        os.makedirs(npy_save_dir, exist_ok=True)
+        os.makedirs(npy_save_dir + '/origin', exist_ok=True)
+        os.makedirs(npy_save_dir + '/transfer', exist_ok=True)
+        os.makedirs(npy_save_dir + '/cycle', exist_ok=True)
+        '''
 
-        models = sorted(os.listdir(opt.model_path))
-        assert len(models) > 0, 'no models found!'
-        latest_model = models[-1]
-        model_path = os.path.join(opt.model_path, latest_model)
-        print(f'loading trained model {model_path}')
+        os.makedirs(midi_save_dir, exist_ok=True)
+        os.makedirs(midi_save_dir + '/origin', exist_ok=True)
+        os.makedirs(midi_save_dir + '/transfer', exist_ok=True)
+        os.makedirs(midi_save_dir + '/cycle', exist_ok=True)
 
-        map_location = lambda storage, loc: storage
-        state_dict = torch.load(model_path, map_location=map_location)
+        if self.opt.model == 'base':
+            dataset = SteelyDataset(self.opt.genreA, self.opt.genreB, self.opt.phase, use_mix=False)
 
-        # for model trained on pytorch < 0.4
-        # for key in list(state_dict.keys()):
-        #     print(key, '--', key.split('.'))
-        #     keys = key.split('.')
-        #     __patch_instance_norm_state_dict(state_dict, netG_x, keys)
-        netG_x.load_state_dict(state_dict)
+        else:
+            dataset = SteelyDataset(self.opt.genreA, self.opt.genreB, self.opt.phase, use_mix=True)
 
-        for i, data in enumerate(dataset):
-            real_x = data['A'].to(device)
+        self.continue_from_latest_checkpoint()
 
-            with torch.no_grad():
-                # fake_y = netG_x.forward(real_x)
-                fake_y = netG_x(real_x)
-                filename = opt.name + '_fake_%05d.png' % (i,)
-                test_path = os.path.join(opt.test_path, filename)
-                tv.utils.save_image(fake_y, test_path, normalize=True)
-                print(f'{filename} saved')
+        loader = DataLoader(dataset, batch_size=1, shuffle=False, num_workers=1, drop_last=True)
+        for i, data in enumerate(loader):
+
+            if self.opt.direction == 'AtoB':
+                origin = torch.unsqueeze(data[:, 0, :, :], 1).to(self.device, dtype=torch.float)
+                transfer = self.generator_A2B(origin)
+                cycle = self.generator_B2A(transfer)
+
+            else:
+                origin = torch.unsqueeze(data[:, 1, :, :], 1).to(self.device, dtype=torch.float)
+                transfer = self.generator_B2A(origin)
+                cycle = self.generator_A2B(transfer)
+
+            generate_midi_from_data(origin.cpu().detach().numpy()[0, 0, :, :], midi_save_dir + '/origin/' + str(i+1) + '.mid')
+            generate_midi_from_data(transfer.cpu().detach().numpy()[0, 0, :, :], midi_save_dir + '/transfer/' + str(i + 1) + '.mid')
+            generate_midi_from_data(cycle.cpu().detach().numpy()[0, 0, :, :], midi_save_dir + '/cycle/' + str(i + 1) + '.mid')
 
     def find_latest_checkpoint(self):
         path = self.opt.D_B_save_path
@@ -627,7 +624,10 @@ def remove_dir_test():
 
 def run():
     cyclegan = CycleGAN()
-    cyclegan.train()
+    if cyclegan.opt.phase == 'train':
+        cyclegan.train()
+    elif cyclegan.opt.phase == 'test':
+        cyclegan.test()
 
 if __name__ == '__main__':
     run()

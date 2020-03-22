@@ -7,18 +7,21 @@ class Config(object):
         self.genreA = 'rock'
         self.genreB = 'jazz'
 
+        self.phase = 'test'
         self.continue_train = False
+
+        self.direction = 'AtoB'
 
         self.model = 'full' # three different models, base, partial, full
         self.gaussian_std = 1
-        self.use_image_pool = False
-
+        self.use_image_pool = True
         self.image_pool_info = 'pooled' if self.use_image_pool else 'not_pooled'
         self.save_path = 'd:/checkpoints/' + '{}2{}_{}_{}_gn{}'.format(self.genreA, self.genreB, self.model, self.image_pool_info, self.gaussian_std)
         self.model_path = self.save_path + '/models'
         self.checkpoint_path = self.save_path + '/checkpoints'
 
         self.test_path = self.save_path + '/test_results'
+        self.test_save_path = self.test_path + '/' + self.direction
 
         self.G_A2B_save_path = self.model_path + '/G_A2B/'
         self.G_B2A_save_path = self.model_path + '/G_B2A/'
@@ -56,7 +59,6 @@ class Config(object):
         self.g_lr = 2e-4                     # generator learning rate
         self.d_lr = 2e-4                     # discriminator learning rate
 
-        self.phase = 'train'
         self.no_flip = True
         self.num_threads = 4
         self.batch_size = 16
@@ -67,7 +69,6 @@ class Config(object):
         self.save_every = 5  # epochs
 
         self.start_epoch = 0
-
 
 if __name__ == '__main__':
     config = Config()

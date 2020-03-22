@@ -6,6 +6,7 @@ import traceback
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+import torch
 import scipy.sparse as ss
 
 def get_midi_collection():
@@ -436,45 +437,37 @@ def test_build_numpy_by_note_length():
     print(nonzeros.shape)
     np.savez_compressed(npy_path, nonzeros)
 
-    '''
-    sample_data = data[1, :, :]
-    dataX = []
-    dataY = []
-    for time in range(64):
-        for pitch in range(84):
-            if sample_data[time][pitch]:
-                dataX.append(time)
-                dataY.append(pitch)
-    plt.scatter(x=dataX, y=dataY)
-    plt.show()
-    '''
 
-def generate_sparse_matrix_from_nonzeros(genre):
+
+def generate_sparse_matrix_of_genre(genre):
     npy_path = 'D:/data/' + genre + '/data_sparse.npz'
 
 
     with np.load(npy_path) as f:
-        data = np.zeros(f['shape'], np.bool_)
+        shape = f['shape']
+        data = np.zeros(shape, np.float_)
         nonzeros = f['nonzeros']
         for x in nonzeros:
-            data[(x[0], x[1], x[2])] = True
-    # data = np.expand_dims(data, axis=1)
-    '''
+            data[(x[0], x[1], x[2])] = 1.
 
-    sample_data = data[1, :, :]
-    dataX = []
-    dataY = []
-    for time in range(64):
-        for pitch in range(84):
-            if sample_data[time][pitch]:
-                dataX.append(time)
-                dataY.append(pitch)
-    plt.scatter(x=dataX, y=dataY)
-    plt.show()
-    '''
     return data
 
 
+def generate_sparse_matrix_from_multiple_genres(genres):
+    length = 0
+
+    genre_collection = get_genre_collection()
+    for genre in genre_collection.find({'Name': {'$in': genres}}):
+        length += genre['PiecesNum']
+    data = np.zeros([length, 64, 84], np.float_)
+
+    for genre in genres:
+        npy_path = 'D:/data/' + genre + '/data_sparse.npz'
+        with np.load(npy_path) as f:
+            nonzeros = f['nonzeros']
+            for x in nonzeros:
+                data[(x[0], x[1], x[2])] = 1.
+    return data
 
 def pretty_midi_test():
     pm = pretty_midi.PrettyMIDI()
@@ -500,5 +493,15 @@ def test_sample_data():
     data = np.load(path)
     print(data.shape)
 
+
 if __name__ == '__main__':
-    generate_sparse_matrix_from_nonzeros('rock')
+    import time
+    time1 = time.time()
+    genres = ['metal', 'punk', 'folk', 'newage', 'country', 'bluegrass']
+    data = generate_sparse_matrix_from_multiple_genres(genres)
+    time2 = time.time()
+    print(time2-time1)
+    np.random.shuffle(data)
+    time3 = time.time()
+    print(data.shape)
+    print(time3-time1)
