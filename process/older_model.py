@@ -104,39 +104,33 @@ class CycleGAN(object):
 
         decay_lr = lambda epoch: self.lr if epoch < self.epoch_step else self.lr * (self.max_epoch - epoch) / (self.max_epoch - self.epoch_step)
 
-        self.D_optimizer = Adam(params=self.discriminator_A.parameters(), lr=self.lr, betas=(self.beta1, self.beta2))
-        self.G_optimizer = Adam(params=self.generator_A2B.parameters(), lr=self.lr, betas=(self.beta1, self.beta2))
-        '''
+
+
         self.DA_optimizer = Adam(params=self.discriminator_A.parameters(), lr=self.lr, betas=(self.beta1, self.beta2))
         self.DB_optimizer = Adam(params=self.discriminator_B.parameters(), lr=self.lr, betas=(self.beta1, self.beta2))
         self.GA2B_optimizer = Adam(params=self.generator_A2B.parameters(), lr=self.lr, betas=(self.beta1, self.beta2))
         self.GB2A_optimizer = Adam(params=self.generator_B2A.parameters(), lr=self.lr, betas=(self.beta1, self.beta2))
-        '''
-
-        self.D_scheduler = lr_scheduler.StepLR(self.D_optimizer, step_size=5, gamma=0.8)
-        self.G_scheduler = lr_scheduler.StepLR(self.G_optimizer, step_size=5, gamma=0.8)
 
         '''
         self.DA_scheduler = lr_scheduler.LambdaLR(self.DA_optimizer, lr_lambda=decay_lr)
         self.DB_scheduler = lr_scheduler.LambdaLR(self.DB_optimizer, lr_lambda=decay_lr)
         self.GA2B_scheduler = lr_scheduler.LambdaLR(self.GA2B_optimizer, lr_lambda=decay_lr)
         self.GB2A_scheduler = lr_scheduler.LambdaLR(self.GB2A_optimizer, lr_lambda=decay_lr)
-        
+        '''
+
         self.DA_scheduler = lr_scheduler.StepLR(self.DA_optimizer, step_size=5, gamma=0.8)
         self.DB_scheduler = lr_scheduler.StepLR(self.DB_optimizer, step_size=5, gamma=0.8)
         self.GA2B_scheduler = lr_scheduler.StepLR(self.GA2B_optimizer, step_size=5, gamma=0.8)
         self.GB2A_scheduler = lr_scheduler.StepLR(self.GB2A_optimizer, step_size=5, gamma=0.8)
-        '''
 
 
 
         if self.model != 'base':
-            pass
-            # self.DA_all_optimizer = torch.optim.Adam(params=self.discriminator_A_all.parameters(), lr=self.lr, betas=(self.beta1, self.beta2))
-            # self.DB_all_optimizer = torch.optim.Adam(params=self.discriminator_B_all.parameters(), lr=self.lr, betas=(self.beta1, self.beta2))
+            self.DA_all_optimizer = torch.optim.Adam(params=self.discriminator_A_all.parameters(), lr=self.lr, betas=(self.beta1, self.beta2))
+            self.DB_all_optimizer = torch.optim.Adam(params=self.discriminator_B_all.parameters(), lr=self.lr, betas=(self.beta1, self.beta2))
 
-            # self.DA_all_scheduler = lr_scheduler.StepLR(self.DA_all_optimizer, step_size=5, gamma=0.8)
-            # self.DB_all_scheduler = lr_scheduler.StepLR(self.DB_all_optimizer, step_size=5, gamma=0.8)
+            self.DA_all_scheduler = lr_scheduler.StepLR(self.DA_all_optimizer, step_size=5, gamma=0.8)
+            self.DB_all_scheduler = lr_scheduler.StepLR(self.DB_all_optimizer, step_size=5, gamma=0.8)
 
 
     def continue_from_latest_checkpoint(self):

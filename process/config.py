@@ -4,14 +4,20 @@ class Config(object):
     def __init__(self):
         self.name = 'steely_gan'
         self.dataset_name = 'free_midi_library'
-        self.model = 'base' # three different models, base, partial, full
-
-
         self.genreA = 'rock'
         self.genreB = 'jazz'
-        self.save_path = 'd:/checkpoints/' + self.name + '/' + self.model
+
+        self.continue_train = False
+
+        self.model = 'full' # three different models, base, partial, full
+        self.gaussian_std = 1
+        self.use_image_pool = False
+
+        self.image_pool_info = 'pooled' if self.use_image_pool else 'not_pooled'
+        self.save_path = 'd:/checkpoints/' + '{}2{}_{}_{}_gn{}'.format(self.genreA, self.genreB, self.model, self.image_pool_info, self.gaussian_std)
         self.model_path = self.save_path + '/models'
         self.checkpoint_path = self.save_path + '/checkpoints'
+
         self.test_path = self.save_path + '/test_results'
 
         self.G_A2B_save_path = self.model_path + '/G_A2B/'
@@ -22,7 +28,7 @@ class Config(object):
         self.D_A_all_save_path = self.model_path + '/D_A_all/'
         self.D_B_all_save_path = self.model_path + '/D_B_all/'
 
-        self.image_pool_max_size = 50
+        self.image_pool_max_size = 20
 
         self.max_dataset_size = 10000
         self.dataset_mode = 'unaligned'
@@ -41,13 +47,7 @@ class Config(object):
         self.input_shape = (1, 64, 84)
 
         self.gpu = True
-        '''
-        self.preprocess = 'resize_and_crop'
-        self.load_size = 320
-        self.crop_size = 220
-        self.no_flip = True
-        self.num_threads = 4
-        '''
+
         self.beta1 = 0.5                     # Adam optimizer beta1 & 2
         self.beta2 = 0.999
 
@@ -63,11 +63,12 @@ class Config(object):
         self.max_epoch = 30
         self.epoch_step = 5
 
-        self.use_image_pool = True
-
         self.plot_every = 100  # iterations
         self.save_every = 5  # epochs
 
-        self.continue_train = False
         self.start_epoch = 0
 
+
+if __name__ == '__main__':
+    config = Config()
+    print(config.save_path)

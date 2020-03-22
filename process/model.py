@@ -26,50 +26,9 @@ class CycleGAN(object):
     def __init__(self):
         self.opt = Config()
 
-        self.name = self.opt.name
-
-        self.genreA = self.opt.genreA
-        self.genreB = self.opt.genreB
-
-        self.save_path = self.opt.save_path
-        self.model_path = self.opt.model_path
-        self.checkpoint_path = self.save_path + '/checkpoints'
-        self.test_path = self.save_path + '/test_results'
-
-        self.G_A2B_save_path = self.opt.G_A2B_save_path
-        self.G_B2A_save_path = self.opt.G_B2A_save_path
-        self.D_A_save_path = self.opt.D_A_save_path
-        self.D_B_save_path = self.opt.D_B_save_path
-        self.D_A_all_save_path = self.opt.D_A_all_save_path
-        self.D_B_all_save_path = self.opt.D_B_all_save_path
-
-        self.data_shape = self.opt.data_shape
-        self.input_shape = self.opt.input_shape
-
-        self.gpu = self.opt.gpu
         self.device = torch.device('cuda') if self.opt.gpu else torch.device('cpu')
 
-        self.beta1 = self.opt.beta1
-        self.beta2 = self.opt.beta2
-
-        self.phase = self.opt.phase
-        self.lr = self.opt.lr
-        self.batch_size = self.opt.batch_size
-        self.max_epoch = self.opt.max_epoch
-        self.epoch_step = self.opt.epoch_step
-        self.start_epoch = self.opt.start_epoch
-
-        self.plot_every = 100  # iteration
-
-        self.save_every = 5  # epochs
-
-        self.model = self.opt.model
-
-        self.use_image_poll = self.opt.use_image_pool
-
         self.pool = ImagePool(self.opt.image_pool_max_size)
-
-        self.continue_train = self.opt.continue_train
 
         self._build_model()
 
@@ -84,95 +43,105 @@ class CycleGAN(object):
         self.discriminator_A_all = None
         self.discriminator_B_all = None
 
-        if self.model != 'base':
+        if self.opt.model != 'base':
             self.discriminator_A_all = Discriminator()
             self.discriminator_B_all = Discriminator()
 
-        if self.gpu:
+        if self.opt.gpu:
             self.generator_A2B.to(self.device)
-            summary(self.generator_A2B, input_size=self.input_shape)
+            summary(self.generator_A2B, input_size=self.opt.input_shape)
             self.generator_B2A.to(self.device)
 
             self.discriminator_A.to(self.device)
-            summary(self.discriminator_A, input_size=self.input_shape)
+            summary(self.discriminator_A, input_size=self.opt.input_shape)
             self.discriminator_B.to(self.device)
 
-            if self.model != 'base':
+            if self.opt.model != 'base':
                 self.discriminator_A_all.to(self.device)
                 self.discriminator_B_all.to(self.device)
 
-        decay_lr = lambda epoch: self.lr if epoch < self.epoch_step else self.lr * (self.max_epoch - epoch) / (
-                    self.max_epoch - self.epoch_step)
+        decay_lr = lambda epoch: self.opt.lr if epoch < self.opt.epoch_step else self.opt.lr * (self.opt.max_epoch - epoch) / (
+                    self.opt.max_epoch - self.opt.epoch_step)
 
-        self.D_optimizer = Adam(params=self.discriminator_A.parameters(), lr=self.lr, betas=(self.beta1, self.beta2))
-        self.G_optimizer = Adam(params=self.generator_A2B.parameters(), lr=self.lr, betas=(self.beta1, self.beta2))
+        self.DA_optimizer = Adam(params=self.discriminator_A.parameters(), lr=self.opt.lr, betas=(self.opt.beta1, self.opt.beta2))
+        self.DB_optimizer = Adam(params=self.discriminator_B.parameters(), lr=self.opt.lr, betas=(self.opt.beta1, self.opt.beta2))
+        self.GA2B_optimizer = Adam(params=self.generator_A2B.parameters(), lr=self.opt.lr, betas=(self.opt.beta1, self.opt.beta2))
+        self.GB2A_optimizer = Adam(params=self.generator_B2A.parameters(), lr=self.opt.lr, betas=(self.opt.beta1, self.opt.beta2))
 
-        self.D_scheduler = lr_scheduler.StepLR(self.D_optimizer, step_size=5, gamma=0.8)
-        self.G_scheduler = lr_scheduler.StepLR(self.G_optimizer, step_size=5, gamma=0.8)
+        self.DA_scheduler = lr_scheduler.StepLR(self.DA_optimizer, step_size=5, gamma=0.8)
+        self.DB_scheduler = lr_scheduler.StepLR(self.DB_optimizer, step_size=5, gamma=0.8)
+        self.GA2B_scheduler = lr_scheduler.StepLR(self.GA2B_optimizer, step_size=5, gamma=0.8)
+        self.GB2A_scheduler = lr_scheduler.StepLR(self.GB2A_optimizer, step_size=5, gamma=0.8)
+
+        if self.opt.model != 'base':
+            self.DA_all_optimizer = torch.optim.Adam(params=self.discriminator_A_all.parameters(), lr=self.opt.lr, betas=(self.opt.beta1, self.opt.beta2))
+            self.DB_all_optimizer = torch.optim.Adam(params=self.discriminator_B_all.parameters(), lr=self.opt.lr, betas=(self.opt.beta1, self.opt.beta2))
+
+            self.DA_all_scheduler = lr_scheduler.StepLR(self.DA_all_optimizer, step_size=5, gamma=0.8)
+            self.DB_all_scheduler = lr_scheduler.StepLR(self.DB_all_optimizer, step_size=5, gamma=0.8)
 
 
     def continue_from_latest_checkpoint(self):
         latest_checked_epoch = self.find_latest_checkpoint()
-        self.start_epoch = latest_checked_epoch + 1
+        self.opt.start_epoch = latest_checked_epoch + 1
 
-        G_A2B_path = self.G_A2B_save_path + 'steely_gan_G_A2B_' + str(latest_checked_epoch) + '.pth'
-        G_B2A_path = self.G_B2A_save_path + 'steely_gan_G_B2A_' + str(latest_checked_epoch) + '.pth'
-        D_A_path = self.D_A_save_path + 'steely_gan_D_A_' + str(latest_checked_epoch) + '.pth'
-        D_B_path = self.D_B_save_path + 'steely_gan_D_B_' + str(latest_checked_epoch) + '.pth'
+        G_A2B_path = self.opt.G_A2B_save_path + 'steely_gan_G_A2B_' + str(latest_checked_epoch) + '.pth'
+        G_B2A_path = self.opt.G_B2A_save_path + 'steely_gan_G_B2A_' + str(latest_checked_epoch) + '.pth'
+        D_A_path = self.opt.D_A_save_path + 'steely_gan_D_A_' + str(latest_checked_epoch) + '.pth'
+        D_B_path = self.opt.D_B_save_path + 'steely_gan_D_B_' + str(latest_checked_epoch) + '.pth'
 
         self.generator_A2B.load_state_dict(torch.load(G_A2B_path))
         self.generator_B2A.load_state_dict(torch.load(G_B2A_path))
         self.discriminator_A.load_state_dict(torch.load(D_A_path))
         self.discriminator_B.load_state_dict(torch.load(D_B_path))
 
-        if self.model != 'base':
-            D_A_all_path = self.D_A_all_save_path + 'steely_gan_D_A_all_' + str(latest_checked_epoch) + '.pth'
-            D_B_all_path = self.D_B_all_save_path + 'steely_gan_D_B_all_' + str(latest_checked_epoch) + '.pth'
+        if self.opt.model != 'base':
+            D_A_all_path = self.opt.D_A_all_save_path + 'steely_gan_D_A_all_' + str(latest_checked_epoch) + '.pth'
+            D_B_all_path = self.opt.D_B_all_save_path + 'steely_gan_D_B_all_' + str(latest_checked_epoch) + '.pth'
 
             self.discriminator_A_all.load_state_dict(torch.load(D_A_all_path))
             self.discriminator_B_all.load_state_dict(torch.load(D_B_all_path))
 
-        print(f'Loaded model from epoch {self.start_epoch}')
+        print(f'Loaded model from epoch {self.opt.start_epoch}')
 
-    def empty_checkpoints(self):
+    def reset_save(self):
         import shutil
-        shutil.rmtree(self.save_path)
+        if os.path.exists(self.opt.save_path):
+            shutil.rmtree(self.opt.save_path)
+        os.makedirs(self.opt.save_path, exist_ok=True)
+        os.makedirs(self.opt.model_path, exist_ok=True)
+        os.makedirs(self.opt.checkpoint_path, exist_ok=True)
+        os.makedirs(self.opt.test_path, exist_ok=True)
 
-    def create_save_dirs(self):
-        os.makedirs(self.save_path, exist_ok=True)
-        os.makedirs(self.model_path, exist_ok=True)
-        os.makedirs(self.checkpoint_path, exist_ok=True)
-        os.makedirs(self.test_path, exist_ok=True)
-
-        os.makedirs(self.G_A2B_save_path, exist_ok=True)
-        os.makedirs(self.G_B2A_save_path, exist_ok=True)
-        os.makedirs(self.D_A_save_path, exist_ok=True)
-        os.makedirs(self.D_B_save_path, exist_ok=True)
-        os.makedirs(self.D_A_all_save_path, exist_ok=True)
-        os.makedirs(self.D_B_all_save_path, exist_ok=True)
+        os.makedirs(self.opt.G_A2B_save_path, exist_ok=True)
+        os.makedirs(self.opt.G_B2A_save_path, exist_ok=True)
+        os.makedirs(self.opt.D_A_save_path, exist_ok=True)
+        os.makedirs(self.opt.D_B_save_path, exist_ok=True)
+        os.makedirs(self.opt.D_A_all_save_path, exist_ok=True)
+        os.makedirs(self.opt.D_B_all_save_path, exist_ok=True)
 
     def save_model(self, epoch):
-        G_A2B_filename = f'{self.name}_G_A2B_{epoch}.pth'
-        G_B2A_filename = f'{self.name}_G_B2A_{epoch}.pth'
-        D_A_filename = f'{self.name}_D_A_{epoch}.pth'
-        D_B_filename = f'{self.name}_D_B_{epoch}.pth'
+        G_A2B_filename = f'{self.opt.name}_G_A2B_{epoch}.pth'
+        G_B2A_filename = f'{self.opt.name}_G_B2A_{epoch}.pth'
+        D_A_filename = f'{self.opt.name}_D_A_{epoch}.pth'
+        D_B_filename = f'{self.opt.name}_D_B_{epoch}.pth'
 
-        G_A2B_filepath = os.path.join(self.G_A2B_save_path, G_A2B_filename)
-        G_B2A_filepath = os.path.join(self.G_B2A_save_path, G_B2A_filename)
-        D_A_filepath = os.path.join(self.D_A_save_path, D_A_filename)
-        D_B_filepath = os.path.join(self.D_B_save_path, D_B_filename)
+        G_A2B_filepath = os.path.join(self.opt.G_A2B_save_path, G_A2B_filename)
+        G_B2A_filepath = os.path.join(self.opt.G_B2A_save_path, G_B2A_filename)
+        D_A_filepath = os.path.join(self.opt.D_A_save_path, D_A_filename)
+        D_B_filepath = os.path.join(self.opt.D_B_save_path, D_B_filename)
 
         torch.save(self.generator_A2B.state_dict(), G_A2B_filepath)
         torch.save(self.generator_B2A.state_dict(), G_B2A_filepath)
         torch.save(self.discriminator_A.state_dict(), D_A_filepath)
         torch.save(self.discriminator_B.state_dict(), D_B_filepath)
 
-        if self.model != 'base':
-            D_A_all_filename = f'{self.name}_D_A_all_{epoch}.pth'
-            D_B_all_filename = f'{self.name}_D_B_all_{epoch}.pth'
+        if self.opt.model != 'base':
+            D_A_all_filename = f'{self.opt.name}_D_A_all_{epoch}.pth'
+            D_B_all_filename = f'{self.opt.name}_D_B_all_{epoch}.pth'
 
-            D_A_all_filepath = os.path.join(self.D_A_all_save_path, D_A_all_filename)
-            D_B_all_filepath = os.path.join(self.D_B_all_save_path, D_B_all_filename)
+            D_A_all_filepath = os.path.join(self.opt.D_A_all_save_path, D_A_all_filename)
+            D_B_all_filepath = os.path.join(self.opt.D_B_all_save_path, D_B_all_filename)
 
             torch.save(self.discriminator_A_all.state_dict(), D_A_all_filepath)
             torch.save(self.discriminator_B_all.state_dict(), D_B_all_filepath)
@@ -182,21 +151,21 @@ class CycleGAN(object):
     def train(self):
         torch.cuda.empty_cache()
 
-        if self.model == 'base':
-            dataset = SteelyDataset(self.genreA, self.genreB, 'train', use_mix=False)
+        if self.opt.model == 'base':
+            dataset = SteelyDataset(self.opt.genreA, self.opt.genreB, 'train', use_mix=False)
             dataset_size = len(dataset)
 
         else:
-            dataset = SteelyDataset(self.genreA, self.genreB, 'train', use_mix=True)
+            dataset = SteelyDataset(self.opt.genreA, self.opt.genreB, 'train', use_mix=True)
             dataset_size = len(dataset)
 
-        if self.continue_train:
+        if self.opt.continue_train:
             self.continue_from_latest_checkpoint()
-        else:
-            self.empty_checkpoints()
-            self.create_save_dirs()
 
-        iter_num = int(dataset_size / self.batch_size)
+        else:
+            self.reset_save()
+
+        iter_num = int(dataset_size / self.opt.batch_size)
 
         print(f'loaded {dataset_size} images for training')
 
@@ -212,16 +181,16 @@ class CycleGAN(object):
 
         criterionIdt = nn.L1Loss()
 
-        GLoss_meter = MovingAverageValueMeter(self.plot_every)
-        DLoss_meter = MovingAverageValueMeter(self.plot_every)
-        CycleLoss_meter = MovingAverageValueMeter(self.plot_every)
+        GLoss_meter = MovingAverageValueMeter(self.opt.plot_every)
+        DLoss_meter = MovingAverageValueMeter(self.opt.plot_every)
+        CycleLoss_meter = MovingAverageValueMeter(self.opt.plot_every)
 
         # loss meters
         losses = {}
         scores = {}
 
-        for epoch in range(self.start_epoch, self.max_epoch):
-            loader = DataLoader(dataset, batch_size=self.batch_size, shuffle=True, num_workers=1, drop_last=True)
+        for epoch in range(self.opt.start_epoch, self.opt.max_epoch):
+            loader = DataLoader(dataset, batch_size=self.opt.batch_size, shuffle=True, num_workers=1, drop_last=True)
             epoch_start_time = time.time()
 
             for i, data in enumerate(loader):
@@ -229,10 +198,9 @@ class CycleGAN(object):
                 real_A = torch.unsqueeze(data[:, 0, :, :], 1).to(self.device, dtype=torch.float)
                 real_B = torch.unsqueeze(data[:, 1, :, :], 1).to(self.device, dtype=torch.float)
 
-                gaussian_noise = torch.abs(torch.normal(mean=torch.zeros(self.data_shape), std=1)).to(self.device,
-                                                                                                      dtype=torch.float)
+                gaussian_noise = torch.abs(torch.normal(mean=torch.zeros(self.opt.data_shape), std=self.opt.gaussian_std)).to(self.device, dtype=torch.float)
 
-                if self.model == 'base':
+                if self.opt.model == 'base':
 
                     ######################
                     # Generator
@@ -264,26 +232,34 @@ class CycleGAN(object):
                         idt_B = self.generator_B2A(real_A)
                         loss_idt_A = criterionIdt(idt_A, real_B) * lambda_A * lambda_identity
                         loss_idt_B = criterionIdt(idt_B, real_A) * lambda_A * lambda_identity
-                        loss_idt = loss_idt_A + loss_idt_B
-                    else:
-                        loss_idt = 0.
 
-                    self.G_optimizer.zero_grad()  # set g_x and g_y gradients to zero
+                    else:
+                        loss_idt_A = 0.
+                        loss_idt_B = 0.
+
+                    loss_idt = loss_idt_A + loss_idt_B
+
+                    self.GA2B_optimizer.zero_grad()  # set g_x and g_y gradients to zero
+                    loss_A2B = loss_G_A2B + loss_cycle_A2B + loss_idt_A
+                    loss_A2B.backward(retain_graph=True)
+                    self.GA2B_optimizer.step()
+
+                    self.GB2A_optimizer.zero_grad()  # set g_x and g_y gradients to zero
+                    loss_B2A = loss_G_B2A + loss_cycle_B2A + loss_idt_B
+                    loss_B2A.backward(retain_graph=True)
+                    self.GB2A_optimizer.step()
 
                     cycle_loss = loss_cycle_A2B + loss_cycle_B2A
                     CycleLoss_meter.add(cycle_loss.item())
 
-                    loss_G = loss_G_A2B + loss_G_B2A + cycle_loss
+                    loss_G = loss_G_A2B + loss_G_B2A + loss_idt
                     GLoss_meter.add(loss_G.item())
-                    loss_G.backward()
-
-                    self.G_optimizer.step()
 
                     ######################
                     # sample
                     ######################
                     fake_A_sample, fake_B_sample = (None, None)
-                    if self.use_image_poll:
+                    if self.opt.use_image_pool:
                         [fake_A_sample, fake_B_sample] = self.pool([fake_A_copy, fake_B_copy])
 
                     ######################
@@ -298,7 +274,7 @@ class CycleGAN(object):
                     loss_DB_real = criterionGAN(DB_real, True)
 
                     # loss fake
-                    if self.use_image_poll:
+                    if self.opt.use_image_pool:
                         DA_fake_sample = self.discriminator_A(fake_A_sample + gaussian_noise)
                         DB_fake_sample = self.discriminator_B(fake_B_sample + gaussian_noise)
 
@@ -310,16 +286,18 @@ class CycleGAN(object):
                         loss_DB_fake = criterionGAN(DB_fake, False)
 
                     # loss and backward
-                    self.D_optimizer.zero_grad()
-
+                    self.DA_optimizer.zero_grad()
                     loss_DA = (loss_DA_real + loss_DA_fake) * 0.5
+                    loss_DA.backward()
+                    self.DA_optimizer.step()
+
+                    self.DB_optimizer.zero_grad()
                     loss_DB = (loss_DB_real + loss_DB_fake) * 0.5
+                    loss_DB.backward()
+                    self.DB_optimizer.step()
+
                     loss_D = loss_DA + loss_DB
                     DLoss_meter.add(loss_D.item())
-
-                    loss_D.backward()
-
-                    self.D_optimizer.step()
 
 
                 else:
@@ -328,8 +306,6 @@ class CycleGAN(object):
                     ######################
                     # Generator
                     ######################
-
-                    self.G_optimizer.zero_grad()  # set g_x and g_y gradients to zero
 
                     fake_B = self.generator_A2B(real_A)  # X -> Y'
                     fake_A = self.generator_B2A(real_B)  # Y -> X'
@@ -357,24 +333,33 @@ class CycleGAN(object):
                         idt_B = self.generator_B2A(real_A)
                         loss_idt_A = criterionIdt(idt_A, real_B) * lambda_A * lambda_identity
                         loss_idt_B = criterionIdt(idt_B, real_A) * lambda_A * lambda_identity
-                        loss_idt = loss_idt_A + loss_idt_B
-                    else:
-                        loss_idt = 0.
 
+                    else:
+                        loss_idt_A = 0.
+                        loss_idt_B = 0.
+
+                    loss_idt = loss_idt_A + loss_idt_B
+
+                    self.GA2B_optimizer.zero_grad()  # set g_x and g_y gradients to zero
+                    loss_A2B = loss_G_A2B + loss_cycle_A2B + loss_idt_A
+                    loss_A2B.backward(retain_graph=True)
+                    self.GA2B_optimizer.step()
+
+                    self.GB2A_optimizer.zero_grad()  # set g_x and g_y gradients to zero
+                    loss_B2A = loss_G_B2A + loss_cycle_B2A + loss_idt_B
+                    loss_B2A.backward(retain_graph=True)
+                    self.GB2A_optimizer.step()
                     cycle_loss = loss_cycle_A2B + loss_cycle_B2A
                     CycleLoss_meter.add(cycle_loss.item())
 
-                    loss_G = loss_G_A2B + loss_G_B2A + cycle_loss
-                    loss_G.backward(retain_graph=True)
+                    loss_G = loss_G_A2B + loss_G_B2A + loss_idt
                     GLoss_meter.add(loss_G.item())
-
-                    self.G_optimizer.step()
 
                     ######################
                     # sample
                     ######################
                     fake_A_sample, fake_B_sample = (None, None)
-                    if self.use_image_poll:
+                    if self.opt.use_image_pool:
                         [fake_A_sample, fake_B_sample] = self.pool([fake_A_copy, fake_B_copy])
 
                     ######################
@@ -395,7 +380,7 @@ class CycleGAN(object):
                     loss_DB_all_real = criterionGAN(DB_real_all, True)
 
                     # loss fake
-                    if self.use_image_poll:
+                    if self.opt.use_image_pool:
                         DA_fake_sample = self.discriminator_A(fake_A_sample + gaussian_noise)
                         DB_fake_sample = self.discriminator_B(fake_B_sample + gaussian_noise)
 
@@ -419,24 +404,34 @@ class CycleGAN(object):
                         loss_DB_fake = criterionGAN(DB_fake, False)
 
                     # loss and backward
-                    self.D_optimizer.zero_grad()
-
+                    self.DA_optimizer.zero_grad()
                     loss_DA = (loss_DA_real + loss_DA_fake) * 0.5
+                    loss_DA.backward()
+                    self.DA_optimizer.step()
+
+                    self.DB_optimizer.zero_grad()
                     loss_DB = (loss_DB_real + loss_DB_fake) * 0.5
+                    loss_DB.backward()
+                    self.DB_optimizer.step()
 
+                    self.DA_all_optimizer.zero_grad()
                     loss_DA_all = (loss_DA_all_real + loss_DA_all_fake) * 0.5
-                    loss_DB_all = (loss_DB_all_real + loss_DB_all_fake) * 0.5
+                    loss_DA_all.backward()
+                    self.DA_all_optimizer.step()
 
-                    loss_D = (loss_DA + loss_DB) + (loss_DA_all + loss_DB_all)
-                    loss_D.backward()
+                    self.DB_all_optimizer.zero_grad()
+                    loss_DB_all = (loss_DB_all_real + loss_DB_all_fake) * 0.5
+                    loss_DB_all.backward()
+                    self.DB_all_optimizer.step()
+
+
+                    loss_D = loss_DA + loss_DB + loss_DB_all + loss_DA_all
                     DLoss_meter.add(loss_D.item())
 
-                    self.D_optimizer.step()
-
                 # save snapshot
-                if i % self.plot_every == 0:
-                    file_name = self.name + '_snap_%03d_%05d.png' % (epoch, i,)
-                    test_path = os.path.join(self.checkpoint_path, file_name)
+                if i % self.opt.plot_every == 0:
+                    file_name = self.opt.name + '_snap_%03d_%05d.png' % (epoch, i,)
+                    test_path = os.path.join(self.opt.checkpoint_path, file_name)
                     tv.utils.save_image(fake_B, test_path, normalize=True)
                     print(f'{file_name} saved.')
 
@@ -449,12 +444,18 @@ class CycleGAN(object):
                     print('Epoch {} progress: {:.2%}\n'.format(epoch, i / iter_num))
 
             # save model
-            if epoch % self.save_every == 0 or epoch == self.max_epoch - 1:
+            if epoch % self.opt.save_every == 0 or epoch == self.opt.max_epoch - 1:
                 self.save_model(epoch)
                 print(f'model saved')
 
-            self.G_scheduler.step(epoch)
-            self.D_scheduler.step(epoch)
+            self.GA2B_scheduler.step(epoch)
+            self.GB2A_scheduler.step(epoch)
+            self.DA_scheduler.step(epoch)
+            self.DB_scheduler.step(epoch)
+
+            if self.opt.model != 'base':
+                self.DA_all_scheduler.step(epoch)
+                self.DB_all_scheduler.step(epoch)
 
             epoch_time = int(time.time() - epoch_start_time)
 
@@ -509,7 +510,7 @@ class CycleGAN(object):
                 print(f'{filename} saved')
 
     def find_latest_checkpoint(self):
-        path = self.D_B_save_path
+        path = self.opt.D_B_save_path
         file_list = os.listdir(path)
         match_str = r'\d+'
         epoch_list = sorted([int(re.findall(match_str, file)[0]) for file in file_list])
@@ -584,27 +585,39 @@ def test_sample_song():
     converted_dir = '../data/converted_midi'
 
     for index in range(10):
-        data = dataset[index + 1000]
+        data = dataset[index + 2000]
         dataA, dataB = data[0, :, :], data[1, :, :]
         # print(torch.unsqueeze(torch.from_numpy(dataA), 0).shape)
         dataA2B = cyclegan.generator_A2B(
             torch.unsqueeze(torch.unsqueeze(torch.from_numpy(dataA), 0), 0).to(device='cuda',
                                                                                dtype=torch.float)).cpu().detach().numpy()[
                   0, 0, :, :]
-
+        dataB2A = cyclegan.generator_B2A(
+            torch.unsqueeze(torch.unsqueeze(torch.from_numpy(dataB), 0), 0).to(device='cuda',
+                                                                               dtype=torch.float)).cpu().detach().numpy()[
+                  0, 0, :, :]
         midi_A_path = converted_dir + '/midi_A_' + str(index) + '.mid'
         midi_A2B_path = converted_dir + '/midi_A2B_' + str(index) + '.mid'
 
-        tonality_A = evaluate_tonal_scale(dataA)
-        tonality_B = evaluate_tonal_scale(dataA2B)
+        midi_B_path = converted_dir + '/midi_B_' + str(index) + '.mid'
+        midi_B2A_path = converted_dir + '/midi_B2A_' + str(index) + '.mid'
 
-        print(tonality_A, tonality_B)
+        tonality_A = evaluate_tonal_scale(dataA)
+        tonality_A2B = evaluate_tonal_scale(dataA2B)
+
+        tonality_B = evaluate_tonal_scale(dataB)
+        tonality_B2A = evaluate_tonal_scale(dataB2A)
+
+        print(tonality_A, tonality_A2B)
+        print(tonality_B, tonality_B2A)
 
         # plot_data(dataA)
         # plot_data(dataA2B)
 
         generate_midi_from_data(dataA, midi_A_path)
         generate_midi_from_data(dataA2B, midi_A2B_path)
+        generate_midi_from_data(dataB, midi_B_path)
+        generate_midi_from_data(dataB2A, midi_B2A_path)
 
 
 def remove_dir_test():
