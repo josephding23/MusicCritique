@@ -37,8 +37,8 @@ class SteelyDataset(data.Dataset):
 
         self.data_path = 'D:/data/'
 
-        numA = genre_collection.find_one({'Name': genreA})['PiecesNum']
-        numB = genre_collection.find_one({'Name': genreB})['PiecesNum']
+        numA = genre_collection.find_one({'Name': genreA})['ValidPiecesNum']
+        numB = genre_collection.find_one({'Name': genreB})['ValidPiecesNum']
 
         train_num = int(min(numA, numB) * 0.9)
         test_num = min(numA, numB) - train_num

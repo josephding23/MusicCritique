@@ -17,62 +17,6 @@ def get_genre_collection():
     client = MongoClient(connect=False)
     return client.free_midi.genres
 
-def generate_multi_instr_numpy(time_step=120, bar_length=4, valid_range = (24, 108), genre='rock'):
-    root_dir = 'E:/merged_midi/'
-    npy_file_root_Dir = 'E:/midi_matrix/' + genre + '/'
-
-    midi_collection = get_midi_collection()
-    for midi in midi_collection.find({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}, 'MultiInstrNpyGenerated': False}, no_cursor_timeout = True):
-        non_zeros = []
-        path = root_dir + genre + '/' + midi['md5'] + '.mid'
-        mult = pypianoroll.parse(path)
-        instr_tracks = {
-            'Drums': None,
-            'Piano': None,
-            'Guitar': None,
-            'Bass': None,
-            'Strings': None
-        }
-        length = 0
-        for track in mult.tracks:
-            length = track.pianoroll.shape[0]
-            valid_matrix = track.pianoroll[:, valid_range[0]:valid_range[1]].copy()
-            instr_tracks[track.name] = valid_matrix
-        for name, content in instr_tracks.items():
-            if content is None:
-                instr_tracks[name] = np.zeros((length, valid_range[1]-valid_range[0]))
-
-
-        merged_instr_matrix = np.dstack((instr_tracks['Drums'], instr_tracks['Piano'],
-                                         instr_tracks['Guitar'], instr_tracks['Bass'],
-                                         instr_tracks['Strings']))
-        whole_paragraphs = length // (time_step * bar_length) + 1
-        try:
-            for track_num in range(5):
-                instr_track = merged_instr_matrix[:, :, track_num]
-                for current_time in range(length):
-                    for note in range(valid_range[1]-valid_range[0]):
-                        if instr_track[current_time][note] != 0:
-                            paragraph_num = current_time // (time_step * bar_length)
-                            bar_num = current_time % (time_step * bar_length) // time_step
-                            time_node = current_time % time_step
-
-                            non_zeros.append([paragraph_num, bar_num, time_node, note, track_num])
-
-            non_zero_temp_matrix = np.array(non_zeros).transpose()
-            print(non_zero_temp_matrix.shape)
-            save_path = npy_file_root_Dir + midi['md5'] + '.npz'
-            np.savez_compressed(save_path, non_zero_temp_matrix)
-            # last_segment_number += whole_paragraphs
-            # print(last_segment_number)
-            midi_collection.update_one({'_id': midi['_id']}, {'$set': {'MultiInstrNpyGenerated': True}})
-            # prossed += 1
-            print('Progress: {:.2%}\n'.format(midi_collection.count({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}, 'MultiInstrNpyGenerated': True}) / midi_collection.count({'Genre': genre, 'NotEmptyTracksNum': {'$gte': 4}})))
-        except:
-            pass
-        # print(merged.shape)
-
-
 def divide_into_groups(group_num=10):
     midi_collection = get_midi_collection()
     genre_collection = get_genre_collection()
@@ -108,7 +52,8 @@ def merge_all_sparse_matrices():
         if not os.path.exists(save_dir):
             os.mkdir(save_dir)
         print(genre['Name'])
-        whole_length = genre['PiecesNum']
+        whole_length = genre['ValidPiecesNum']
+
         shape = np.array([whole_length, time_step, valid_range[1]-valid_range[0]])
 
         processed = 0
@@ -119,20 +64,22 @@ def merge_all_sparse_matrices():
         for midi in midi_collection.find({'Genre': genre['Name']}, no_cursor_timeout=True):
 
             path = root_dir + genre['Name'] + '/' + midi['md5'] + '.npz'
-            pieces_num = midi['PiecesNum']
+            valid_pieces_num = midi['PiecesNum'] - 1
 
             f = np.load(path)
             matrix = f['arr_0'].copy()
-            print(pieces_num, matrix.shape[0])
+            print(valid_pieces_num, matrix.shape[0])
             for data in matrix:
                 try:
                     data = data.tolist()
-                    piece_order = last_piece_num + data[0]
-                    non_zeros.append([piece_order, data[1], data[2]])
+
+                    if data[0] < valid_pieces_num:
+                        piece_order = last_piece_num + data[0]
+                        non_zeros.append([piece_order, data[1], data[2]])
                 except:
                     print(path)
 
-            last_piece_num += pieces_num
+            last_piece_num += valid_pieces_num
             processed += 1
 
             print('Progress: {:.2%}\n'.format(processed / whole_num))
@@ -212,37 +159,8 @@ def find_data_with_no_empty_tracks():
             # midi_collection.delete_one({'_id': midi['_id']})
     print(total)
 
-def add_paragraph_num_info(time_step=120, bar_length=4, valid_range = (24, 108)):
-    root_dir = 'E:/merged_midi/'
 
-    midi_collection = get_midi_collection()
-    for midi in midi_collection.find({'PiecesNum': {'$exists': False}}, no_cursor_timeout = True):
-        path = root_dir + midi['Genre'] + '/' + midi['md5'] + '.mid'
-        mult = pypianoroll.parse(path)
-        instr_tracks = {
-            'Drums': None,
-            'Piano': None,
-            'Guitar': None,
-            'Bass': None,
-            'Strings': None
-        }
-        length = 0
-        for track in mult.tracks:
-            length = track.pianoroll.shape[0]
-            valid_matrix = track.pianoroll[:, valid_range[0]:valid_range[1]].copy()
-            instr_tracks[track.name] = valid_matrix
-        for name, content in instr_tracks.items():
-            if content is None:
-                instr_tracks[name] = np.zeros((length, valid_range[1]-valid_range[0]))
-
-        piece_num = math.ceil(length / (time_step * bar_length) + 1)
-        print(piece_num)
-
-        midi_collection.update_one({'_id': midi['_id']}, {'$set': {'PiecesNum': piece_num}})
-        print('Progress: {:.2%}\n'.format( midi_collection.count({'PiecesNum': {'$exists': True}}) / midi_collection.count()))
-
-
-def reset_paragraph_num_info():
+def set_paragraph_num_info():
     midi_collection = get_midi_collection()
     root_dir = 'E:/merged_midi/'
     for midi in midi_collection.find({'PiecesNum': {'$exists': False}}, no_cursor_timeout = True):
@@ -374,7 +292,7 @@ def generate_nonzeros_by_notes():
             path = root_dir + genre_name + '/' + midi['md5'] + '.mid'
             save_path = npy_file_root_dir + midi['md5'] + '.npz'
             pm = pretty_midi.PrettyMIDI(path)
-            segment_num = math.ceil(pm.get_end_time() / 8)
+            segment_num = int(pm.get_end_time() / 8)
             note_range = (24, 108)
 
             # data = np.zeros((segment_num, 64, 84), np.bool_)
@@ -403,42 +321,6 @@ def generate_nonzeros_by_notes():
                 midi_collection.count({'Genre': genre_name, 'OneInstrNpyGenerated': True}) / midi_collection.count()), end='\n')
 
 
-
-def test_build_numpy_by_note_length():
-    path = './e56b7b3e51ee03bab6fedbebcc90ed00.mid'
-    pm = pretty_midi.PrettyMIDI(path)
-    segment_num = math.ceil(pm.get_end_time() / 8)
-    note_range = (24, 108)
-
-    npy_path = './data.npz'
-
-    data = np.zeros((segment_num, 64, 84), np.bool_)
-    nonzeros = []
-
-    quarter_length = (60 / 120) / 4
-    for instr in pm.instruments:
-        print(instr.name)
-        if not instr.is_drum:
-            for note in instr.notes:
-                start = int(note.start / quarter_length)
-                end = int(note.end / quarter_length)
-                pitch = note.pitch
-                if pitch < 24 or pitch >= 108:
-                    continue
-                else:
-                    pitch -= 24
-                    for time_raw in range(start, end):
-                        segment = int(time_raw / 64)
-                        time = time_raw % 64
-                        data[segment, time, pitch] = True
-                        nonzeros.append([segment, time, pitch])
-
-    nonzeros = np.array(nonzeros)
-    print(nonzeros.shape)
-    np.savez_compressed(npy_path, nonzeros)
-
-
-
 def generate_sparse_matrix_of_genre(genre):
     npy_path = 'D:/data/' + genre + '/data_sparse.npz'
 
@@ -458,7 +340,7 @@ def generate_sparse_matrix_from_multiple_genres(genres):
 
     genre_collection = get_genre_collection()
     for genre in genre_collection.find({'Name': {'$in': genres}}):
-        length += genre['PiecesNum']
+        length += genre['ValidPiecesNum']
     data = np.zeros([length, 64, 84], np.float_)
 
     for genre in genres:
@@ -493,15 +375,11 @@ def test_sample_data():
     data = np.load(path)
     print(data.shape)
 
+def add_more_valid_pieces_num():
+    for genre in get_genre_collection().find():
+        valid_pieces_num = genre['PiecesNum'] - get_midi_collection().count({'Genre': genre['Name']})
+        get_genre_collection().update_many({'_id': genre['_id']}, {'$set': {'ValidPiecesNum': valid_pieces_num}})
 
 if __name__ == '__main__':
-    import time
-    time1 = time.time()
-    genres = ['metal', 'punk', 'folk', 'newage', 'country', 'bluegrass']
-    data = generate_sparse_matrix_from_multiple_genres(genres)
-    time2 = time.time()
-    print(time2-time1)
-    np.random.shuffle(data)
-    time3 = time.time()
-    print(data.shape)
-    print(time3-time1)
+    # get_genre_collection().update_many({}, {'$set': {'DatasetGenerated': False}})
+    merge_all_sparse_matrices()

@@ -150,7 +150,7 @@ class CycleGAN(object):
 
 
     def add_file_logger(self):
-        fh = logging.FileHandler(filename=self.opt.log_path, mode='w')
+        fh = logging.FileHandler(filename=self.opt.log_path, mode='a')
         fh.setFormatter(logging.Formatter('%(asctime)s - %(message)s'))
         self.logger.addHandler(fh)
 
@@ -209,12 +209,10 @@ class CycleGAN(object):
 
         if self.opt.model == 'base':
             dataset = SteelyDataset(self.opt.genreA, self.opt.genreB, self.opt.phase, use_mix=False)
-            dataset_size = len(dataset)
-
         else:
             dataset = SteelyDataset(self.opt.genreA, self.opt.genreB, self.opt.phase, use_mix=True)
-            dataset_size = len(dataset)
 
+        dataset_size = len(dataset)
         iter_num = int(dataset_size / self.opt.batch_size)
 
         self.logger.info(f'Dataset loaded, genreA: {self.opt.genreA}, genreB: {self.opt.genreB}, total size: {dataset_size}.')
@@ -580,13 +578,23 @@ class CycleGAN(object):
         else:
             dataset = SteelyDataset(self.opt.genreA, self.opt.genreB, self.opt.phase, use_mix=True)
 
+        dataset_size = len(dataset)
+        loader = DataLoader(dataset, batch_size=1, shuffle=False, num_workers=1, drop_last=True)
+        self.logger.info(f'Dataset loaded, genreA: {self.opt.genreA}, genreB: {self.opt.genreB}, total size: {dataset_size}.')
+
+        ######################
+        # Load model
+        ######################
+
         try:
             self.continue_from_latest_checkpoint()
         except CyganException as e:
-            print(e)
+            self.logger.error(e)
             return
 
-        loader = DataLoader(dataset, batch_size=1, shuffle=False, num_workers=1, drop_last=True)
+        ######################
+        # Test
+        ######################
 
         for i, data in enumerate(loader):
             if self.opt.direction == 'AtoB':
