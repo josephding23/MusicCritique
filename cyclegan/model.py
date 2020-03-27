@@ -18,7 +18,7 @@ from torchnet.meter import MovingAverageValueMeter
 from networks.musegan import MuseDiscriminator, MuseGenerator, GANLoss
 from networks.MST import Discriminator, Generator
 from cyclegan.config import Config
-from util.toolkit import generate_midi_from_data, plot_data, evaluate_tonal_scale
+from util.toolkit import generate_midi_segment_from_tensor, generate_data_from_midi, generate_whole_midi_from_tensor, plot_data, evaluate_tonal_scale
 from util.image_pool import ImagePool
 import logging
 import colorlog
@@ -652,7 +652,7 @@ def load_model_test():
     print(params2['cnet1.1.weight'])
 
 
-def test_sample_song():
+def test_sample_song_old():
     dataset = SteelyDataset('rock', 'jazz', 'test', False)
 
     cyclegan = CycleGAN()
@@ -690,11 +690,27 @@ def test_sample_song():
         # plot_data(dataA)
         # plot_data(dataA2B)
 
-        generate_midi_from_data(dataA, midi_A_path)
-        generate_midi_from_data(dataA2B, midi_A2B_path)
-        generate_midi_from_data(dataB, midi_B_path)
-        generate_midi_from_data(dataB2A, midi_B2A_path)
+        generate_midi_segment_from_tensor(dataA, midi_A_path)
+        generate_midi_segment_from_tensor(dataA2B, midi_A2B_path)
+        generate_midi_segment_from_tensor(dataB, midi_B_path)
+        generate_midi_segment_from_tensor(dataB2A, midi_B2A_path)
 
+
+def test_whole_song():
+
+    cyclegan = CycleGAN()
+    cyclegan.continue_from_latest_checkpoint()
+
+    # ori_path = 'E:/free_MIDI/rock/Basket Case - Green Day.mid'
+    ori_path = 'E:/free_MIDI/rock/In Bloom - Nirvana.mid'
+    ori_data = generate_data_from_midi(ori_path)
+
+    transformed_data = cyclegan.generator_A2B(
+        torch.unsqueeze(torch.from_numpy(ori_data), 1).to(device='cuda',
+                                                                           dtype=torch.float)).cpu().detach().numpy()[
+              :, 0, :, :]
+    print(transformed_data.shape)
+    generate_whole_midi_from_tensor(transformed_data, './transformed.mid')
 
 def remove_dir_test():
     import shutil

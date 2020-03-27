@@ -4,8 +4,8 @@ class Config(object):
     def __init__(self):
         self.name = 'steely_gan'
         self.dataset_name = 'free_midi_library'
-        self.genreA = 'rock'
-        self.genreB = 'jazz'
+        self.genreA = 'blues'
+        self.genreB = 'country'
 
         self.phase = 'train'
         self.continue_train = False

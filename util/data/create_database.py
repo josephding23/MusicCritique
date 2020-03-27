@@ -1,7 +1,6 @@
 from pymongo import MongoClient
 import os
 import pretty_midi
-import pypianoroll
 import traceback
 import numpy as np
 import matplotlib.pyplot as plt
@@ -17,26 +16,6 @@ def get_genre_collection():
     client = MongoClient(connect=False)
     return client.free_midi.genres
 
-def divide_into_groups(group_num=10):
-    midi_collection = get_midi_collection()
-    genre_collection = get_genre_collection()
-    for genre in genre_collection.find():
-        total_amount = midi_collection.count({'Genre': genre['Name']})
-        num_per_group = math.ceil(total_amount // group_num)
-        current_num = 0
-        for midi in midi_collection.find({'Genre': genre['Name']},
-                                         no_cursor_timeout=True):
-            group = current_num // num_per_group
-            midi_collection.update_one({'_id': midi['_id']}, {'$set': {'DataGroup': group}})
-            current_num += 1
-
-def test_multiple_genres_midi():
-    midi_collection = get_midi_collection()
-    genre_collection = get_genre_collection()
-    one_genre_num = midi_collection.count({'TotalGenres': ['pop', 'rock']})
-    print(one_genre_num / midi_collection.count())
-
-
 
 def merge_all_sparse_matrices():
     midi_collection = get_midi_collection()
@@ -45,7 +24,6 @@ def merge_all_sparse_matrices():
 
     time_step = 64
     valid_range = (24, 108)
-
 
     for genre in genre_collection.find({'DatasetGenerated': False}):
         save_dir = 'd:/data/' + genre['Name']
@@ -91,75 +69,6 @@ def merge_all_sparse_matrices():
         genre_collection.update_one({'_id': genre['_id']}, {'$set': {'DatasetGenerated': True}})
 
 
-
-def print_all_genres_num():
-    genres_collection = get_genre_collection()
-    midi_collection = get_midi_collection()
-
-    for genre in genres_collection.find():
-        whole_num = 0
-        for midi in midi_collection.find({'Genre': genre['Name']}):
-           whole_num += midi['PiecesNum']
-        genres_collection.update_one(
-            {'_id': genre['_id']},
-            {'$set': {'PiecesNum': whole_num}}
-        )
-        print(genre['Name'], whole_num)
-
-def get_genre_pieces(genre):
-    genres_collection = get_genre_collection()
-
-    pieces_num = genres_collection.find_one({'Name': genre})
-
-    return pieces_num['PiecesNum']['IgnoreLessThan4']
-
-
-def generate_data_from_sparse_data(root_dir='d:/data', genre='rock', parts_num=10):
-    shape = np.load(root_dir + '/' +genre + '/shape.npy')
-    result = np.zeros(shape, np.bool_)
-    paths = [root_dir+ '/'  + genre + '/data_sparse_part' + str(num) + '.npz' for num in range(parts_num)]
-
-
-    for path in paths:
-        with np.load(path) as npfile:
-            print(path)
-            sparse = npfile['nonzeros']
-            for data in sparse:
-                # print(data)
-                result[data] = True
-    print(result.shape)
-    return result
-
-
-def find_data_with_no_empty_tracks():
-    root_dir = 'E:/merged_midi/'
-    total = 0
-    midi_collection = get_midi_collection()
-    for midi in midi_collection.find({'NotEmptyTracksNum': {'$exists': False}}):
-        instr_tracks = {
-            'Drums': None,
-            'Piano': None,
-            'Guitar': None,
-            'Bass': None,
-            'Strings': None
-        }
-        num = 0
-        try:
-            path = root_dir + midi['Genre'] + '/' + midi['md5'] + '.mid'
-            mult = pypianoroll.parse(path)
-            for track in mult.tracks:
-                num += 1
-            midi_collection.update_one(
-                {'_id': midi['_id']},
-                {'$set': {'NotEmptyTracksNum': num}}
-            )
-            print('Progress: {:.2%}\n'.format(midi_collection.count({'NotEmptyTracksNum': {'$exists': True}}) / midi_collection.count()))
-        except:
-            total += 1
-            # midi_collection.delete_one({'_id': midi['_id']})
-    print(total)
-
-
 def set_paragraph_num_info():
     midi_collection = get_midi_collection()
     root_dir = 'E:/merged_midi/'
@@ -190,24 +99,6 @@ def find_music_with_multiple_genres():
                                    {'$set': {'GenresNum': total_genres_num, 'TotalGenres': genres}})
         print('Progress: {:.2%}\n'.format(midi_collection.count({'GenresNum': {'$exists': True}}) / midi_collection.count()))
 
-def load_data_from_npz(filename):
-    """Load and return the training data from a npz file (sparse format)."""
-    with np.load(filename) as f:
-        data = np.zeros(f['shape'], np.bool_)
-        print(f['nonzero'].shape) # (5, 156149621)
-        for i in f['nonzero']:
-            print(i)
-        data[[x for x in f['nonzero']]] = True
-    return data
-
-def test_example_data():
-    path = 'E:/data/train_x_lpd_5_phr.npz'
-    data = load_data_from_npz(path)
-    print(data.shape)  # (102378, 4, 48, 84, 5)
-
-def get_music_with_no_empty_tracks():
-    midi_collection = get_midi_collection()
-    print(midi_collection.count({'Genre': 'rock', 'NotEmptyTracksNum': {'$gte': 4}}), midi_collection.count())
 
 def build_single_tensor_from_sparse(path):
     midi_collection = get_midi_collection()
@@ -217,10 +108,6 @@ def build_single_tensor_from_sparse(path):
     result[[data for data in nonzeros]] = True
     return result
 
-def get_original_tempo(md5):
-    midi = get_midi_collection().find_one({'md5': md5})
-    print(midi['Info']['tempo'][0])
-    return midi['Info']['tempo'][0]
 
 def build_midi_from_tensor(src_path, save_path, time_step=120, bar_length=4, valid_range = (24, 108)):
     data = build_single_tensor_from_sparse(src_path)
@@ -292,7 +179,7 @@ def generate_nonzeros_by_notes():
             path = root_dir + genre_name + '/' + midi['md5'] + '.mid'
             save_path = npy_file_root_dir + midi['md5'] + '.npz'
             pm = pretty_midi.PrettyMIDI(path)
-            segment_num = int(pm.get_end_time() / 8)
+            # segment_num = math.ceil(pm.get_end_time() / 8)
             note_range = (24, 108)
 
             # data = np.zeros((segment_num, 64, 84), np.bool_)
@@ -323,26 +210,21 @@ def generate_nonzeros_by_notes():
 
 def generate_sparse_matrix_of_genre(genre):
     npy_path = 'D:/data/' + genre + '/data_sparse.npz'
-
-
     with np.load(npy_path) as f:
         shape = f['shape']
         data = np.zeros(shape, np.float_)
         nonzeros = f['nonzeros']
         for x in nonzeros:
             data[(x[0], x[1], x[2])] = 1.
-
     return data
 
 
 def generate_sparse_matrix_from_multiple_genres(genres):
     length = 0
-
     genre_collection = get_genre_collection()
     for genre in genre_collection.find({'Name': {'$in': genres}}):
         length += genre['ValidPiecesNum']
     data = np.zeros([length, 64, 84], np.float_)
-
     for genre in genres:
         npy_path = 'D:/data/' + genre + '/data_sparse.npz'
         with np.load(npy_path) as f:
@@ -351,34 +233,6 @@ def generate_sparse_matrix_from_multiple_genres(genres):
                 data[(x[0], x[1], x[2])] = 1.
     return data
 
-def pretty_midi_test():
-    pm = pretty_midi.PrettyMIDI()
-    instr = pretty_midi.Instrument(0)
-    instr.notes.append(pretty_midi.Note(64, 64, 0, 2))
-    pm.instruments.append(instr)
-    pm.write('./pm_test.mid')
-
-def test_build_midi():
-    test_path = '4e074b1b1470a0f4b58a94272f1f06fa.npz'
-    data = build_single_tensor_from_sparse(test_path)
-    save_path = 'test.mid'
-    build_midi_from_tensor(test_path, save_path)
-
-def label_all_numpy_existed():
-    root_dir = 'e:/midi_matrix/rock'
-    for file in os.listdir(root_dir):
-        md5 = file[:-4]
-        get_midi_collection().update_one({'md5': md5, 'Genre': 'rock'}, {'$set': {'MultiInstrNpyGenerated': True}})
-
-def test_sample_data():
-    path = './classic_piano_train_1.npy'
-    data = np.load(path)
-    print(data.shape)
-
-def add_more_valid_pieces_num():
-    for genre in get_genre_collection().find():
-        valid_pieces_num = genre['PiecesNum'] - get_midi_collection().count({'Genre': genre['Name']})
-        get_genre_collection().update_many({'_id': genre['_id']}, {'$set': {'ValidPiecesNum': valid_pieces_num}})
 
 if __name__ == '__main__':
     # get_genre_collection().update_many({}, {'$set': {'DatasetGenerated': False}})
