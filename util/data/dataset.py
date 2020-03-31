@@ -1,8 +1,5 @@
 import torch.utils.data as data
-from pymongo import MongoClient
 import numpy as np
-from torch.utils.data import DataLoader
-import torch
 
 from util.data.create_database import generate_sparse_matrix_of_genre, get_genre_collection, generate_sparse_matrix_from_multiple_genres
 

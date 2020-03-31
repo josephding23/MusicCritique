@@ -1,16 +1,13 @@
 from pymongo import MongoClient
 import os
 import pretty_midi
-import traceback
 import numpy as np
-import matplotlib.pyplot as plt
-import math
-import torch
-import scipy.sparse as ss
+
 
 def get_midi_collection():
     client = MongoClient(connect=False)
     return client.free_midi.midi
+
 
 def get_genre_collection():
     client = MongoClient(connect=False)
@@ -69,42 +66,11 @@ def merge_all_sparse_matrices():
         genre_collection.update_one({'_id': genre['_id']}, {'$set': {'DatasetGenerated': True}})
 
 
-def set_paragraph_num_info():
-    midi_collection = get_midi_collection()
-    root_dir = 'E:/merged_midi/'
-    for midi in midi_collection.find({'PiecesNum': {'$exists': False}}, no_cursor_timeout = True):
-        path = root_dir + midi['Genre'] + '/' + midi['md5'] + '.mid'
-        pm = pretty_midi.PrettyMIDI(path)
-        length = pm.get_end_time()
-
-        piece_num = math.ceil(length / 8)
-        print(piece_num)
-
-        midi_collection.update_one({'_id': midi['_id']}, {'$set': {'PiecesNum': piece_num}})
-        print('Progress: {:.2%}\n'.format( midi_collection.count({'PiecesNum': {'$exists': True}}) / midi_collection.count()))
-
-
-def find_music_with_multiple_genres():
-    root_dir = 'E:/merged_midi/'
-    midi_collection = get_midi_collection()
-    for midi in midi_collection.find({'GenresNum': {'$exists': False}}):
-        performer = midi['Performer']
-        name = midi['Name']
-        genres = []
-        total_genres_num = midi_collection.count({'Name': name, 'Performer': performer})
-        for md in midi_collection.find({'Name': name, 'Performer': performer}):
-            genres.append(md['Genre'])
-        print(total_genres_num, genres)
-        midi_collection.update_one({'_id': midi['_id']},
-                                   {'$set': {'GenresNum': total_genres_num, 'TotalGenres': genres}})
-        print('Progress: {:.2%}\n'.format(midi_collection.count({'GenresNum': {'$exists': True}}) / midi_collection.count()))
-
-
 def build_single_tensor_from_sparse(path):
     midi_collection = get_midi_collection()
     nonzeros = np.load(path)['arr_0']
     midi = midi_collection.find_one({'md5': path[:-4]})
-    result = np.zeros((midi['PiecesNum'] + 1, 4, 120, 84, 5))
+    result = np.zeros((midi['PiecesNum'], 4, 120, 84, 5))
     result[[data for data in nonzeros]] = True
     return result
 
@@ -160,6 +126,7 @@ def build_midi_from_tensor(src_path, save_path, time_step=120, bar_length=4, val
 
     pm.write(save_path)
 
+
 def generate_nonzeros_by_notes():
     root_dir = 'E:/merged_midi/'
 
@@ -171,9 +138,6 @@ def generate_nonzeros_by_notes():
         npy_file_root_dir = 'E:/midi_matrix/one_instr/' + genre_name + '/'
         if not os.path.exists(npy_file_root_dir):
             os.mkdir(npy_file_root_dir)
-        print('Progress: {:.2%}'.format(
-            midi_collection.count({'Genre': genre_name, 'OneInstrNpyGenerated': True}) / midi_collection.count({'Genre': genre_name})),
-            end='\n')
 
         for midi in midi_collection.find({'Genre': genre_name, 'OneInstrNpyGenerated': False}, no_cursor_timeout = True):
             path = root_dir + genre_name + '/' + midi['md5'] + '.mid'
@@ -181,16 +145,14 @@ def generate_nonzeros_by_notes():
             pm = pretty_midi.PrettyMIDI(path)
             # segment_num = math.ceil(pm.get_end_time() / 8)
             note_range = (24, 108)
-
             # data = np.zeros((segment_num, 64, 84), np.bool_)
             nonzeros = []
-
-            quarter_length = 60 / 120 / 4
+            sixteenth_length = 60 / 120 / 4
             for instr in pm.instruments:
                 if not instr.is_drum:
                     for note in instr.notes:
-                        start = int(note.start / quarter_length)
-                        end = int(note.end / quarter_length)
+                        start = int(note.start / sixteenth_length)
+                        end = int(note.end / sixteenth_length)
                         pitch = note.pitch
                         if pitch < note_range[0] or pitch >= note_range[1]:
                             continue
@@ -205,7 +167,7 @@ def generate_nonzeros_by_notes():
             np.savez_compressed(save_path, nonzeros)
             midi_collection.update_one({'_id': midi['_id']}, {'$set': {'OneInstrNpyGenerated': True}})
             print('Progress: {:.2%}'.format(
-                midi_collection.count({'Genre': genre_name, 'OneInstrNpyGenerated': True}) / midi_collection.count()), end='\n')
+                midi_collection.count({'Genre': genre_name, 'OneInstrNpyGenerated': True}) / midi_collection.count({'Genre': genre_name})), end='\n')
 
 
 def generate_sparse_matrix_of_genre(genre):
@@ -235,5 +197,4 @@ def generate_sparse_matrix_from_multiple_genres(genres):
 
 
 if __name__ == '__main__':
-    # get_genre_collection().update_many({}, {'$set': {'DatasetGenerated': False}})
-    merge_all_sparse_matrices()
+    pass

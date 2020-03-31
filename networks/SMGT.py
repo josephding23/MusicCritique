@@ -12,33 +12,33 @@ class Discriminator(nn.Module):
         # df_dim = 64
 
         conv1 = nn.Conv2d(in_channels=1,
-                           out_channels=64,
-                           kernel_size=7,
-                           stride=2,
-                           padding=3,
-                           bias=False)
+                          out_channels=64,
+                          kernel_size=7,
+                          stride=2,
+                          padding=3,
+                          bias=False)
         init.normal_(conv1.weight, mean=0.0, std=0.02)
-        self.net1 = nn.Sequential(conv1, nn.LeakyReLU(negative_slope=0.2))
+        self.net1 = nn.Sequential(conv1, nn.LeakyReLU(negative_slope=0.2), nn.Dropout(0.5))
 
         conv2 = nn.Conv2d(in_channels=64,
-                               out_channels=256,
-                               kernel_size=7,
-                               stride=2,
-                               padding=3,
-                               bias=False)
+                          out_channels=256,
+                          kernel_size=7,
+                          stride=2,
+                          padding=3,
+                          bias=False)
         init.normal_(conv2.weight, mean=0.0, std=0.02)
         self.net2 = nn.Sequential(conv2,
                                   nn.InstanceNorm2d(256, eps=1e-5),
-                                  nn.LeakyReLU(negative_slope=0.2))
+                                  nn.LeakyReLU(negative_slope=0.2), nn.Dropout(0.5))
 
         conv3 = nn.Conv2d(in_channels=256,
-                               out_channels=1,
-                               kernel_size=7,
-                               stride=1,
-                               padding=3,
-                               bias=False)
+                          out_channels=1,
+                          kernel_size=7,
+                          stride=1,
+                          padding=3,
+                          bias=False)
         init.normal_(conv3.weight, mean=0.0, std=0.02)
-        self.net3 = nn.Sequential(conv3, nn.LeakyReLU(negative_slope=0.2))
+        self.net3 = nn.Sequential(conv3)
 
     def forward(self, tensor_in):
         x = tensor_in
@@ -52,6 +52,7 @@ class Discriminator(nn.Module):
 
         return x
 
+
 class Generator(nn.Module):
     def __init__(self):
         super(Generator, self).__init__()
@@ -62,11 +63,14 @@ class Generator(nn.Module):
                           stride=1,
                           padding=0,
                           bias=False)
-        init.normal_(conv1.weight)
+        init.normal_(conv1.weight, mean=0, std=0.02)
         self.cnet1 = nn.Sequential(nn.ReflectionPad2d((3, 3, 3, 3)),
                                    conv1,
                                    nn.InstanceNorm2d(64, eps=1e-5),
                                    nn.ReLU())
+
+        for params in self.cnet1.parameters():
+            init.normal_(params, mean=0, std=0.02)
 
         conv2 = nn.Conv2d(in_channels=64,
                           out_channels=128,
@@ -74,10 +78,13 @@ class Generator(nn.Module):
                           stride=2,
                           padding=1,
                           bias=False)
-        init.normal_(conv2.weight)
+        init.normal_(conv2.weight, mean=0, std=0.02)
         self.cnet2 = nn.Sequential(conv2,
                                    nn.InstanceNorm2d(64, eps=1e-5),
                                    nn.ReLU())
+
+        for params in self.cnet2.parameters():
+            init.normal_(params, mean=0, std=0.02)
 
         conv3 = nn.Conv2d(in_channels=128,
                           out_channels=256,
@@ -85,7 +92,7 @@ class Generator(nn.Module):
                           stride=2,
                           padding=1,
                           bias=False)
-        init.normal_(conv3.weight)
+        init.normal_(conv3.weight, mean=0, std=0.02)
         self.cnet3 = nn.Sequential(conv3,
                                    nn.InstanceNorm2d(128, eps=1e-5),
                                    nn.ReLU())
@@ -93,10 +100,10 @@ class Generator(nn.Module):
         self.resnet = nn.Sequential()
         for i in range(10):
             self.resnet.add_module('resnet_block', ResnetBlock(dim=256,
-                                                          padding_type='reflect',
-                                                          use_dropout=False,
-                                                          use_bias=False,
-                                                          norm_layer=nn.InstanceNorm2d))
+                                                               padding_type='reflect',
+                                                               use_dropout=False,
+                                                               use_bias=False,
+                                                               norm_layer=nn.InstanceNorm2d))
 
         tconv1 = nn.ConvTranspose2d(in_channels=256,
                                     out_channels=128,
@@ -105,7 +112,7 @@ class Generator(nn.Module):
                                     padding=1,
                                     bias=False)
 
-        init.normal_(tconv1.weight)
+        init.normal_(tconv1.weight, mean=0, std=0.02)
         self.tcnet1 = nn.Sequential(tconv1,
                                     nn.ZeroPad2d((0, 1, 0, 1)),
                                     nn.InstanceNorm2d(256, eps=1e-5),
@@ -116,8 +123,9 @@ class Generator(nn.Module):
                                     kernel_size=3,
                                     stride=2,
                                     padding=1,
-                                    bias=False)
-        init.normal_(tconv2.weight)
+                                     bias=False)
+
+        init.normal_(tconv2.weight, mean=0, std=0.02)
         self.tcnet2 = nn.Sequential(tconv2,
                                     nn.ZeroPad2d((0, 1, 0, 1)),
                                     nn.InstanceNorm2d(256, eps=1e-5),
@@ -128,7 +136,7 @@ class Generator(nn.Module):
                           kernel_size=7,
                           stride=1,
                           padding=0)
-        init.normal_(conv4.weight)
+        init.normal_(conv4.weight, mean=0, std=0.02)
 
         self.cnet4 = nn.Sequential(nn.ReflectionPad2d((3, 3, 3, 3)),
                                    conv4,
@@ -158,6 +166,7 @@ class Generator(nn.Module):
         # (batch * 1 * 64 * 84)
 
         return x
+
 
 def test_g():
     padding = nn.ReflectionPad2d((3, 3, 3, 3))
@@ -232,7 +241,6 @@ def test_g():
 
     cnet4 = nn.Sequential(padding, conv4, sigmoid)
 
-
     x = torch.ones((4, 1, 64, 84))
     x = cnet1(x)
     x = cnet2(x)
@@ -242,6 +250,7 @@ def test_g():
     x = tcnet2(x)
     x = cnet4(x)
     print(x.shape)
+
 
 if __name__ == '__main__':
     test_g()

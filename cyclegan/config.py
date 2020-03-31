@@ -1,11 +1,12 @@
 import os
 
+
 class Config(object):
     def __init__(self):
         self.name = 'steely_gan'
         self.dataset_name = 'free_midi_library'
-        self.genreA = 'blues'
-        self.genreB = 'country'
+        self.genreA = 'rock'
+        self.genreB = 'jazz'
 
         self.phase = 'train'
         self.continue_train = False
@@ -56,6 +57,7 @@ class Config(object):
         self.beta2 = 0.999
 
         self.lr = 0.00005
+        self.weight_decay = 0.1
 
         self.g_lr = 2e-4                     # generator learning rate
         self.d_lr = 2e-4                     # discriminator learning rate
@@ -74,6 +76,8 @@ class Config(object):
 
         self.start_epoch = 0
 
+
 if __name__ == '__main__':
     config = Config()
     print(config.save_path)
+

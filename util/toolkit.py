@@ -118,6 +118,8 @@ def generate_data_from_midi(path):
 
 
 def evaluate_tonal_scale(data):
+
+    # should consider minor
     note_range = 84
     time_step = 64
     tonal_distance = [0, 2, 4, 5, 7, 9, 11]
@@ -133,6 +135,7 @@ def evaluate_tonal_scale(data):
                     outta_tone_notes += 1
     tonality = in_tone_notes / (in_tone_notes + outta_tone_notes)
     return tonality
+
 
 if __name__ == '__main__':
     generate_data_from_midi('./test.mid')

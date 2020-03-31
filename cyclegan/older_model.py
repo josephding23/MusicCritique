@@ -16,7 +16,7 @@ import torchvision as tv
 from torchsummary import summary
 from torchnet.meter import MovingAverageValueMeter
 from networks.musegan import MuseDiscriminator, MuseGenerator, GANLoss
-from networks.MST import Discriminator, Generator
+from networks.SMGT import Discriminator, Generator
 from model.config import Config
 from util.toolkit import generate_midi_from_data, plot_data, evaluate_tonal_scale
 from util.image_pool import ImagePool
