@@ -36,10 +36,8 @@ class Discriminator(nn.Module):
         init.normal_(conv3.weight, mean=0.0, std=0.02)
         self.net1 = nn.Sequential(conv1,
                                   nn.LeakyReLU(negative_slope=0.2),
-                                  nn.Dropout(0.5),
                                   conv2,
                                   nn.LeakyReLU(negative_slope=0.2),
-                                  nn.Dropout(0.5),
                                   conv3,
                                   nn.LeakyReLU(negative_slope=0.2),
                                   nn.Dropout(0.5)
@@ -61,7 +59,8 @@ class Discriminator(nn.Module):
         self.net2 = nn.Sequential(conv4,
                                   nn.LeakyReLU(negative_slope=0.2),
                                   conv5,
-                                  nn.LeakyReLU(negative_slope=0.2)
+                                  nn.LeakyReLU(negative_slope=0.2),
+                                  nn.Dropout(0.5)
                                   )
 
         conv6 = nn.Conv2d(in_channels=4,
@@ -135,7 +134,7 @@ class Generator(nn.Module):
         for i in range(20):
             self.resnet.add_module('resnet_block', ResnetBlock(dim=256,
                                                                padding_type='reflect',
-                                                               use_dropout=True,
+                                                               use_dropout=False,
                                                                use_bias=False,
                                                                norm_layer=nn.InstanceNorm2d))
 

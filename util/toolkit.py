@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import pretty_midi
 import math
+from util.data import auxillary as aux
 import numpy as np
 
 def plot_data(data):
@@ -137,5 +138,14 @@ def evaluate_tonal_scale(data):
     return tonality
 
 
+def get_md5_of(performer, song, genre):
+    midi_collection = aux.get_midi_collection()
+    try:
+        md5 = midi_collection.find_one({'Performer': performer, 'Name': song, 'Genre': genre})['md5']
+        return md5
+    except Exception:
+        raise Exception('No midi Found.')
+
+
 if __name__ == '__main__':
-    generate_data_from_midi('./test.mid')
+    print(get_md5_of())

@@ -17,7 +17,7 @@ import shutil
 # from networks.SMGT import Generator
 from networks.SteelyGAN import Discriminator, Generator
 from cyclegan.config import Config
-from util.toolkit import generate_midi_segment_from_tensor, generate_data_from_midi, generate_whole_midi_from_tensor, plot_data, evaluate_tonal_scale
+from util.toolkit import generate_midi_segment_from_tensor, generate_data_from_midi, generate_whole_midi_from_tensor, evaluate_tonal_scale, get_md5_of
 from util.image_pool import ImagePool
 import logging
 import colorlog
@@ -68,13 +68,13 @@ class CycleGAN(object):
                     self.opt.max_epoch - self.opt.epoch_step)
 
         self.DA_optimizer = Adam(params=self.discriminator_A.parameters(), lr=self.opt.lr,
-                                 betas=(self.opt.beta1, self.opt.beta2), weight_decay=self.opt.weight_decay)
+                                 betas=(self.opt.beta1, self.opt.beta2))
         self.DB_optimizer = Adam(params=self.discriminator_B.parameters(), lr=self.opt.lr,
-                                 betas=(self.opt.beta1, self.opt.beta2), weight_decay=self.opt.weight_decay)
+                                 betas=(self.opt.beta1, self.opt.beta2))
         self.GA2B_optimizer = Adam(params=self.generator_A2B.parameters(), lr=self.opt.lr,
-                                   betas=(self.opt.beta1, self.opt.beta2), weight_decay=self.opt.weight_decay)
+                                   betas=(self.opt.beta1, self.opt.beta2))
         self.GB2A_optimizer = Adam(params=self.generator_B2A.parameters(), lr=self.opt.lr,
-                                   betas=(self.opt.beta1, self.opt.beta2), weight_decay=self.opt.weight_decay)
+                                   betas=(self.opt.beta1, self.opt.beta2))
 
         self.DA_scheduler = lr_scheduler.StepLR(self.DA_optimizer, step_size=5, gamma=0.2)
         self.DB_scheduler = lr_scheduler.StepLR(self.DB_optimizer, step_size=5, gamma=0.2)
@@ -83,9 +83,9 @@ class CycleGAN(object):
 
         if self.opt.model != 'base':
             self.DA_all_optimizer = torch.optim.Adam(params=self.discriminator_A_all.parameters(), lr=self.opt.lr,
-                                                     betas=(self.opt.beta1, self.opt.beta2), weight_decay=self.opt.weight_decay)
+                                                     betas=(self.opt.beta1, self.opt.beta2))
             self.DB_all_optimizer = torch.optim.Adam(params=self.discriminator_B_all.parameters(), lr=self.opt.lr,
-                                                     betas=(self.opt.beta1, self.opt.beta2), weight_decay=self.opt.weight_decay)
+                                                     betas=(self.opt.beta1, self.opt.beta2))
 
             self.DA_all_scheduler = lr_scheduler.StepLR(self.DA_all_optimizer, step_size=5, gamma=0.8)
             self.DB_all_scheduler = lr_scheduler.StepLR(self.DB_all_optimizer, step_size=5, gamma=0.8)
@@ -698,19 +698,34 @@ def test_sample_song_old():
         generate_midi_segment_from_tensor(dataB2A, midi_B2A_path)
 
 
-def test_whole_song(original_path='E:/free_midi_library/unhashed/rock/N I B - Black Sabbath.mid'):
+def test_whole_song(performer='Bill Evans', song='Autumn Leaves', genre='jazz'):
+    root_dir = 'E:/free_midi_library/merged_midi'
+    try:
+        md5 = get_md5_of(performer, song, genre)
+        original_path = root_dir + '/' + genre + '/' + md5 + '.mid'
+    except Exception as e:
+        print(e)
+        return
 
     cyclegan = CycleGAN()
     cyclegan.continue_from_latest_checkpoint()
 
-    transformed_path = '../data/converted_midi/' + os.path.split(original_path)[-1]
-    copy_path = '../data/original_midi/' + os.path.split(original_path)[-1]
+    # direction = 'AtoB'
+    direction = 'BtoA'
+
+    transformed_path = '../data/converted_midi/' + song + ' - ' + performer + '.mid'
+    copy_path = '../data/original_midi/' + song + ' - ' + performer + '.mid'
 
     ori_data = generate_data_from_midi(original_path)
 
-    transformed_data = cyclegan.generator_A2B(
-        torch.unsqueeze(torch.from_numpy(ori_data), 1).to(
-            device='cuda',  dtype=torch.float)).cpu().detach().numpy()
+    if direction == 'AtoB':
+        transformed_data = cyclegan.generator_A2B(
+            torch.unsqueeze(torch.from_numpy(ori_data), 1).to(
+                device='cuda',  dtype=torch.float)).cpu().detach().numpy()
+    else:
+        transformed_data = cyclegan.generator_B2A(
+            torch.unsqueeze(torch.from_numpy(ori_data), 1).to(
+                device='cuda', dtype=torch.float)).cpu().detach().numpy()
     print(transformed_data.shape)
     generate_whole_midi_from_tensor(transformed_data, transformed_path)
     shutil.copyfile(original_path, copy_path)
@@ -730,4 +745,4 @@ def run():
 
 
 if __name__ == '__main__':
-    run()
+    test_whole_song()

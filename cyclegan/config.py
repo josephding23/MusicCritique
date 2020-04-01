@@ -9,7 +9,7 @@ class Config(object):
         self.genreB = 'jazz'
 
         self.phase = 'train'
-        self.continue_train = False
+        self.continue_train = True
 
         self.direction = 'AtoB'
 
