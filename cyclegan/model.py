@@ -85,13 +85,17 @@ class CycleGAN(object):
                     self.opt.max_epoch - self.opt.epoch_step)
 
         self.DA_optimizer = Adam(params=self.discriminator_A.parameters(), lr=self.opt.lr,
-                                 betas=(self.opt.beta1, self.opt.beta2), )
+                                 betas=(self.opt.beta1, self.opt.beta2),
+                                 weight_decay=self.opt.weight_decay)
         self.DB_optimizer = Adam(params=self.discriminator_B.parameters(), lr=self.opt.lr,
-                                 betas=(self.opt.beta1, self.opt.beta2))
+                                 betas=(self.opt.beta1, self.opt.beta2),
+                                 weight_decay=self.opt.weight_decay)
         self.GA2B_optimizer = Adam(params=self.generator_A2B.parameters(), lr=self.opt.lr,
-                                   betas=(self.opt.beta1, self.opt.beta2))
+                                   betas=(self.opt.beta1, self.opt.beta2),
+                                   weight_decay=self.opt.weight_decay)
         self.GB2A_optimizer = Adam(params=self.generator_B2A.parameters(), lr=self.opt.lr,
-                                   betas=(self.opt.beta1, self.opt.beta2))
+                                   betas=(self.opt.beta1, self.opt.beta2),
+                                   weight_decay=self.opt.weight_decay)
 
         self.DA_scheduler = lr_scheduler.StepLR(self.DA_optimizer, step_size=5, gamma=0.2)
         self.DB_scheduler = lr_scheduler.StepLR(self.DB_optimizer, step_size=5, gamma=0.2)
@@ -100,12 +104,14 @@ class CycleGAN(object):
 
         if self.opt.model != 'base':
             self.DA_all_optimizer = torch.optim.Adam(params=self.discriminator_A_all.parameters(), lr=self.opt.lr,
-                                                     betas=(self.opt.beta1, self.opt.beta2))
+                                                     betas=(self.opt.beta1, self.opt.beta2),
+                                                     weight_decay=self.opt.weight_decay)
             self.DB_all_optimizer = torch.optim.Adam(params=self.discriminator_B_all.parameters(), lr=self.opt.lr,
-                                                     betas=(self.opt.beta1, self.opt.beta2))
+                                                     betas=(self.opt.beta1, self.opt.beta2),
+                                                     weight_decay=self.opt.weight_decay)
 
-            self.DA_all_scheduler = lr_scheduler.StepLR(self.DA_all_optimizer, step_size=5, gamma=0.8)
-            self.DB_all_scheduler = lr_scheduler.StepLR(self.DB_all_optimizer, step_size=5, gamma=0.8)
+            self.DA_all_scheduler = lr_scheduler.StepLR(self.DA_all_optimizer, step_size=5, gamma=0.2)
+            self.DB_all_scheduler = lr_scheduler.StepLR(self.DB_all_optimizer, step_size=5, gamma=0.2)
 
     def continue_from_latest_checkpoint(self):
         latest_checked_epoch = self.find_latest_checkpoint()

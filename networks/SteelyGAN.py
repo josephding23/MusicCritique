@@ -8,7 +8,6 @@ def init_weight_(net):
     for name, param in net.named_parameters():
         if 'weight' in name:
             init.normal_(param, mean=0, std=0.02)
-            print(name)
 
 
 class Discriminator(nn.Module):
@@ -19,27 +18,21 @@ class Discriminator(nn.Module):
         # df_dim = 64
 
         self.net1 = nn.Sequential(nn.Conv2d(in_channels=1,
-                                            out_channels=16,
+                                            out_channels=64,
                                             kernel_size=7,
                                             stride=1,
                                             padding=3,
                                             bias=False),
                                   nn.LeakyReLU(negative_slope=0.2),
-                                  nn.Conv2d(in_channels=16,
-                                            out_channels=64,
+
+                                  nn.Conv2d(in_channels=64,
+                                            out_channels=256,
                                             kernel_size=7,
                                             stride=2,
                                             padding=3,
                                             bias=False),
                                   nn.LeakyReLU(negative_slope=0.2),
-                                  nn.Conv2d(in_channels=64,
-                                            out_channels=256,
-                                            kernel_size=7,
-                                            stride=1,
-                                            padding=3,
-                                            bias=False),
-                                  nn.LeakyReLU(negative_slope=0.2),
-                                  nn.Dropout(0.5)
+                                  nn.Dropout(0.8),
                                   )
         init_weight_(self.net1)
 
@@ -50,41 +43,48 @@ class Discriminator(nn.Module):
                                             padding=3,
                                             bias=False),
                                   nn.LeakyReLU(negative_slope=0.2),
-                                  nn.Conv2d(in_channels=16,
-                                            out_channels=1,
-                                            kernel_size=7,
-                                            stride=2,
-                                            padding=3,
-                                            bias=False),
-                                  nn.LeakyReLU(negative_slope=0.2),
-                                  nn.Dropout(0.5)
                                   )
         init_weight_(self.net2)
 
-        self.net3 = nn.Sequential(nn.Conv2d(in_channels=4,
+        self.net3 = nn.Sequential(nn.InstanceNorm2d(64, eps=1e-5),
+                                  nn.Conv2d(in_channels=64,
                                             out_channels=1,
                                             kernel_size=7,
                                             stride=1,
                                             padding=3,
                                             bias=False),
-                                  nn.Sigmoid()
                                   )
         init_weight_(self.net3)
 
     def forward(self, tensor_in):
         x = tensor_in
+        # (batch * 1 * 64 * 84)
+
         x = self.net1(x)
+        # (batch * 16 * 64 * 84)
+        # ↓
+        # (batch * 64 * 16 * 21)
+        # ↓
+        # (batch * 256 * 16 * 21)
 
         x1, x2, x3, x4 = x.split([64, 64, 64, 64], dim=1)
+        # (batch * 64 * 16 * 21)
 
         x1 = self.net2(x1)
         x2 = self.net2(x2)
         x3 = self.net2(x3)
         x4 = self.net2(x4)
+        # (batch * 64 * 16 * 21)
+        # ↓
+        # (batch * 16 * 16 * 21)
+        # ↓
+        # (batch * 1 * 16 * 21)
 
         x = torch.cat([x1, x2, x3, x4], dim=1)
+        # (batch * 4 * 16 * 21)
 
         x = self.net3(x)
+        # (batch * 1 * 16 * 21)
 
         return x
 
@@ -102,7 +102,6 @@ class Generator(nn.Module):
                                                       bias=False),
                                             nn.InstanceNorm2d(64, eps=1e-5),
                                             nn.ReLU(),
-                                            nn.Dropout(0.5),
 
                                             nn.Conv2d(in_channels=64,
                                                       out_channels=128,
@@ -112,7 +111,7 @@ class Generator(nn.Module):
                                                       bias=False),
                                             nn.InstanceNorm2d(64, eps=1e-5),
                                             nn.ReLU(),
-                                            nn.Dropout(0.5),
+                                            nn.Dropout(0.8),
                                             )
         init_weight_(self.paragraph_net1)
 
