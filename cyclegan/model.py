@@ -14,7 +14,8 @@ from torchsummary import summary
 from torchnet.meter import MovingAverageValueMeter
 from networks.musegan import GANLoss
 import shutil
-# from networks.SMGT import Generator
+import networks.SteelyGAN as SteelyGAN
+import networks.SMGT as SMGT
 from networks.SteelyGAN import Discriminator, Generator
 from cyclegan.config import Config
 from util.toolkit import generate_midi_segment_from_tensor, generate_data_from_midi, generate_whole_midi_from_tensor, evaluate_tonal_scale, get_md5_of
@@ -38,18 +39,34 @@ class CycleGAN(object):
 
     def _build_model(self):
 
-        self.generator_A2B = Generator()
-        self.generator_B2A = Generator()
+        if self.opt.name == 'steely_gan':
 
-        self.discriminator_A = Discriminator()
-        self.discriminator_B = Discriminator()
+            self.generator_A2B = SteelyGAN.Generator()
+            self.generator_B2A = SteelyGAN.Generator()
 
-        self.discriminator_A_all = None
-        self.discriminator_B_all = None
+            self.discriminator_A = SteelyGAN.Discriminator()
+            self.discriminator_B = SteelyGAN.Discriminator()
 
-        if self.opt.model != 'base':
-            self.discriminator_A_all = Discriminator()
-            self.discriminator_B_all = Discriminator()
+            self.discriminator_A_all = None
+            self.discriminator_B_all = None
+
+            if self.opt.model != 'base':
+                self.discriminator_A_all = SteelyGAN.Discriminator()
+                self.discriminator_B_all = SteelyGAN.Discriminator()
+
+        else:
+            self.generator_A2B = SMGT.Generator()
+            self.generator_B2A = SMGT.Generator()
+
+            self.discriminator_A = SMGT.Discriminator()
+            self.discriminator_B = SMGT.Discriminator()
+
+            self.discriminator_A_all = None
+            self.discriminator_B_all = None
+
+            if self.opt.model != 'base':
+                self.discriminator_A_all = SMGT.Discriminator()
+                self.discriminator_B_all = SMGT.Discriminator()
 
         if self.opt.gpu:
             self.generator_A2B.to(self.device)
@@ -68,7 +85,7 @@ class CycleGAN(object):
                     self.opt.max_epoch - self.opt.epoch_step)
 
         self.DA_optimizer = Adam(params=self.discriminator_A.parameters(), lr=self.opt.lr,
-                                 betas=(self.opt.beta1, self.opt.beta2))
+                                 betas=(self.opt.beta1, self.opt.beta2), )
         self.DB_optimizer = Adam(params=self.discriminator_B.parameters(), lr=self.opt.lr,
                                  betas=(self.opt.beta1, self.opt.beta2))
         self.GA2B_optimizer = Adam(params=self.generator_A2B.parameters(), lr=self.opt.lr,
@@ -745,4 +762,4 @@ def run():
 
 
 if __name__ == '__main__':
-    test_whole_song()
+    run()

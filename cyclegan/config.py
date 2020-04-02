@@ -9,16 +9,16 @@ class Config(object):
         self.genreB = 'jazz'
 
         self.phase = 'train'
-        self.continue_train = True
+        self.continue_train = False
 
         self.direction = 'AtoB'
 
-        self.model = 'full' # three different models, base, partial, full
+        self.model = 'full'  # three different models, base, partial, full
         self.gaussian_std = 1
         self.use_image_pool = True
         self.image_pool_info = 'pooled' if self.use_image_pool else 'not_pooled'
 
-        self.save_path = 'd:/checkpoints/' + '{}2{}_{}_{}_gn{}'.format(self.genreA, self.genreB, self.model, self.image_pool_info, self.gaussian_std)
+        self.save_path = 'd:/checkpoints/' + '{}_{}2{}_{}_{}_gn{}'.format(self.name, self.genreA, self.genreB, self.model, self.image_pool_info, self.gaussian_std)
         self.model_path = self.save_path + '/models'
         self.checkpoint_path = self.save_path + '/checkpoints'
 
@@ -53,7 +53,7 @@ class Config(object):
 
         self.gpu = True
 
-        self.beta1 = 0.5                     # Adam optimizer beta1 & 2
+        self.beta1 = 0.9                     # Adam optimizer beta1 & 2
         self.beta2 = 0.999
 
         self.lr = 0.00005
