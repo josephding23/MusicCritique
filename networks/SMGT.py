@@ -18,7 +18,7 @@ class Discriminator(nn.Module):
                           padding=3,
                           bias=False)
         init.normal_(conv1.weight, mean=0.0, std=0.02)
-        self.net1 = nn.Sequential(conv1, nn.LeakyReLU(negative_slope=0.2), nn.Dropout(0.5))
+        self.net1 = nn.Sequential(conv1, nn.LeakyReLU(negative_slope=0.2))
 
         conv2 = nn.Conv2d(in_channels=64,
                           out_channels=256,
@@ -29,7 +29,8 @@ class Discriminator(nn.Module):
         init.normal_(conv2.weight, mean=0.0, std=0.02)
         self.net2 = nn.Sequential(conv2,
                                   nn.InstanceNorm2d(256, eps=1e-5),
-                                  nn.LeakyReLU(negative_slope=0.2), nn.Dropout(0.5))
+                                  nn.LeakyReLU(negative_slope=0.2),
+                                  )
 
         conv3 = nn.Conv2d(in_channels=256,
                           out_channels=1,

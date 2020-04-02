@@ -23,7 +23,9 @@ class Discriminator(nn.Module):
                                             stride=1,
                                             padding=3,
                                             bias=False),
+                                  nn.InstanceNorm2d(256, eps=1e-5),
                                   nn.LeakyReLU(negative_slope=0.2),
+                                  nn.Dropout(0.9),
 
                                   nn.Conv2d(in_channels=64,
                                             out_channels=256,
@@ -31,30 +33,20 @@ class Discriminator(nn.Module):
                                             stride=2,
                                             padding=3,
                                             bias=False),
+                                  nn.InstanceNorm2d(256, eps=1e-5),
                                   nn.LeakyReLU(negative_slope=0.2),
-                                  nn.Dropout(0.8),
+                                  nn.Dropout(0.9),
                                   )
         init_weight_(self.net1)
 
-        self.net2 = nn.Sequential(nn.Conv2d(in_channels=64,
-                                            out_channels=16,
-                                            kernel_size=7,
-                                            stride=1,
-                                            padding=3,
-                                            bias=False),
-                                  nn.LeakyReLU(negative_slope=0.2),
-                                  )
-        init_weight_(self.net2)
-
-        self.net3 = nn.Sequential(nn.InstanceNorm2d(64, eps=1e-5),
-                                  nn.Conv2d(in_channels=64,
+        self.net2 = nn.Sequential(nn.Conv2d(in_channels=256,
                                             out_channels=1,
                                             kernel_size=7,
                                             stride=1,
                                             padding=3,
                                             bias=False),
                                   )
-        init_weight_(self.net3)
+        init_weight_(self.net2)
 
     def forward(self, tensor_in):
         x = tensor_in
@@ -67,23 +59,7 @@ class Discriminator(nn.Module):
         # ↓
         # (batch * 256 * 16 * 21)
 
-        x1, x2, x3, x4 = x.split([64, 64, 64, 64], dim=1)
-        # (batch * 64 * 16 * 21)
-
-        x1 = self.net2(x1)
-        x2 = self.net2(x2)
-        x3 = self.net2(x3)
-        x4 = self.net2(x4)
-        # (batch * 64 * 16 * 21)
-        # ↓
-        # (batch * 16 * 16 * 21)
-        # ↓
-        # (batch * 1 * 16 * 21)
-
-        x = torch.cat([x1, x2, x3, x4], dim=1)
-        # (batch * 4 * 16 * 21)
-
-        x = self.net3(x)
+        x = self.net2(x)
         # (batch * 1 * 16 * 21)
 
         return x
@@ -102,6 +78,7 @@ class Generator(nn.Module):
                                                       bias=False),
                                             nn.InstanceNorm2d(64, eps=1e-5),
                                             nn.ReLU(),
+                                            nn.Dropout(0.9),
 
                                             nn.Conv2d(in_channels=64,
                                                       out_channels=128,
@@ -109,9 +86,9 @@ class Generator(nn.Module):
                                                       stride=2,
                                                       padding=1,
                                                       bias=False),
-                                            nn.InstanceNorm2d(64, eps=1e-5),
+                                            nn.InstanceNorm2d(128, eps=1e-5),
                                             nn.ReLU(),
-                                            nn.Dropout(0.8),
+                                            nn.Dropout(0.9),
                                             )
         init_weight_(self.paragraph_net1)
 
@@ -121,12 +98,12 @@ class Generator(nn.Module):
                                                 stride=2,
                                                 padding=1,
                                                 bias=False),
-                                      nn.InstanceNorm2d(128, eps=1e-5),
+                                      nn.InstanceNorm2d(64, eps=1e-5),
                                       nn.ReLU())
         init_weight_(self.bar_cnet)
 
         self.resnet = nn.Sequential()
-        for i in range(20):
+        for i in range(10):
             self.resnet.add_module('resnet_block', ResnetBlock(dim=256,
                                                                padding_type='reflect',
                                                                use_dropout=False,
@@ -140,7 +117,7 @@ class Generator(nn.Module):
                                                           padding=1,
                                                           bias=False),
                                        nn.ZeroPad2d((0, 1, 0, 1)),
-                                       nn.InstanceNorm2d(256, eps=1e-5),
+                                       nn.InstanceNorm2d(32, eps=1e-5),
                                        nn.ReLU())
         init_weight_(self.bar_tcnet)
 
@@ -151,7 +128,7 @@ class Generator(nn.Module):
                                                                padding=1,
                                                                bias=False),
                                             nn.ZeroPad2d((0, 1, 0, 1)),
-                                            nn.InstanceNorm2d(256, eps=1e-5),
+                                            nn.InstanceNorm2d(64, eps=1e-5),
                                             nn.ReLU(),
 
                                             nn.ReflectionPad2d((3, 3, 3, 3)),

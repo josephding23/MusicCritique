@@ -54,7 +54,7 @@ class Config(object):
 
         self.lr = 0.0001
 
-        self.weight_decay = 0.2
+        self.weight_decay = 0.05
 
         self.no_flip = True
         self.num_threads = 1
