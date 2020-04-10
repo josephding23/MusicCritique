@@ -20,36 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b77e5dfc-4c90-42b0-97d0-a4afd2ccd659" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/classify/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/classify/classify_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/classify/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/classify/loss.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/error/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/networks/classifier.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/util/logger.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/MusicCritique.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MusicCritique.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cyclegan/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cyclegan/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/cygan_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cyclegan/cygan_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/cygan_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/converted_midi/Attack - System of a Down.mid" beforeDir="false" afterPath="$PROJECT_DIR$/data/converted_midi/Attack - System of a Down.mid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/original_midi/Attack - System of a Down.mid" beforeDir="false" afterPath="$PROJECT_DIR$/data/original_midi/Attack - System of a Down.mid" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/networks/SteelyGAN.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/SteelyGAN.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/util/data/auxillary.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/data/auxillary.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/data/create_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/data/create_database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/data/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/data/dataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/midi_A.mid" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/midi_A2B.mid" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/re_midi.mid" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/test.mid" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/test.rar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/test/Dream_On.mid" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/test/free_midi.midi" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/test/invalid_file.midi" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/test/valid_file.midi" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/text.rar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/text/text.mid" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/toolkit.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/toolkit.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +152,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="bass&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Codes/CycleGAN-Music-Style-Transfer-Refactorization-master" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../FreeMidiLibrary" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -185,6 +162,13 @@
     <option name="myUseExistingConsole" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\毕业论文" />
+      <recent name="D:\PycharmProjects\MusicCritique\util" />
+      <recent name="D:\PycharmProjects\MusicCritique\util\data" />
+      <recent name="D:\PycharmProjects\MusicCritique\data_process" />
+      <recent name="D:\PycharmProjects\MusicCritique\misc\GuitarPro\data" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\PycharmProjects\MusicCritique\networks" />
       <recent name="D:\PycharmProjects\MusicCritique\util\data" />
@@ -192,15 +176,30 @@
       <recent name="D:\PycharmProjects\MusicCritique\data_process" />
       <recent name="D:\PycharmProjects\MusicCritique\scratch" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\PycharmProjects\MusicCritique\util" />
-      <recent name="D:\PycharmProjects\MusicCritique\util\data" />
-      <recent name="D:\PycharmProjects\MusicCritique\data_process" />
-      <recent name="D:\PycharmProjects\MusicCritique\misc\GuitarPro\data" />
-      <recent name="D:\PycharmProjects\MusicCritique" />
-    </key>
   </component>
-  <component name="RunManager" selected="Python.classify_model">
+  <component name="RunManager" selected="Python.cygan_model">
+    <configuration name="auxillary" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MusicCritique" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/util/data" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/util/data/auxillary.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="classifier" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MusicCritique" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -245,7 +244,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="create_database" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="config" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MusicCritique" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -253,12 +252,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/util/data" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cyclegan" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/util/data/create_database.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cyclegan/config.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -289,35 +288,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="model" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="MusicCritique" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cyclegan" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="D:\PycharmProjects\MusicCritique\cyclegan\cygan_model.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.cygan_model" />
+        <item itemvalue="Python.auxillary" />
+        <item itemvalue="Python.config" />
         <item itemvalue="Python.classify_model" />
         <item itemvalue="Python.classifier" />
-        <item itemvalue="Python.cygan_model" />
-        <item itemvalue="Python.model" />
-        <item itemvalue="Python.create_database" />
       </list>
     </recent_temporary>
   </component>
@@ -455,7 +432,9 @@
       <workItem from="1586400695611" duration="26286000" />
       <workItem from="1586432820361" duration="641000" />
       <workItem from="1586440020530" duration="14068000" />
-      <workItem from="1586484017548" duration="16202000" />
+      <workItem from="1586484017548" duration="24702000" />
+      <workItem from="1586518538005" duration="827000" />
+      <workItem from="1586527290001" duration="2160000" />
     </task>
     <task id="LOCAL-00001" summary="pretty">
       <created>1578794444076</created>
@@ -485,7 +464,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580633915280</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="add classifier structure">
+      <created>1586502469539</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1586502469540</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView">
@@ -517,49 +503,50 @@
     <MESSAGE value="guitartab" />
     <MESSAGE value="midi_converter" />
     <MESSAGE value="implement cyclegan" />
-    <option name="LAST_COMMIT_MESSAGE" value="implement cyclegan" />
+    <MESSAGE value="add classifier structure" />
+    <option name="LAST_COMMIT_MESSAGE" value="add classifier structure" />
   </component>
   <component name="WindowStateProjectService">
     <state x="552" y="213" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586401768554">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="552" y="213" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1586401768554" />
-    <state x="740" y="309" key="FileChooserDialogImpl" timestamp="1586407540664">
+    <state x="740" y="309" key="FileChooserDialogImpl" timestamp="1586509938768">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="740" y="309" key="FileChooserDialogImpl/0.30.1920.1050@0.30.1920.1050" timestamp="1586407540664" />
-    <state width="1877" height="241" key="GridCell.Tab.0.bottom" timestamp="1586501797634">
+    <state x="740" y="309" key="FileChooserDialogImpl/0.30.1920.1050@0.30.1920.1050" timestamp="1586509938768" />
+    <state width="1877" height="275" key="GridCell.Tab.0.bottom" timestamp="1586530161336">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="241" key="GridCell.Tab.0.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1586501797634" />
-    <state width="1877" height="241" key="GridCell.Tab.0.center" timestamp="1586501797633">
+    <state width="1877" height="275" key="GridCell.Tab.0.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1586530161336" />
+    <state width="1877" height="275" key="GridCell.Tab.0.center" timestamp="1586530161336">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="241" key="GridCell.Tab.0.center/0.30.1920.1050@0.30.1920.1050" timestamp="1586501797632" />
-    <state width="1877" height="241" key="GridCell.Tab.0.left" timestamp="1586501797629">
+    <state width="1877" height="275" key="GridCell.Tab.0.center/0.30.1920.1050@0.30.1920.1050" timestamp="1586530161336" />
+    <state width="1877" height="275" key="GridCell.Tab.0.left" timestamp="1586530161336">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="241" key="GridCell.Tab.0.left/0.30.1920.1050@0.30.1920.1050" timestamp="1586501797629" />
-    <state width="1877" height="241" key="GridCell.Tab.0.right" timestamp="1586501797633">
+    <state width="1877" height="275" key="GridCell.Tab.0.left/0.30.1920.1050@0.30.1920.1050" timestamp="1586530161336" />
+    <state width="1877" height="275" key="GridCell.Tab.0.right" timestamp="1586530161336">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="241" key="GridCell.Tab.0.right/0.30.1920.1050@0.30.1920.1050" timestamp="1586501797633" />
-    <state width="1877" height="349" key="GridCell.Tab.1.bottom" timestamp="1586486936428">
+    <state width="1877" height="275" key="GridCell.Tab.0.right/0.30.1920.1050@0.30.1920.1050" timestamp="1586530161336" />
+    <state width="1877" height="349" key="GridCell.Tab.1.bottom" timestamp="1586517499559">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="349" key="GridCell.Tab.1.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1586486936428" />
-    <state width="1877" height="349" key="GridCell.Tab.1.center" timestamp="1586486936428">
+    <state width="1877" height="349" key="GridCell.Tab.1.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1586517499559" />
+    <state width="1877" height="349" key="GridCell.Tab.1.center" timestamp="1586517499559">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="349" key="GridCell.Tab.1.center/0.30.1920.1050@0.30.1920.1050" timestamp="1586486936428" />
-    <state width="1877" height="349" key="GridCell.Tab.1.left" timestamp="1586486936428">
+    <state width="1877" height="349" key="GridCell.Tab.1.center/0.30.1920.1050@0.30.1920.1050" timestamp="1586517499559" />
+    <state width="1877" height="349" key="GridCell.Tab.1.left" timestamp="1586517499559">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="349" key="GridCell.Tab.1.left/0.30.1920.1050@0.30.1920.1050" timestamp="1586486936428" />
-    <state width="1877" height="349" key="GridCell.Tab.1.right" timestamp="1586486936428">
+    <state width="1877" height="349" key="GridCell.Tab.1.left/0.30.1920.1050@0.30.1920.1050" timestamp="1586517499559" />
+    <state width="1877" height="349" key="GridCell.Tab.1.right" timestamp="1586517499559">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="349" key="GridCell.Tab.1.right/0.30.1920.1050@0.30.1920.1050" timestamp="1586486936428" />
+    <state width="1877" height="349" key="GridCell.Tab.1.right/0.30.1920.1050@0.30.1920.1050" timestamp="1586517499559" />
     <state width="218" height="483" key="HiddenNamespacesPopup" timestamp="1586401726100">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -575,12 +562,13 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MusicCritique$classify_model.coverage" NAME="classify_model Coverage Results" MODIFIED="1586501616117" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/classify" />
-    <SUITE FILE_PATH="coverage/MusicCritique$auxillary.coverage" NAME="auxillary Coverage Results" MODIFIED="1586404256666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
+    <SUITE FILE_PATH="coverage/MusicCritique$auxillary.coverage" NAME="auxillary Coverage Results" MODIFIED="1586507890336" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
     <SUITE FILE_PATH="coverage/MusicCritique$model.coverage" NAME="model Coverage Results" MODIFIED="1586419301960" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
     <SUITE FILE_PATH="coverage/MusicCritique$create_database.coverage" NAME="create_database Coverage Results" MODIFIED="1586418625090" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
     <SUITE FILE_PATH="coverage/MusicCritique$dataset.coverage" NAME="dataset Coverage Results" MODIFIED="1586418282219" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
-    <SUITE FILE_PATH="coverage/MusicCritique$cygan_model.coverage" NAME="cygan_model Coverage Results" MODIFIED="1586432852879" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
+    <SUITE FILE_PATH="coverage/MusicCritique$cygan_model.coverage" NAME="cygan_model Coverage Results" MODIFIED="1586530161329" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
     <SUITE FILE_PATH="coverage/MusicCritique$classifier.coverage" NAME="classifier Coverage Results" MODIFIED="1586484875393" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/networks" />
+    <SUITE FILE_PATH="coverage/MusicCritique$config.coverage" NAME="config Coverage Results" MODIFIED="1586503807124" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
   </component>
   <component name="masterDetails">
     <states>

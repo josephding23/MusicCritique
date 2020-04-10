@@ -10,8 +10,8 @@ class Config(object):
         self.name = 'steely_gan'
 
         self.dataset_name = 'free_midi_library'
-        self.genreA = 'rock'
-        self.genreB = 'jazz'
+        self.genreA = 'metal'
+        self.genreB = 'country'
         self.dataset_mode = 'unaligned'
         self.track_merged = False
 
@@ -22,7 +22,7 @@ class Config(object):
         self.instr_num = 5
 
         self.phase = 'train'
-        self.continue_train = False
+        self.continue_train = True
 
         self.direction = 'AtoB'
 
@@ -57,7 +57,7 @@ class Config(object):
         self.weight_decay = 0.001
 
         self.no_flip = True
-        self.num_threads = 1
+        self.num_threads = 0
         self.batch_size = 16
         self.max_epoch = 30
         self.epoch_step = 5

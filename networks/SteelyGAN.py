@@ -78,7 +78,6 @@ class Generator(nn.Module):
                                                       bias=False),
                                             nn.InstanceNorm2d(64, eps=1e-5),
                                             nn.LeakyReLU(negative_slope=0.2),
-                                            nn.Dropout(0.8),
 
                                             nn.Conv2d(in_channels=64,
                                                       out_channels=128,
@@ -88,7 +87,6 @@ class Generator(nn.Module):
                                                       bias=False),
                                             nn.InstanceNorm2d(128, eps=1e-5),
                                             nn.LeakyReLU(negative_slope=0.2),
-                                            nn.Dropout(0.8),
                                             )
         init_weight_(self.paragraph_net1)
 
@@ -106,7 +104,7 @@ class Generator(nn.Module):
         for i in range(10):
             self.resnet.add_module('resnet_block', ResnetBlock(dim=256,
                                                                padding_type='reflect',
-                                                               use_dropout=False,
+                                                               use_dropout=True,
                                                                use_bias=False,
                                                                norm_layer=nn.InstanceNorm2d))
 
@@ -119,6 +117,7 @@ class Generator(nn.Module):
                                        nn.ZeroPad2d((0, 1, 0, 1)),
                                        nn.InstanceNorm2d(32, eps=1e-5),
                                        nn.LeakyReLU(negative_slope=0.2))
+
         init_weight_(self.bar_tcnet)
 
         self.paragraph_net2 = nn.Sequential(nn.ConvTranspose2d(in_channels=128,

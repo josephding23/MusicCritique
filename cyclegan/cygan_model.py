@@ -774,4 +774,4 @@ def run():
 
 
 if __name__ == '__main__':
-    run()
+    test_whole_song('Def Leppard', 'Too Late For Love', 'metal')

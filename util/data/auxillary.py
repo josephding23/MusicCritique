@@ -3,10 +3,13 @@ import math
 import pypianoroll
 import os
 import pretty_midi
+import matplotlib.pyplot as plt
+
 
 def get_midi_collection():
     client = MongoClient(connect=False)
     return client.free_midi.midi
+
 
 def get_genre_collection():
     client = MongoClient(connect=False)
@@ -81,7 +84,21 @@ def set_paragraph_num_info():
         print(piece_num)
 
         midi_collection.update_one({'_id': midi['_id']}, {'$set': {'PiecesNum': piece_num}})
-        print('Progress: {:.2%}\n'.format( midi_collection.count({'PiecesNum': {'$exists': True}}) / midi_collection.count()))
+        print('Progress: {:.2%}\n'.format(midi_collection.count({'PiecesNum': {'$exists': True}}) / midi_collection.count()))
+
+
+def get_nonempty_tracks_num():
+    midi_collection = get_midi_collection()
+    tracks_num_list = [0, 0, 0, 0, 0, 0]
+    for midi in midi_collection.find():
+        track_num = midi['NotEmptyTracksNum']
+        tracks_num_list[track_num] += 1
+    plt.bar([0, 1, 2, 3, 4, 5], tracks_num_list)
+    plt.xlabel('Instrument tracks num')
+    plt.ylabel('MIDI num')
+    plt.show()
+
+    print(tracks_num_list[5] / midi_collection.count())
 
 
 def label_all_numpy_existed():
@@ -129,4 +146,4 @@ def get_total_piece_num():
 
 
 if __name__ == '__main__':
-    add_genre_valid_pieces_num()
+    get_nonempty_tracks_num()
