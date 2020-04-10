@@ -28,6 +28,7 @@ def find_music_with_multiple_genres():
                                    {'$set': {'GenresNum': total_genres_num, 'TotalGenres': genres}})
         print('Progress: {:.2%}\n'.format(midi_collection.count({'GenresNum': {'$exists': True}}) / midi_collection.count()))
 
+
 def print_all_genres_num():
     genres_collection = get_genre_collection()
     midi_collection = get_midi_collection()
@@ -49,6 +50,7 @@ def add_midi_valid_pieces_num():
         pieces = midi['PiecesNum']
         valid_pieces = int(math.modf(pieces)[1] + 1) if math.modf(pieces)[0] >= 0.9 else int(math.modf(pieces)[1])
         midi_collection.update_one({'_id': midi['_id']}, {'$set': {'ValidPiecesNum': valid_pieces}})
+
 
 def add_genre_valid_pieces_num():
     midi_collection = get_midi_collection()
@@ -116,6 +118,14 @@ def find_data_with_no_empty_tracks():
             total += 1
             # midi_collection.delete_one({'_id': midi['_id']})
     print(total)
+
+
+def get_total_piece_num():
+    total_pieces = 0
+    for midi in get_midi_collection().find():
+        total_pieces += midi['PiecesNum']
+        print(midi['PiecesNum'])
+    print(total_pieces)
 
 
 if __name__ == '__main__':

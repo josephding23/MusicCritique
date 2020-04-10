@@ -117,10 +117,15 @@ class CycleGAN(object):
         latest_checked_epoch = self.find_latest_checkpoint()
         self.opt.start_epoch = latest_checked_epoch + 1
 
-        G_A2B_path = self.opt.G_A2B_save_path + 'steely_gan_G_A2B_' + str(latest_checked_epoch) + '.pth'
-        G_B2A_path = self.opt.G_B2A_save_path + 'steely_gan_G_B2A_' + str(latest_checked_epoch) + '.pth'
-        D_A_path = self.opt.D_A_save_path + 'steely_gan_D_A_' + str(latest_checked_epoch) + '.pth'
-        D_B_path = self.opt.D_B_save_path + 'steely_gan_D_B_' + str(latest_checked_epoch) + '.pth'
+        G_A2B_filename = f'{self.opt.name}_G_A2B_{latest_checked_epoch}.pth'
+        G_B2A_filename = f'{self.opt.name}_G_B2A_{latest_checked_epoch}.pth'
+        D_A_filename = f'{self.opt.name}_D_A_{latest_checked_epoch}.pth'
+        D_B_filename = f'{self.opt.name}_D_B_{latest_checked_epoch}.pth'
+
+        G_A2B_path = self.opt.G_A2B_save_path + G_A2B_filename
+        G_B2A_path = self.opt.G_B2A_save_path + G_B2A_filename
+        D_A_path = self.opt.D_A_save_path + D_A_filename
+        D_B_path = self.opt.D_B_save_path + D_B_filename
 
         self.generator_A2B.load_state_dict(torch.load(G_A2B_path))
         self.generator_B2A.load_state_dict(torch.load(G_B2A_path))
@@ -128,8 +133,11 @@ class CycleGAN(object):
         self.discriminator_B.load_state_dict(torch.load(D_B_path))
 
         if self.opt.model != 'base':
-            D_A_all_path = self.opt.D_A_all_save_path + 'steely_gan_D_A_all_' + str(latest_checked_epoch) + '.pth'
-            D_B_all_path = self.opt.D_B_all_save_path + 'steely_gan_D_B_all_' + str(latest_checked_epoch) + '.pth'
+            D_A_all_filename = f'{self.opt.name}_D_A_all_{latest_checked_epoch}.pth'
+            D_B_all_filename = f'{self.opt.name}_D_B_all_{latest_checked_epoch}.pth'
+
+            D_A_all_path = self.opt.D_A_all_save_path + D_A_all_filename
+            D_B_all_path = self.opt.D_B_all_save_path + D_B_all_filename
 
             self.discriminator_A_all.load_state_dict(torch.load(D_A_all_path))
             self.discriminator_B_all.load_state_dict(torch.load(D_B_all_path))
@@ -137,7 +145,6 @@ class CycleGAN(object):
         print(f'Loaded model from epoch {self.opt.start_epoch-1}')
 
     def reset_save(self):
-        import shutil
         if os.path.exists(self.opt.save_path):
             shutil.rmtree(self.opt.save_path)
 
@@ -385,7 +392,6 @@ class CycleGAN(object):
 
                     loss_D = loss_DA + loss_DB
                     DLoss_meter.add(loss_D.item())
-
 
                 else:
                     real_mixed = torch.unsqueeze(data[:, 2, :, :], 1).to(self.device, dtype=torch.float)

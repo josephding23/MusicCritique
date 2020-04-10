@@ -1,5 +1,6 @@
 import torch.utils.data as data
 import numpy as np
+import random
 
 from util.data.create_database import generate_sparse_matrix_of_genre, get_genre_collection, generate_sparse_matrix_from_multiple_genres
 
@@ -10,6 +11,7 @@ def get_dataset(genreA, genreB):
     numB = genre_collection.find_one({'Name': genreB})['PiecesNum']
     print(numA, numB)
     # limit_num = get_smaller
+
 
 class MixedSourceDataset(data.Dataset):
     def __init__(self):
@@ -24,6 +26,7 @@ class MixedSourceDataset(data.Dataset):
     def __len__(self):
         return self.length
 
+
 class SteelyDataset(data.Dataset):
     def __init__(self, genreA, genreB, phase, use_mix):
         assert phase in ['train', 'test'], 'not valid dataset type'
@@ -34,17 +37,16 @@ class SteelyDataset(data.Dataset):
 
         self.data_path = 'D:/data/'
 
-        numA = genre_collection.find_one({'Name': genreA})['ValidPiecesNum']
-        numB = genre_collection.find_one({'Name': genreB})['ValidPiecesNum']
-
-        train_num = int(min(numA, numB) * 0.9)
-        test_num = min(numA, numB) - train_num
+        train_num = min(genre_collection.find_one({'Name': genreA})['TrainPieces'],
+                        genre_collection.find_one({'Name': genreB})['TrainPieces'])
+        test_num = min(genre_collection.find_one({'Name': genreA})['TestPieces'],
+                       genre_collection.find_one({'Name': genreB})['TestPieces'])
         if phase is 'train':
             self.length = train_num
 
             if use_mix:
-                dataA = np.expand_dims(generate_sparse_matrix_of_genre(genreA)[:self.length], 1)
-                dataB = np.expand_dims(generate_sparse_matrix_of_genre(genreB)[:self.length], 1)
+                dataA = np.expand_dims(generate_sparse_matrix_of_genre(genreA, phase)[:self.length], 1)
+                dataB = np.expand_dims(generate_sparse_matrix_of_genre(genreB, phase)[:self.length], 1)
                 mixed = generate_sparse_matrix_from_multiple_genres(sources)
                 np.random.shuffle(mixed)
                 data_mixed = np.expand_dims(mixed[:self.length], 1)
@@ -52,17 +54,16 @@ class SteelyDataset(data.Dataset):
                 self.data = np.concatenate((dataA, dataB, data_mixed), axis=1)
 
             else:
-                dataA = np.expand_dims(generate_sparse_matrix_of_genre(genreA)[:self.length], 1)
-                dataB = np.expand_dims(generate_sparse_matrix_of_genre(genreB)[:self.length], 1)
+                dataA = np.expand_dims(generate_sparse_matrix_of_genre(genreA, phase)[:self.length], 1)
+                dataB = np.expand_dims(generate_sparse_matrix_of_genre(genreB, phase)[:self.length], 1)
 
                 self.data = np.concatenate((dataA, dataB), axis=1)
         else:
             self.length = test_num
-            dataA = np.expand_dims(generate_sparse_matrix_of_genre(genreA)[:self.length], 1)
-            dataB = np.expand_dims(generate_sparse_matrix_of_genre(genreB)[:self.length], 1)
+            dataA = np.expand_dims(generate_sparse_matrix_of_genre(genreA, phase)[:self.length], 1)
+            dataB = np.expand_dims(generate_sparse_matrix_of_genre(genreB, phase)[:self.length], 1)
 
             self.data = np.concatenate((dataA, dataB), axis=1)
-
 
     def __getitem__(self, index):
         return self.data[index, :, :, :]
@@ -71,6 +72,56 @@ class SteelyDataset(data.Dataset):
         return self.length
 
 
+class ClassifierDataset(data.Dataset):
+    def __init__(self, genreA, genreB, phase):
+
+        genre_collection = get_genre_collection()
+
+        train_num = min(genre_collection.find_one({'Name': genreA})['TrainPieces'],
+                        genre_collection.find_one({'Name': genreB})['TrainPieces'])
+        test_num = min(genre_collection.find_one({'Name': genreA})['TestPieces'],
+                       genre_collection.find_one({'Name': genreB})['TestPieces'])
+
+        if phase is 'train':
+            # self.length = min(20000, train_num)
+            self.length = train_num
+            print(self.length)
+
+            dataA = np.expand_dims(generate_sparse_matrix_of_genre(genreA, phase)[:self.length], 1)
+            dataB = np.expand_dims(generate_sparse_matrix_of_genre(genreB, phase)[:self.length], 1)
+
+            labelA = np.array([[1.0, 0.0] for _ in range(self.length)])
+            labelB = np.array([[0.0, 1.0] for _ in range(self.length)])
+
+            self.data = np.concatenate((dataA, dataB), axis=0)
+            self.labels = np.concatenate((labelA, labelB), axis=0)
+            self.data_pair = [pair for pair in zip(self.data, self.labels)]
+
+        else:
+            self.length = test_num
+
+            dataA = np.expand_dims(generate_sparse_matrix_of_genre(genreA, phase)[:self.length], 1)
+            dataB = np.expand_dims(generate_sparse_matrix_of_genre(genreB, phase)[:self.length], 1)
+
+            labelA = np.array([[1.0, 0.0] for _ in range(self.length)])
+            labelB = np.array([[0.0, 1.0] for _ in range(self.length)])
+
+            self.data = np.concatenate((dataA, dataB), axis=0)
+            self.labels = np.concatenate((labelA, labelB), axis=0)
+            self.data_pair = [pair for pair in zip(self.data, self.labels)]
+
+    def __getitem__(self, index):
+        return self.data_pair[index]
+
+    def __len__(self):
+        return self.length * 2
+
+    def get_data(self):
+        return self.data
+
+    def get_labels(self):
+        return self.labels
+
+
 if __name__ == '__main__':
-    dataset = SteelyDataset('rock', 'jazz', 'train', True)
-    print(dataset.data.shape)
+    print(np.concatenate((np.ones(5), np.zeros(5)), axis=0))

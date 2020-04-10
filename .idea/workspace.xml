@@ -1,13 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="b77e5dfc-4c90-42b0-97d0-a4afd2ccd659" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/classify/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/classify/classify_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/classify/config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/classify/loss.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/error/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/networks/classifier.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/MusicCritique.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MusicCritique.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cyclegan/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networks/SMGT.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/SMGT.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cyclegan/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/cygan_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/networks/SteelyGAN.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/SteelyGAN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/data/auxillary.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/data/auxillary.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/data/create_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/data/create_database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/data/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/data/dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/midi_A.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/midi_A2B.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/re_midi.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/test.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/test.rar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/test/Dream_On.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/test/free_midi.midi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/test/invalid_file.midi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/test/valid_file.midi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/text.rar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/text/text.mid" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/toolkit.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/toolkit.py" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,8 +70,8 @@
     <SUITE FILE_PATH="coverage/MusicCritique$RATM.coverage" NAME="RATM Coverage Results" MODIFIED="1571189355635" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/attempts" />
     <SUITE FILE_PATH="coverage/MusicCritique$UtilityBox.coverage" NAME="UtilityBox Coverage Results" MODIFIED="1578835388326" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/midi_extended" />
     <SUITE FILE_PATH="coverage/MusicCritique$cyclegan.coverage" NAME="cyclegan Coverage Results" MODIFIED="1583857017140" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/process" />
-    <SUITE FILE_PATH="coverage/MusicCritique$create_database.coverage" NAME="create_database Coverage Results" MODIFIED="1585366408042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
-    <SUITE FILE_PATH="coverage/MusicCritique$auxillary.coverage" NAME="auxillary Coverage Results" MODIFIED="1585410529864" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
+    <SUITE FILE_PATH="coverage/MusicCritique$create_database.coverage" NAME="create_database Coverage Results" MODIFIED="1586337561756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
+    <SUITE FILE_PATH="coverage/MusicCritique$auxillary.coverage" NAME="auxillary Coverage Results" MODIFIED="1585925774805" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
     <SUITE FILE_PATH="coverage/MusicCritique$organize.coverage" NAME="organize Coverage Results" MODIFIED="1581412028717" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
     <SUITE FILE_PATH="coverage/MusicCritique$midi_convertion__1_.coverage" NAME="midi_convertion (1) Coverage Results" MODIFIED="1581223504461" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_process" />
     <SUITE FILE_PATH="coverage/MusicCritique$pytest_in_test_py.coverage" NAME="pytest in test.py Coverage Results" MODIFIED="1583653637580" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/misc/GuitarPro" />
@@ -64,117 +107,6 @@
     <SUITE FILE_PATH="coverage/MusicCritique$pygame_player.coverage" NAME="pygame_player Coverage Results" MODIFIED="1569737399890" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples" />
     <SUITE FILE_PATH="coverage/MusicCritique$Interface__1_.coverage" NAME="Interface (1) Coverage Results" MODIFIED="1579500724800" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/interface/src" />
     <SUITE FILE_PATH="coverage/MusicCritique$SteelyGAN.coverage" NAME="SteelyGAN Coverage Results" MODIFIED="1585754953804" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/networks" />
-  </component>
-  <component name="DatabaseView">
-    <option name="SHOW_INTERMEDIATE" value="true" />
-    <option name="GROUP_DATA_SOURCES" value="true" />
-    <option name="GROUP_SCHEMA" value="true" />
-    <option name="GROUP_CONTENTS" value="false" />
-    <option name="SORT_POSITIONED" value="false" />
-    <option name="SHOW_EMPTY_GROUPS" value="false" />
-    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
-    <option name="HIDDEN_KINDS">
-      <set />
-    </option>
-    <expand />
-    <select />
-  </component>
-  <component name="FavoritesManager">
-    <favorites_list name="MusicCritique" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cyclegan/model.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="48" selection-start-line="48" selection-end-line="48" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/networks/SteelyGAN.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-887">
-              <caret line="107" column="80" selection-start-line="107" selection-start-column="80" selection-end-line="107" selection-end-column="80" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/networks/util.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-48">
-              <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cyclegan/config.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="412">
-              <caret line="54" column="24" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/networks/SMGT.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1264">
-              <caret line="32" column="34" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/util/toolkit.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2176">
-              <caret line="140" column="37" selection-start-line="140" selection-start-column="37" selection-end-line="140" selection-end-column="37" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/util/data/create_database.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="27" column="26" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/util/data/auxillary.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1872">
-              <caret line="121" selection-start-line="121" selection-end-line="121" />
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -230,130 +162,24 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/cyclegan/data/aligned_dataset.py" />
-        <option value="$PROJECT_DIR$/cyclegan/models/__init__.py" />
-        <option value="$PROJECT_DIR$/cyclegan/data/__init__.py" />
-        <option value="$PROJECT_DIR$/data_process.py" />
-        <option value="$PROJECT_DIR$/data_process/midi_convertion.py" />
-        <option value="$PROJECT_DIR$/data_process/utl.py" />
-        <option value="$PROJECT_DIR$/data_process/midi_to_npz.py" />
-        <option value="$PROJECT_DIR$/util/organize.py" />
-        <option value="$PROJECT_DIR$/util/midi_scratch.py" />
-        <option value="$PROJECT_DIR$/musegan/data.py" />
-        <option value="$PROJECT_DIR$/data_process/md5_reorganize.py" />
-        <option value="$PROJECT_DIR$/data_process/dump_h5.py" />
-        <option value="$PROJECT_DIR$/scratch/midi_scratch.py" />
-        <option value="$PROJECT_DIR$/data_process/midi_to_npy.py" />
-        <option value="$PROJECT_DIR$/data_process/track_merge.py" />
-        <option value="$PROJECT_DIR$/interface/src/Piano.py" />
-        <option value="$PROJECT_DIR$/data_process/unify_tempo.py" />
-        <option value="$PROJECT_DIR$/data_process/transpose_tone.py" />
-        <option value="$PROJECT_DIR$/../FreeMidiLibrary/src/unify_tempo.py" />
-        <option value="$PROJECT_DIR$/util/dataset.py" />
-        <option value="$PROJECT_DIR$/data_process/create_database.py" />
-        <option value="$PROJECT_DIR$/pytorch_tutorial/load_and_normalize.py" />
-        <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/util/text/data_preprossess.py" />
-        <option value="$PROJECT_DIR$/util/create_database.py" />
-        <option value="$PROJECT_DIR$/util/data_preprocess.py" />
-        <option value="$PROJECT_DIR$/process/train.py" />
-        <option value="$PROJECT_DIR$/musegan/model.py" />
-        <option value="$PROJECT_DIR$/networks/networks.py" />
-        <option value="$PROJECT_DIR$/util/data/create_database_note_length.py" />
-        <option value="$PROJECT_DIR$/misc/GuitarPro/test.py" />
-        <option value="$PROJECT_DIR$/process/cyclegan.py" />
-        <option value="$PROJECT_DIR$/util/plotting.py" />
-        <option value="$PROJECT_DIR$/process/old_model.py" />
-        <option value="$PROJECT_DIR$/process/older_model.py" />
-        <option value="$PROJECT_DIR$/networks/musegan.py" />
-        <option value="$PROJECT_DIR$/util/image_pool.py" />
-        <option value="$PROJECT_DIR$/process/config.py" />
-        <option value="$PROJECT_DIR$/process/model.py" />
-        <option value="$PROJECT_DIR$/cyclegan/error.py" />
-        <option value="$PROJECT_DIR$/util/data/dataset.py" />
-        <option value="$PROJECT_DIR$/util/data/auxillary.py" />
-        <option value="$PROJECT_DIR$/util/data/create_database.py" />
-        <option value="$PROJECT_DIR$/networks/MST.py" />
-        <option value="$PROJECT_DIR$/networks/test_network.py" />
-        <option value="$PROJECT_DIR$/networks/DeeperSMGT.py" />
-        <option value="$PROJECT_DIR$/util/toolkit.py" />
-        <option value="$PROJECT_DIR$/cyclegan/model.py" />
-        <option value="$PROJECT_DIR$/cyclegan/config.py" />
-        <option value="$PROJECT_DIR$/networks/SMGT.py" />
-        <option value="$PROJECT_DIR$/networks/SteelyGAN.py" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="952" />
-    <option name="y" value="22" />
-    <option name="width" value="976" />
-    <option name="height" value="1066" />
-  </component>
+  <component name="ProjectId" id="1aGWH3dXLtYjpJrdfJ5queY1z9X" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="cyclegan" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="musegan" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="networks" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MusicCritique" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MusicCritique" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mongo" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="bass&#9;null&#9;null" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/networks/musegan.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Codes/CycleGAN-Music-Style-Transfer-Refactorization-master" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.language" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myUseExistingConsole" value="true" />
@@ -374,20 +200,8 @@
       <recent name="D:\PycharmProjects\MusicCritique" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Python.model">
-    <configuration name="SteelyGAN" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.classify_model">
+    <configuration name="classifier" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MusicCritique" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -400,7 +214,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/networks/SteelyGAN.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/networks/classifier.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -409,7 +223,29 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="auxillary" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="classify_model" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MusicCritique" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/classify" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/classify/classify_model.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="create_database" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="MusicCritique" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -422,7 +258,29 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/util/data/auxillary.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/util/data/create_database.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="cygan_model" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MusicCritique" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cyclegan" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cyclegan/cygan_model.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -444,51 +302,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cyclegan/model.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="test_network" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="MusicCritique" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/networks" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/networks/test_network.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="toolkit" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="MusicCritique" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/util" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/util/toolkit.py" />
+      <option name="SCRIPT_NAME" value="D:\PycharmProjects\MusicCritique\cyclegan\cygan_model.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -499,11 +313,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.classify_model" />
+        <item itemvalue="Python.classifier" />
+        <item itemvalue="Python.cygan_model" />
         <item itemvalue="Python.model" />
-        <item itemvalue="Python.SteelyGAN" />
-        <item itemvalue="Python.toolkit" />
-        <item itemvalue="Python.test_network" />
-        <item itemvalue="Python.auxillary" />
+        <item itemvalue="Python.create_database" />
       </list>
     </recent_temporary>
   </component>
@@ -629,7 +443,19 @@
       <workItem from="1585587780565" duration="46000" />
       <workItem from="1585626194716" duration="14098000" />
       <workItem from="1585703434008" duration="16646000" />
-      <workItem from="1585792057799" duration="25985000" />
+      <workItem from="1585792057799" duration="26979000" />
+      <workItem from="1585921165706" duration="2108000" />
+      <workItem from="1585986485082" duration="696000" />
+      <workItem from="1586092618035" duration="2190000" />
+      <workItem from="1586178702536" duration="1345000" />
+      <workItem from="1586271017825" duration="1430000" />
+      <workItem from="1586309605915" duration="599000" />
+      <workItem from="1586326796595" duration="3200000" />
+      <workItem from="1586362323542" duration="1851000" />
+      <workItem from="1586400695611" duration="26286000" />
+      <workItem from="1586432820361" duration="641000" />
+      <workItem from="1586440020530" duration="14068000" />
+      <workItem from="1586484017548" duration="16202000" />
     </task>
     <task id="LOCAL-00001" summary="pretty">
       <created>1578794444076</created>
@@ -662,32 +488,6 @@
     <option name="localTasksCounter" value="5" />
     <servers />
   </component>
-  <component name="TestHistory">
-    <history-entry file="pytest_in_create_database_py - 2020.03.03 at 13h 57m 12s.xml">
-      <configuration name="pytest in create_database.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_create_database_py - 2020.03.03 at 13h 57m 35s.xml">
-      <configuration name="pytest in create_database.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_create_database_py - 2020.03.07 at 22h 06m 58s.xml">
-      <configuration name="pytest in create_database.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_create_database_py - 2020.03.07 at 22h 07m 20s.xml">
-      <configuration name="pytest in create_database.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_musegan_py - 2020.03.07 at 23h 18m 30s.xml">
-      <configuration name="pytest in musegan.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_create_database_py - 2020.03.08 at 00h 11m 18s.xml">
-      <configuration name="pytest in create_database.py" configurationId="tests" />
-    </history-entry>
-    <history-entry file="pytest_in_test_py - 2020.03.08 at 15h 47m 19s.xml">
-      <configuration name="pytest in test.py" configurationId="tests" />
-    </history-entry>
-  </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="849252000" />
-  </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
@@ -697,69 +497,20 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="22" width="1936" height="1066" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.86079544" visible="true" weight="0.17217484" />
-      <window_info id="TODO" order="1" sideWeight="0.39377683" side_tool="true" weight="0.13752665" />
-      <window_info id="Favorites" order="2" sideWeight="0.13920455" side_tool="true" weight="0.14072494" />
-      <window_info id="Structure" order="3" sideWeight="0.2264151" side_tool="true" weight="0.14978679" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.21137339" />
-      <window_info anchor="bottom" id="Debug" order="2" weight="0.397351" />
-      <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="6" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="CSS-X-Fire" order="8" weight="0.32956383" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.14410481" side_tool="true" weight="0.84871244" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.4989083" weight="0.12362031" />
-      <window_info anchor="bottom" id="Python Console" order="11" sideWeight="0.5008026" weight="0.24392936" />
-      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="12" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" auto_hide="true" x="-23" y="314" width="1846" height="932" id="Run" order="13" sideWeight="0.8558952" visible="true" weight="0.30242825" />
-      <window_info anchor="bottom" id="LuaCheck" order="14" weight="0.3289183" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" weight="0.29744136" />
-      <window_info anchor="right" id="R Graphics" order="4" />
-      <window_info anchor="right" id="R Packages" order="5" />
-      <window_info anchor="right" id="Database" order="6" weight="0.16044776" />
-      <window_info anchor="right" id="LuaJ" order="7" />
-      <window_info anchor="right" id="Mongo Explorer" order="8" weight="0.32995737" />
-    </layout>
-    <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.60622317" visible="true" weight="0.1391258" />
-      <window_info id="TODO" order="1" sideWeight="0.39377683" side_tool="true" weight="0.13752665" />
-      <window_info id="Favorites" order="2" sideWeight="0.3936" side_tool="true" weight="0.13752665" />
-      <window_info id="Structure" order="3" sideWeight="0.2264151" side_tool="true" weight="0.14978679" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.21137339" />
-      <window_info anchor="bottom" id="Debug" order="2" weight="0.39806867" />
-      <window_info anchor="bottom" id="Cvs" order="3" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
-      <window_info anchor="bottom" id="Docker" order="5" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="6" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="CSS-X-Fire" order="8" weight="0.32956383" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.14410481" side_tool="true" weight="0.84871244" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.4989083" visible="true" weight="0.2886266" />
-      <window_info anchor="bottom" id="Python Console" order="11" sideWeight="0.5008026" weight="0.2446352" />
-      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="12" weight="0.32936078" />
-      <window_info anchor="bottom" auto_hide="true" x="-23" y="314" width="1846" height="932" id="Run" order="13" sideWeight="0.8558952" weight="0.22103004" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" weight="0.29744136" />
-      <window_info anchor="right" id="R Graphics" order="4" />
-      <window_info anchor="right" id="R Packages" order="5" />
-      <window_info anchor="right" id="Database" order="6" weight="0.16044776" />
-    </layout-to-restore>
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="pretty" />
@@ -768,299 +519,68 @@
     <MESSAGE value="implement cyclegan" />
     <option name="LAST_COMMIT_MESSAGE" value="implement cyclegan" />
   </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../FreeMidiLibrary/src/midi_to_npy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="21" selection-start-line="21" selection-end-line="23" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../FreeMidiLibrary/src/organize.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/midi_extended/UtilityBox.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="11" column="15" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../FreeMidiLibrary/src/unify_tempo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="786">
-          <caret line="220" column="27" selection-start-line="220" selection-end-line="220" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/pypianoroll/multitrack.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="757" selection-start-line="757" selection-end-line="757" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cyclegan/datasets/combine_A_and_B.py" />
-    <entry file="file://$PROJECT_DIR$/cyclegan/datasets/make_dataset_aligned.py" />
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/pymongo/collection.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="538">
-          <caret line="3326" selection-start-line="3326" selection-end-line="3326" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/numpy/lib/npyio.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="421" selection-start-line="421" selection-end-line="421" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/models.py" />
-    <entry file="file://$PROJECT_DIR$/cyclegan/data/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/cyclegan/models/pix2pix_model.py" />
-    <entry file="file://$PROJECT_DIR$/cyclegan/models/template_model.py" />
-    <entry file="file://$PROJECT_DIR$/cyclegan/train.py" />
-    <entry file="file://$PROJECT_DIR$/cyclegan/models/base_model.py" />
-    <entry file="file://$PROJECT_DIR$/cyclegan/models/networks.py" />
-    <entry file="file://$PROJECT_DIR$/pytorch_tutorial/load_and_normalize.py" />
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="256">
-            <caret line="16" column="8" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="8" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/util/text/data_preprossess.py" />
-    <entry file="file://$PROJECT_DIR$/util/data_preprocess.py" />
-    <entry file="file://$PROJECT_DIR$/musegan/io_util.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/util/data/create_database_note_length.py" />
-    <entry file="file://$PROJECT_DIR$/misc/GuitarPro/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/misc/GuitarPro/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="3" column="44" selection-start-line="3" selection-start-column="44" selection-end-line="3" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/torch/nn/functional.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45424">
-          <caret line="2851" selection-start-line="2851" selection-end-line="2851" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cyclegan/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/musegan/data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cyclegan/older_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16">
-          <caret line="605" column="22" selection-start-line="605" selection-start-column="22" selection-end-line="608" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/musegan.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="200" column="27" selection-start-line="200" selection-start-column="27" selection-end-line="200" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/midi_write.py" />
-    <entry file="file://$PROJECT_DIR$/models/cycle_gan_model.py" />
-    <entry file="file://$PROJECT_DIR$/models/attempt.py" />
-    <entry file="file://$PROJECT_DIR$/models/__init__.py" />
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/torchnet/meter/movingaveragevaluemeter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="5" column="29" lean-forward="true" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/torchvision/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/util/image_pool.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="6" column="30" selection-start-line="6" selection-start-column="30" selection-end-line="6" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cyclegan/error.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/test_network.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="38" column="11" selection-start-line="38" selection-start-column="11" selection-end-line="38" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/util/data/dataset.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="47" selection-start-line="47" selection-end-line="47" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/torch/nn/init.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="81" column="50" selection-start-line="81" selection-start-column="50" selection-end-line="81" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/util/toolkit.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2176">
-          <caret line="140" column="37" selection-start-line="140" selection-start-column="37" selection-end-line="140" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/util/data/create_database.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="27" column="26" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/util/data/auxillary.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1872">
-          <caret line="121" selection-start-line="121" selection-end-line="121" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/torch/optim/adam.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="29" column="8" selection-start-line="29" selection-start-column="8" selection-end-line="29" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cyclegan/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="54" column="24" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/SMGT.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1264">
-          <caret line="32" column="34" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/util.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-48">
-          <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cyclegan/model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="48" selection-start-line="48" selection-end-line="48" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/ProgramData/Anaconda3/Lib/site-packages/torch/nn/modules/instancenorm.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-91">
-          <caret line="132" column="6" selection-start-line="132" selection-start-column="6" selection-end-line="132" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/networks/SteelyGAN.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-887">
-          <caret line="107" column="80" selection-start-line="107" selection-start-column="80" selection-end-line="107" selection-end-column="80" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+  <component name="WindowStateProjectService">
+    <state x="552" y="213" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586401768554">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="552" y="213" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1586401768554" />
+    <state x="740" y="309" key="FileChooserDialogImpl" timestamp="1586407540664">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="740" y="309" key="FileChooserDialogImpl/0.30.1920.1050@0.30.1920.1050" timestamp="1586407540664" />
+    <state width="1877" height="241" key="GridCell.Tab.0.bottom" timestamp="1586501797634">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="241" key="GridCell.Tab.0.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1586501797634" />
+    <state width="1877" height="241" key="GridCell.Tab.0.center" timestamp="1586501797633">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="241" key="GridCell.Tab.0.center/0.30.1920.1050@0.30.1920.1050" timestamp="1586501797632" />
+    <state width="1877" height="241" key="GridCell.Tab.0.left" timestamp="1586501797629">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="241" key="GridCell.Tab.0.left/0.30.1920.1050@0.30.1920.1050" timestamp="1586501797629" />
+    <state width="1877" height="241" key="GridCell.Tab.0.right" timestamp="1586501797633">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="241" key="GridCell.Tab.0.right/0.30.1920.1050@0.30.1920.1050" timestamp="1586501797633" />
+    <state width="1877" height="349" key="GridCell.Tab.1.bottom" timestamp="1586486936428">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="349" key="GridCell.Tab.1.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1586486936428" />
+    <state width="1877" height="349" key="GridCell.Tab.1.center" timestamp="1586486936428">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="349" key="GridCell.Tab.1.center/0.30.1920.1050@0.30.1920.1050" timestamp="1586486936428" />
+    <state width="1877" height="349" key="GridCell.Tab.1.left" timestamp="1586486936428">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="349" key="GridCell.Tab.1.left/0.30.1920.1050@0.30.1920.1050" timestamp="1586486936428" />
+    <state width="1877" height="349" key="GridCell.Tab.1.right" timestamp="1586486936428">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1877" height="349" key="GridCell.Tab.1.right/0.30.1920.1050@0.30.1920.1050" timestamp="1586486936428" />
+    <state width="218" height="483" key="HiddenNamespacesPopup" timestamp="1586401726100">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="218" height="483" key="HiddenNamespacesPopup/0.30.1920.1050@0.30.1920.1050" timestamp="1586401726100" />
+    <state x="461" y="199" key="SettingsEditor" timestamp="1586403414129">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="461" y="199" key="SettingsEditor/0.30.1920.1050@0.30.1920.1050" timestamp="1586403414129" />
+    <state x="623" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1586416336084">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="623" y="257" width="672" height="678" key="search.everywhere.popup/0.30.1920.1050@0.30.1920.1050" timestamp="1586416336084" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/MusicCritique$classify_model.coverage" NAME="classify_model Coverage Results" MODIFIED="1586501616117" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/classify" />
+    <SUITE FILE_PATH="coverage/MusicCritique$auxillary.coverage" NAME="auxillary Coverage Results" MODIFIED="1586404256666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
+    <SUITE FILE_PATH="coverage/MusicCritique$model.coverage" NAME="model Coverage Results" MODIFIED="1586419301960" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
+    <SUITE FILE_PATH="coverage/MusicCritique$create_database.coverage" NAME="create_database Coverage Results" MODIFIED="1586418625090" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
+    <SUITE FILE_PATH="coverage/MusicCritique$dataset.coverage" NAME="dataset Coverage Results" MODIFIED="1586418282219" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
+    <SUITE FILE_PATH="coverage/MusicCritique$cygan_model.coverage" NAME="cygan_model Coverage Results" MODIFIED="1586432852879" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
+    <SUITE FILE_PATH="coverage/MusicCritique$classifier.coverage" NAME="classifier Coverage Results" MODIFIED="1586484875393" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/networks" />
   </component>
   <component name="masterDetails">
     <states>

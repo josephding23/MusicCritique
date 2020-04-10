@@ -147,5 +147,9 @@ def get_md5_of(performer, song, genre):
         raise Exception('No midi Found.')
 
 
+def get_chord_type():
+    pass
+
+
 if __name__ == '__main__':
     print(get_md5_of())

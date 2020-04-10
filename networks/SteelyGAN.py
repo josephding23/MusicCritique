@@ -23,9 +23,9 @@ class Discriminator(nn.Module):
                                             stride=1,
                                             padding=3,
                                             bias=False),
-                                  nn.InstanceNorm2d(256, eps=1e-5),
-                                  nn.LeakyReLU(negative_slope=0.2),
-                                  nn.Dropout(0.9),
+                                  nn.InstanceNorm2d(64, eps=1e-5),
+                                  nn.PReLU(num_parameters=64, init=0.2),
+                                  nn.Dropout(0.8),
 
                                   nn.Conv2d(in_channels=64,
                                             out_channels=256,
@@ -34,8 +34,8 @@ class Discriminator(nn.Module):
                                             padding=3,
                                             bias=False),
                                   nn.InstanceNorm2d(256, eps=1e-5),
-                                  nn.LeakyReLU(negative_slope=0.2),
-                                  nn.Dropout(0.9),
+                                  nn.PReLU(num_parameters=256, init=0.2),
+                                  nn.Dropout(0.8),
                                   )
         init_weight_(self.net1)
 
@@ -77,8 +77,8 @@ class Generator(nn.Module):
                                                       padding=0,
                                                       bias=False),
                                             nn.InstanceNorm2d(64, eps=1e-5),
-                                            nn.ReLU(),
-                                            nn.Dropout(0.9),
+                                            nn.LeakyReLU(negative_slope=0.2),
+                                            nn.Dropout(0.8),
 
                                             nn.Conv2d(in_channels=64,
                                                       out_channels=128,
@@ -87,8 +87,8 @@ class Generator(nn.Module):
                                                       padding=1,
                                                       bias=False),
                                             nn.InstanceNorm2d(128, eps=1e-5),
-                                            nn.ReLU(),
-                                            nn.Dropout(0.9),
+                                            nn.LeakyReLU(negative_slope=0.2),
+                                            nn.Dropout(0.8),
                                             )
         init_weight_(self.paragraph_net1)
 
@@ -99,7 +99,7 @@ class Generator(nn.Module):
                                                 padding=1,
                                                 bias=False),
                                       nn.InstanceNorm2d(64, eps=1e-5),
-                                      nn.ReLU())
+                                      nn.LeakyReLU(negative_slope=0.2))
         init_weight_(self.bar_cnet)
 
         self.resnet = nn.Sequential()
@@ -118,7 +118,7 @@ class Generator(nn.Module):
                                                           bias=False),
                                        nn.ZeroPad2d((0, 1, 0, 1)),
                                        nn.InstanceNorm2d(32, eps=1e-5),
-                                       nn.ReLU())
+                                       nn.LeakyReLU(negative_slope=0.2))
         init_weight_(self.bar_tcnet)
 
         self.paragraph_net2 = nn.Sequential(nn.ConvTranspose2d(in_channels=128,
@@ -129,7 +129,7 @@ class Generator(nn.Module):
                                                                bias=False),
                                             nn.ZeroPad2d((0, 1, 0, 1)),
                                             nn.InstanceNorm2d(64, eps=1e-5),
-                                            nn.ReLU(),
+                                            nn.LeakyReLU(negative_slope=0.2),
 
                                             nn.ReflectionPad2d((3, 3, 3, 3)),
                                             nn.Conv2d(in_channels=64,
@@ -138,7 +138,7 @@ class Generator(nn.Module):
                                                       stride=1,
                                                       padding=0,
                                                       bias=False),
-                                            nn.Sigmoid()
+                                            # nn.Sigmoid()
                                             )
         init_weight_(self.paragraph_net2)
 
