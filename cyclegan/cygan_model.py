@@ -17,7 +17,7 @@ import shutil
 import networks.SteelyGAN as SteelyGAN
 import networks.SMGT as SMGT
 from networks.SteelyGAN import Discriminator, Generator
-from cyclegan.config import Config
+from cyclegan.cygan_config import Config
 from util.toolkit import generate_midi_segment_from_tensor, generate_data_from_midi, generate_whole_midi_from_tensor, evaluate_tonal_scale, get_md5_of
 from util.image_pool import ImagePool
 import logging
@@ -774,4 +774,4 @@ def run():
 
 
 if __name__ == '__main__':
-    test_whole_song('Def Leppard', 'Too Late For Love', 'metal')
+    run()

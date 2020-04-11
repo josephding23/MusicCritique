@@ -10,9 +10,9 @@ def init_weight_(net):
             init.normal_(param, mean=0, std=0.02)
 
 
-class Classifier(nn.Module):
+class NewClassifier(nn.Module):
     def __init__(self):
-        super(Classifier, self).__init__()
+        super(NewClassifier, self).__init__()
 
         self.resnet = nn.Sequential()
         for i in range(20):
@@ -25,18 +25,28 @@ class Classifier(nn.Module):
         # shape = (64, 84, 1)
         self.net = nn.Sequential(
             nn.Conv2d(in_channels=1,
-                      out_channels=64,
-                      kernel_size=[1, 12],
-                      stride=[1, 12],
+                      out_channels=16,
+                      kernel_size=[1, 3],
+                      stride=[1, 3],
                       padding=0,
                       bias=False
                       ),
             nn.LeakyReLU(negative_slope=0.2),
 
-            nn.Conv2d(in_channels=64,
-                      out_channels=128,
+            nn.Conv2d(in_channels=16,
+                      out_channels=64,
                       kernel_size=[4, 1],
                       stride=[4, 1],
+                      padding=0,
+                      bias=False
+                      ),
+            nn.InstanceNorm2d(64, eps=1e-5),
+            nn.LeakyReLU(negative_slope=0.2),
+
+            nn.Conv2d(in_channels=64,
+                      out_channels=128,
+                      kernel_size=[1, 4],
+                      stride=[1, 4],
                       padding=0,
                       bias=False
                       ),
@@ -52,20 +62,43 @@ class Classifier(nn.Module):
                       ),
             nn.InstanceNorm2d(256, eps=1e-5),
             nn.LeakyReLU(negative_slope=0.2),
+            nn.Dropout(0.5),
 
             # self.resnet,
 
             nn.Conv2d(in_channels=256,
                       out_channels=512,
-                      kernel_size=[8, 1],
-                      stride=[8, 1],
+                      kernel_size=[2, 1],
+                      stride=[2, 1],
                       padding=0,
                       bias=False
                       ),
             nn.InstanceNorm2d(512, eps=1e-5),
             nn.LeakyReLU(negative_slope=0.2),
+            nn.Dropout(0.5),
 
             nn.Conv2d(in_channels=512,
+                      out_channels=1024,
+                      kernel_size=[2, 1],
+                      stride=[2, 1],
+                      padding=0,
+                      bias=False
+                      ),
+            nn.InstanceNorm2d(1024, eps=1e-5),
+            nn.LeakyReLU(negative_slope=0.2),
+            nn.Dropout(0.5),
+
+            nn.Conv2d(in_channels=1024,
+                      out_channels=2048,
+                      kernel_size=[2, 1],
+                      stride=[2, 1],
+                      padding=0,
+                      bias=False
+                      ),
+            nn.InstanceNorm2d(2048, eps=1e-5),
+            nn.LeakyReLU(negative_slope=0.2),
+
+            nn.Conv2d(in_channels=2048,
                       out_channels=2,
                       kernel_size=[1, 7],
                       stride=[1, 7],

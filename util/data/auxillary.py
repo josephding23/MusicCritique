@@ -139,11 +139,20 @@ def find_data_with_no_empty_tracks():
 
 def get_total_piece_num():
     total_pieces = 0
-    for midi in get_midi_collection().find():
-        total_pieces += midi['PiecesNum']
-        print(midi['PiecesNum'])
+    for genre in get_genre_collection().find():
+        total_pieces += genre['PiecesNum']
     print(total_pieces)
 
 
+def get_genre_files_num():
+    genre_collection = get_genre_collection()
+    for genre in genre_collection.find():
+        files_num = get_midi_collection().count({'Genre': genre['Name']})
+        genre_collection.update_one(
+            {'Name': genre['Name']},
+            {'$set': {'FilesNum': files_num}}
+        )
+
+
 if __name__ == '__main__':
-    get_nonempty_tracks_num()
+    get_genre_files_num()

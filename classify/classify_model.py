@@ -15,8 +15,9 @@ from torchnet.meter import MovingAverageValueMeter
 from networks.musegan import GANLoss
 import shutil
 from networks.classifier import Classifier
+from networks.new_classifier import NewClassifier
 from networks.SteelyGAN import Discriminator, Generator
-from classify.config import Config
+from classify.classify_config import Config
 from util.image_pool import ImagePool
 import logging
 import colorlog
@@ -34,7 +35,7 @@ class Classify(object):
         self._build_model()
 
     def _build_model(self):
-        self.classifier = Classifier()
+        self.classifier = NewClassifier()
 
         if self.opt.gpu:
             self.classifier.to(self.device)
