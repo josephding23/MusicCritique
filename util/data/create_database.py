@@ -14,6 +14,16 @@ def get_genre_collection():
     return client.free_midi.genres
 
 
+def get_classical_collection():
+    client = MongoClient(connect=False)
+    return client.classical_midi.midi
+
+
+def get_classical_composer_collection():
+    client = MongoClient(connect=False)
+    return client.classical_midi.performers
+
+
 def merge_all_sparse_matrices():
     midi_collection = get_midi_collection()
     genre_collection = get_genre_collection()
@@ -83,6 +93,116 @@ def merge_all_sparse_matrices():
                                                                      'TestPieces': test_length}})
 
 
+def merge_classical():
+    midi_collection = get_classical_collection()
+    genre_collection = get_genre_collection()
+
+    root_dir = 'E:/classical_midi/npy_files'
+    time_step = 64
+    valid_range = (24, 108)
+
+    genre = genre_collection.find_one({'Name': 'classical'})
+
+    save_dir = 'd:/data/' + genre['Name']
+
+    train_file_path = save_dir + '/train.npz'
+    test_file_path = save_dir + '/test.npz'
+
+    whole_length = genre['ValidPiecesNum']
+
+    train_length = int(whole_length * 0.9)
+    test_length = whole_length - train_length
+
+    train_shape = np.array([train_length, time_step, valid_range[1]-valid_range[0]])
+    test_shape = np.array([test_length, time_step, valid_range[1]-valid_range[0]])
+
+    processed = 0
+    last_piece_num = 0
+    whole_num = genre['FilesNum']
+
+    non_zeros_train = []
+    non_zeros_test = []
+
+    for midi in midi_collection.find({}, no_cursor_timeout=True):
+        path = root_dir + '/' + midi['md5'] + '.npz'
+        valid_pieces_num = midi['ValidPiecesNum']
+
+        f = np.load(path)
+        matrix = f['arr_0'].copy()
+        for data in matrix:
+            try:
+                data = data.tolist()
+
+                if data[0] < valid_pieces_num:
+                    piece_order = last_piece_num + data[0]
+
+                    if piece_order < train_length:
+                        non_zeros_train.append([piece_order, data[1], data[2]])
+                    else:
+                        non_zeros_test.append([piece_order - train_length, data[1], data[2]])
+            except:
+                print(path)
+
+        last_piece_num += valid_pieces_num
+        processed += 1
+
+        print('\tProgress: {:.2%}\n'.format(processed / whole_num))
+
+    print(last_piece_num, whole_length)
+    non_zeros_train, non_zeros_test = np.array(non_zeros_train), np.array(non_zeros_test)
+
+    np.savez_compressed(train_file_path, nonzeros=non_zeros_train, shape=train_shape)
+    np.savez_compressed(test_file_path, nonzeros=non_zeros_test, shape=test_shape)
+
+
+def build_classical_tensor():
+    import math
+    midi_collection = get_classical_collection()
+    root_dir = 'E:/classical_midi/scaled'
+    npy_file_root_dir = 'E:/classical_midi/npy_files'
+    for midi in midi_collection.find({'OneInstrNpyGenerated': False}, no_cursor_timeout=True):
+        path = root_dir + '/' + midi['md5'] + '.mid'
+        save_path = npy_file_root_dir + '/' + midi['md5'] + '.npz'
+
+        pm = pretty_midi.PrettyMIDI(path)
+
+        segment_num = pm.get_end_time() / 8
+        valid_pieces = int(math.modf(segment_num)[1] + 1) if math.modf(segment_num)[0] >= 0.9 else int(math.modf(segment_num)[1])
+
+        note_range = (24, 108)
+        # data = np.zeros((segment_num, 64, 84), np.bool_)
+        nonzeros = []
+        sixteenth_length = 60 / 120 / 4
+        for instr in pm.instruments:
+            if not instr.is_drum:
+                for note in instr.notes:
+                    start = int(note.start / sixteenth_length)
+                    end = int(note.end / sixteenth_length)
+                    pitch = note.pitch
+                    if pitch < note_range[0] or pitch >= note_range[1]:
+                        continue
+                    else:
+                        pitch -= 24
+                        for time_raw in range(start, end):
+                            segment = int(time_raw / 64)
+                            time = time_raw % 64
+                            nonzeros.append([segment, time, pitch])
+
+        nonzeros = np.array(nonzeros)
+        np.savez_compressed(save_path, nonzeros)
+
+        midi_collection.update_one(
+            {'_id': midi['_id']},
+            {'$set': {
+                'ValidPiecesNum': valid_pieces,
+                'PiecesNum': segment_num,
+                'OneInstrNpyGenerated': True
+            }})
+
+        print('Progress: {:.2%}'.format(
+            midi_collection.count({'OneInstrNpyGenerated': True}) / midi_collection.count()))
+
+
 def build_single_tensor_from_sparse(path):
     midi_collection = get_midi_collection()
     nonzeros = np.load(path)['arr_0']
@@ -92,7 +212,7 @@ def build_single_tensor_from_sparse(path):
     return result
 
 
-def build_midi_from_tensor(src_path, save_path, time_step=120, bar_length=4, valid_range = (24, 108)):
+def build_midi_from_tensor(src_path, save_path, time_step=120, bar_length=4, valid_range=(24, 108)):
     data = build_single_tensor_from_sparse(src_path)
     piece_num = data.shape[0]
     instr_list = ['Drums', 'Piano', 'Guitar', 'Bass', 'Strings']
@@ -156,11 +276,11 @@ def generate_nonzeros_by_notes():
         if not os.path.exists(npy_file_root_dir):
             os.mkdir(npy_file_root_dir)
 
-        for midi in midi_collection.find({'Genre': genre_name}, no_cursor_timeout=True):
+        for midi in midi_collection.find({'Genre': genre_name, 'OneInstrNpyGenerated': False}, no_cursor_timeout=True):
             path = root_dir + genre_name + '/' + midi['md5'] + '.mid'
             save_path = npy_file_root_dir + midi['md5'] + '.npz'
             pm = pretty_midi.PrettyMIDI(path)
-            # segment_num = math.ceil(pm.get_end_time() / 8)
+            segment_num = pm.get_end_time() / 8
             note_range = (24, 108)
             # data = np.zeros((segment_num, 64, 84), np.bool_)
             nonzeros = []
@@ -221,6 +341,30 @@ def generate_sparse_matrix_from_multiple_genres(genres):
     return data
 
 
+def update_classical_info():
+    classical_collection = get_classical_collection()
+
+    genres_collection = get_genre_collection()
+
+    total_valid = 0
+    for midi in classical_collection.find():
+        total_valid += midi['ValidPiecesNum']
+
+    genres_collection.update_one(
+        {'Name': 'classical'},
+        {'$set': {
+            'PerformersNum': get_classical_composer_collection().count(),
+            'ValidPiecesNum': total_valid,
+            'TrainPieces': int(total_valid * 0.9),
+            'TestPieces': total_valid - int(total_valid * 0.9),
+            'FilesNum': get_classical_collection().count()
+        }}
+    )
+    print(total_valid)
+
+
 if __name__ == '__main__':
+    # build_classical_tensor()
+    merge_classical()
     # get_genre_collection().update_many({}, {'$set': {'DatasetGenerated': False}})
-    generate_sparse_matrix_of_genre('rock', 'train')
+    # print_total_classical_segnum()

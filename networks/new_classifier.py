@@ -35,8 +35,8 @@ class NewClassifier(nn.Module):
 
             nn.Conv2d(in_channels=16,
                       out_channels=64,
-                      kernel_size=[4, 1],
-                      stride=[4, 1],
+                      kernel_size=[1, 4],
+                      stride=[1, 4],
                       padding=0,
                       bias=False
                       ),
@@ -45,8 +45,8 @@ class NewClassifier(nn.Module):
 
             nn.Conv2d(in_channels=64,
                       out_channels=128,
-                      kernel_size=[1, 4],
-                      stride=[1, 4],
+                      kernel_size=[4, 1],
+                      stride=[4, 1],
                       padding=0,
                       bias=False
                       ),

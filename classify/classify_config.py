@@ -10,8 +10,8 @@ class Config(object):
         self.name = 'classifier'
 
         self.dataset_name = 'free_midi_library'
-        self.genreA = 'rock'
-        self.genreB = 'jazz'
+        self.genreA = 'jazz'
+        self.genreB = 'rock'
         self.dataset_mode = 'unaligned'
         self.track_merged = False
 
