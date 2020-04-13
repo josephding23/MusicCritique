@@ -24,7 +24,7 @@ class Discriminator(nn.Module):
                                             padding=3,
                                             bias=False),
                                   nn.InstanceNorm2d(64, eps=1e-5),
-                                  nn.PReLU(num_parameters=64, init=0.2),
+                                  nn.RReLU(lower=0.2, upper=0.4),
                                   nn.Dropout(0.8),
 
                                   nn.Conv2d(in_channels=64,
@@ -34,7 +34,7 @@ class Discriminator(nn.Module):
                                             padding=3,
                                             bias=False),
                                   nn.InstanceNorm2d(256, eps=1e-5),
-                                  nn.PReLU(num_parameters=256, init=0.2),
+                                  nn.RReLU(lower=0.2, upper=0.4),
                                   nn.Dropout(0.8),
                                   )
         init_weight_(self.net1)

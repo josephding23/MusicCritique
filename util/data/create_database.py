@@ -19,6 +19,11 @@ def get_classical_collection():
     return client.classical_midi.midi
 
 
+def get_jazz_collection():
+    client = MongoClient(connect=False)
+    return client.jazz_midi.midi
+
+
 def get_classical_composer_collection():
     client = MongoClient(connect=False)
     return client.classical_midi.performers
@@ -155,11 +160,117 @@ def merge_classical():
     np.savez_compressed(test_file_path, nonzeros=non_zeros_test, shape=test_shape)
 
 
-def build_classical_tensor():
+def merge_jazz():
+    midi_collection = get_midi_collection()
+    jazz_collection = get_jazz_collection()
+    genre_collection = get_genre_collection()
+
+    extra_dir = 'E:/jazz_midi/npy_files'
+    root_dir = 'E:/midi_matrix/one_instr/jazz'
+
+    time_step = 64
+    valid_range = (24, 108)
+
+    genre = genre_collection.find_one({'Name': 'jazz'})
+
+    save_dir = 'd:/data/' + genre['Name']
+
+    train_file_path = save_dir + '/train.npz'
+    test_file_path = save_dir + '/test.npz'
+
+    old_pieces = genre['OriginalValidPiecesNum']
+    new_pieces = genre['NewValidPiecesNum']
+
+    train_length = genre['TrainPieces']
+    test_length = genre['TestPieces']
+
+    new_train_length = genre['NewTrainPieces']
+    old_train_length = genre['OriginalTrainPieces']
+
+    new_test_length = genre['NewTestPieces']
+    old_test_length = genre['OriginalTestPieces']
+
+    train_shape = np.array([train_length, time_step, valid_range[1]-valid_range[0]])
+    test_shape = np.array([test_length, time_step, valid_range[1]-valid_range[0]])
+
+    processed = 0
+    last_piece_num = 0
+    whole_length = genre['OriginalFilesNum']
+
+    non_zeros_train = []
+    non_zeros_test = []
+
+    for midi in midi_collection.find({'Genre': 'jazz'}, no_cursor_timeout=True):
+        path = root_dir + '/' + midi['md5'] + '.npz'
+        valid_pieces_num = midi['ValidPiecesNum']
+
+        f = np.load(path)
+        matrix = f['arr_0'].copy()
+        for data in matrix:
+            try:
+                data = data.tolist()
+
+                if data[0] < valid_pieces_num:
+                    piece_order = last_piece_num + data[0]
+
+                    if piece_order < old_train_length:
+                        non_zeros_train.append([piece_order, data[1], data[2]])
+                    else:
+                        non_zeros_test.append([piece_order - old_train_length, data[1], data[2]])
+            except:
+                print(path)
+
+        last_piece_num += valid_pieces_num
+        processed += 1
+
+        print('\tFirst part Progress: {:.2%}\n'.format(processed / whole_length))
+    print(last_piece_num, old_pieces)
+
+    processed = 0
+    last_piece_num = 0
+    whole_length = genre['NewFilesNum']
+
+    for midi in jazz_collection.find({}, no_cursor_timeout=True):
+        path = extra_dir + '/' + midi['md5'] + '.npz'
+        valid_pieces_num = midi['ValidPiecesNum']
+
+        print(valid_pieces_num)
+
+        f = np.load(path)
+        matrix = f['arr_0'].copy()
+        for data in matrix:
+            try:
+                data = data.tolist()
+
+                if data[0] < valid_pieces_num:
+                    piece_order = last_piece_num + data[0]
+
+                    if piece_order < new_train_length:
+                        print(piece_order + old_train_length)
+                        non_zeros_train.append([piece_order + old_train_length, data[1], data[2]])
+                    else:
+                        non_zeros_test.append([piece_order - new_train_length + old_test_length, data[1], data[2]])
+            except:
+                print(path)
+
+        last_piece_num += valid_pieces_num
+        processed += 1
+
+        print('\tSecond part Progress: {:.2%}\n'.format(processed / whole_length))
+
+    print(last_piece_num, new_pieces)
+    non_zeros_train, non_zeros_test = np.array(non_zeros_train), np.array(non_zeros_test)
+
+    np.savez_compressed(train_file_path, nonzeros=non_zeros_train, shape=train_shape)
+    np.savez_compressed(test_file_path, nonzeros=non_zeros_test, shape=test_shape)
+
+
+
+def build_extra_tensor():
     import math
-    midi_collection = get_classical_collection()
-    root_dir = 'E:/classical_midi/scaled'
-    npy_file_root_dir = 'E:/classical_midi/npy_files'
+    midi_collection = get_jazz_collection()
+    root_dir = 'E:/jazz_midi/scaled'
+    npy_file_root_dir = 'E:/jazz_midi/npy_files'
     for midi in midi_collection.find({'OneInstrNpyGenerated': False}, no_cursor_timeout=True):
         path = root_dir + '/' + midi['md5'] + '.mid'
         save_path = npy_file_root_dir + '/' + midi['md5'] + '.npz'
@@ -363,8 +474,63 @@ def update_classical_info():
     print(total_valid)
 
 
+def update_jazz_info():
+    jazz_collection = get_jazz_collection()
+
+    genres_collection = get_genre_collection()
+
+    original_info = genres_collection.find_one({'Name': 'jazz'})
+    original_total_valid = original_info['ValidPiecesNum']
+    new_valid_num = 0
+    for midi in jazz_collection.find():
+        new_valid_num += midi['ValidPiecesNum']
+    print(new_valid_num)
+
+    total_valid = original_total_valid + new_valid_num
+
+    genres_collection.update_one(
+        {'Name': 'jazz'},
+        {'$set': {
+            'ValidPiecesNum': total_valid,
+            'OriginalValidNum': original_total_valid,
+            'NewValidNum': new_valid_num,
+
+            'OriginalTrainPieces': int(original_total_valid * 0.9),
+            'OriginalTestPieces': original_total_valid - int(original_total_valid * 0.9),
+
+            'NewTrainPieces': int(new_valid_num * 0.9),
+            'NewTestPieces': new_valid_num - int(new_valid_num * 0.9),
+
+            'TrainPieces': int(original_total_valid * 0.9) + int(new_valid_num * 0.9),
+            'TestPieces': original_total_valid - int(original_total_valid * 0.9) + new_valid_num - int(new_valid_num * 0.9),
+
+            'FilesNum': original_info['OriginalFilesNum'] + jazz_collection.count(),
+            'OriginalFilesNum': original_info['OriginalFilesNum'],
+            'NewFilesNum': jazz_collection.count()
+        }}
+    )
+
+
+def append_new_jazz_info():
+    jazz_collection = get_jazz_collection()
+    midi_collection = get_midi_collection()
+
+    for new_jazz in jazz_collection.find({}):
+        midi_collection.insert_one({
+            'Name': new_jazz['Name'],
+            'DownloadPage': new_jazz['Url'],
+            'Genre': 'jazz',
+            'Downloaded': True,
+            'Transposed': True,
+            'MergedAndScaled': True,
+            'md5': new_jazz['md5'],
+            'KeySignature': new_jazz['KeySignature'],
+            'OnsInstrNpyGenerated': True,
+            'PiecesNum': new_jazz['PiecesNum'],
+            'ValidPiecesNum': new_jazz['ValidPiecesNum']
+        })
+
+
 if __name__ == '__main__':
-    # build_classical_tensor()
-    merge_classical()
-    # get_genre_collection().update_many({}, {'$set': {'DatasetGenerated': False}})
-    # print_total_classical_segnum()
+    merge_jazz()
+    # print(generate_sparse_matrix_of_genre('jazz', 'train').shape)

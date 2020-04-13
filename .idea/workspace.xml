@@ -22,7 +22,9 @@
     <list default="true" id="b77e5dfc-4c90-42b0-97d0-a4afd2ccd659" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classify/classify_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/classify/classify_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/SteelyGAN.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/SteelyGAN.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/networks/new_classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/new_classifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/data/auxillary.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/data/auxillary.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/util/data/create_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/data/create_database.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -153,7 +155,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.language" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myUseExistingConsole" value="true" />
@@ -219,6 +221,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="classify_config" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MusicCritique" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/classify" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/classify/classify_config.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="classify_model" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MusicCritique" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -263,35 +287,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="toolkit" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="MusicCritique" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/util" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/util/toolkit.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.classify_model" />
         <item itemvalue="Python.create_database" />
-        <item itemvalue="Python.classifier" />
-        <item itemvalue="Python.toolkit" />
         <item itemvalue="Python.auxillary" />
+        <item itemvalue="Python.classify_config" />
+        <item itemvalue="Python.classifier" />
       </list>
     </recent_temporary>
   </component>
@@ -434,7 +436,9 @@
       <workItem from="1586527290001" duration="2209000" />
       <workItem from="1586566192145" duration="23350000" />
       <workItem from="1586613496719" duration="4157000" />
-      <workItem from="1586681762400" duration="10449000" />
+      <workItem from="1586681762400" duration="10647000" />
+      <workItem from="1586741673568" duration="20936000" />
+      <workItem from="1586786315064" duration="3009000" />
     </task>
     <task id="LOCAL-00001" summary="pretty">
       <created>1578794444076</created>
@@ -515,57 +519,58 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="740" y="309" key="FileChooserDialogImpl/0.30.1920.1050@0.30.1920.1050" timestamp="1586509938768" />
-    <state width="1877" height="490" key="GridCell.Tab.0.bottom" timestamp="1586704430708">
+    <state width="914" height="24" key="GridCell.Tab.0.bottom" timestamp="1586790198831">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="490" key="GridCell.Tab.0.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1586704430708" />
-    <state width="1877" height="490" key="GridCell.Tab.0.center" timestamp="1586704430707">
+    <state width="914" height="24" key="GridCell.Tab.0.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1586790198831" />
+    <state width="914" height="24" key="GridCell.Tab.0.center" timestamp="1586790198831">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="490" key="GridCell.Tab.0.center/0.30.1920.1050@0.30.1920.1050" timestamp="1586704430707" />
-    <state width="1877" height="490" key="GridCell.Tab.0.left" timestamp="1586704430707">
+    <state width="914" height="24" key="GridCell.Tab.0.center/0.30.1920.1050@0.30.1920.1050" timestamp="1586790198831" />
+    <state width="914" height="24" key="GridCell.Tab.0.left" timestamp="1586790198830">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="490" key="GridCell.Tab.0.left/0.30.1920.1050@0.30.1920.1050" timestamp="1586704430707" />
-    <state width="1877" height="490" key="GridCell.Tab.0.right" timestamp="1586704430708">
+    <state width="914" height="24" key="GridCell.Tab.0.left/0.30.1920.1050@0.30.1920.1050" timestamp="1586790198830" />
+    <state width="914" height="24" key="GridCell.Tab.0.right" timestamp="1586790198831">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="490" key="GridCell.Tab.0.right/0.30.1920.1050@0.30.1920.1050" timestamp="1586704430708" />
-    <state width="1877" height="349" key="GridCell.Tab.1.bottom" timestamp="1586698514914">
+    <state width="914" height="24" key="GridCell.Tab.0.right/0.30.1920.1050@0.30.1920.1050" timestamp="1586790198831" />
+    <state width="1877" height="349" key="GridCell.Tab.1.bottom" timestamp="1586708648205">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="349" key="GridCell.Tab.1.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1586698514914" />
-    <state width="1877" height="349" key="GridCell.Tab.1.center" timestamp="1586698514914">
+    <state width="1877" height="349" key="GridCell.Tab.1.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1586708648205" />
+    <state width="1877" height="349" key="GridCell.Tab.1.center" timestamp="1586708648205">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="349" key="GridCell.Tab.1.center/0.30.1920.1050@0.30.1920.1050" timestamp="1586698514914" />
-    <state width="1877" height="349" key="GridCell.Tab.1.left" timestamp="1586698514914">
+    <state width="1877" height="349" key="GridCell.Tab.1.center/0.30.1920.1050@0.30.1920.1050" timestamp="1586708648205" />
+    <state width="1877" height="349" key="GridCell.Tab.1.left" timestamp="1586708648205">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="349" key="GridCell.Tab.1.left/0.30.1920.1050@0.30.1920.1050" timestamp="1586698514914" />
-    <state width="1877" height="349" key="GridCell.Tab.1.right" timestamp="1586698514914">
+    <state width="1877" height="349" key="GridCell.Tab.1.left/0.30.1920.1050@0.30.1920.1050" timestamp="1586708648205" />
+    <state width="1877" height="349" key="GridCell.Tab.1.right" timestamp="1586708648205">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="349" key="GridCell.Tab.1.right/0.30.1920.1050@0.30.1920.1050" timestamp="1586698514914" />
+    <state width="1877" height="349" key="GridCell.Tab.1.right/0.30.1920.1050@0.30.1920.1050" timestamp="1586708648205" />
     <state width="218" height="483" key="HiddenNamespacesPopup" timestamp="1586401726100">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state width="218" height="483" key="HiddenNamespacesPopup/0.30.1920.1050@0.30.1920.1050" timestamp="1586401726100" />
-    <state x="461" y="199" key="SettingsEditor" timestamp="1586403414129">
+    <state x="461" y="199" key="SettingsEditor" timestamp="1586745986520">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="461" y="199" key="SettingsEditor/0.30.1920.1050@0.30.1920.1050" timestamp="1586403414129" />
+    <state x="461" y="199" key="SettingsEditor/0.30.1920.1050@0.30.1920.1050" timestamp="1586745986520" />
     <state x="623" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1586699072667">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="623" y="257" width="672" height="678" key="search.everywhere.popup/0.30.1920.1050@0.30.1920.1050" timestamp="1586699072667" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/MusicCritique$classify_model.coverage" NAME="classify_model Coverage Results" MODIFIED="1586704430700" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/classify" />
-    <SUITE FILE_PATH="coverage/MusicCritique$auxillary.coverage" NAME="auxillary Coverage Results" MODIFIED="1586572932722" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
+    <SUITE FILE_PATH="coverage/MusicCritique$classify_model.coverage" NAME="classify_model Coverage Results" MODIFIED="1586787286344" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/classify" />
+    <SUITE FILE_PATH="coverage/MusicCritique$auxillary.coverage" NAME="auxillary Coverage Results" MODIFIED="1586760361770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
     <SUITE FILE_PATH="coverage/MusicCritique$model.coverage" NAME="model Coverage Results" MODIFIED="1586419301960" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
+    <SUITE FILE_PATH="coverage/MusicCritique$classify_config.coverage" NAME="classify_config Coverage Results" MODIFIED="1586759120942" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/classify" />
     <SUITE FILE_PATH="coverage/MusicCritique$toolkit.coverage" NAME="toolkit Coverage Results" MODIFIED="1586583775573" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
-    <SUITE FILE_PATH="coverage/MusicCritique$create_database.coverage" NAME="create_database Coverage Results" MODIFIED="1586701228685" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
+    <SUITE FILE_PATH="coverage/MusicCritique$create_database.coverage" NAME="create_database Coverage Results" MODIFIED="1586786587041" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
     <SUITE FILE_PATH="coverage/MusicCritique$dataset.coverage" NAME="dataset Coverage Results" MODIFIED="1586418282219" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
     <SUITE FILE_PATH="coverage/MusicCritique$cygan_model.coverage" NAME="cygan_model Coverage Results" MODIFIED="1586567499895" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
     <SUITE FILE_PATH="coverage/MusicCritique$classifier.coverage" NAME="classifier Coverage Results" MODIFIED="1586613832556" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/networks" />

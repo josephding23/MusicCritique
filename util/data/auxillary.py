@@ -16,6 +16,11 @@ def get_genre_collection():
     return client.free_midi.genres
 
 
+def get_jazz_collection():
+    client = MongoClient(connect=False)
+    return client.jazz_midi.midi
+
+
 def find_music_with_multiple_genres():
     root_dir = 'E:/merged_midi/'
     midi_collection = get_midi_collection()
@@ -154,5 +159,47 @@ def get_genre_files_num():
         )
 
 
+def fix_jazz_pieces_num():
+    genre_collection = get_genre_collection()
+    midi_collection = get_midi_collection()
+    jazz_collection = get_jazz_collection()
+
+    old_pieces = 0
+    for midi in midi_collection.find({'Genre': 'jazz'}):
+        old_pieces += midi['ValidPiecesNum']
+    old_train = int(old_pieces * 0.9)
+    old_test = old_pieces - old_train
+
+    old_files = get_midi_collection().count({'Genre': 'jazz'})
+
+    new_pieces = 0
+    for midi in jazz_collection.find({}):
+        new_pieces += midi['ValidPiecesNum']
+    new_train = int(new_pieces * 0.9)
+    new_test = new_pieces - new_train
+
+    new_files = get_jazz_collection().count()
+
+    genre_collection.update_one(
+        {'Name': 'jazz'},
+        {'$set': {
+            'OriginalFilesNum': old_files,
+            'OriginalValidPiecesNum': old_pieces,
+            'OriginalTrainPieces': old_train,
+            'OriginalTestPieces': old_test,
+
+            'NewFilesNum': new_files,
+            'NewValidPiecesNum': new_pieces,
+            'NewTrainPieces': new_train,
+            'NewTestPieces': new_test,
+
+            'FilesNum': old_files + new_files,
+            'ValidPiecesNum': old_pieces + new_pieces,
+            'TrainPieces': old_train + new_train,
+            'TestPieces': old_test + new_test
+        }}
+    )
+
+
 if __name__ == '__main__':
-    get_genre_files_num()
+    fix_jazz_pieces_num()

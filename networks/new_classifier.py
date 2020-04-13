@@ -16,9 +16,9 @@ class NewClassifier(nn.Module):
 
         self.resnet = nn.Sequential()
         for i in range(20):
-            self.resnet.add_module('resnet_block', ResnetBlock(dim=256,
+            self.resnet.add_module('resnet_block', ResnetBlock(dim=512,
                                                                padding_type='reflect',
-                                                               use_dropout=False,
+                                                               use_dropout=True,
                                                                use_bias=False,
                                                                norm_layer=nn.InstanceNorm2d))
 
@@ -26,8 +26,8 @@ class NewClassifier(nn.Module):
         self.net = nn.Sequential(
             nn.Conv2d(in_channels=1,
                       out_channels=16,
-                      kernel_size=[1, 3],
-                      stride=[1, 3],
+                      kernel_size=[1, 2],
+                      stride=[1, 2],
                       padding=0,
                       bias=False
                       ),
@@ -35,8 +35,8 @@ class NewClassifier(nn.Module):
 
             nn.Conv2d(in_channels=16,
                       out_channels=64,
-                      kernel_size=[1, 4],
-                      stride=[1, 4],
+                      kernel_size=[1, 6],
+                      stride=[1, 6],
                       padding=0,
                       bias=False
                       ),
@@ -52,30 +52,20 @@ class NewClassifier(nn.Module):
                       ),
             nn.InstanceNorm2d(128, eps=1e-5),
             nn.LeakyReLU(negative_slope=0.2),
-
-            nn.Conv2d(in_channels=128,
-                      out_channels=256,
-                      kernel_size=[2, 1],
-                      stride=[2, 1],
-                      padding=0,
-                      bias=False
-                      ),
-            nn.InstanceNorm2d(256, eps=1e-5),
-            nn.LeakyReLU(negative_slope=0.2),
             nn.Dropout(0.5),
 
-            # self.resnet,
-
-            nn.Conv2d(in_channels=256,
+            nn.Conv2d(in_channels=128,
                       out_channels=512,
-                      kernel_size=[2, 1],
-                      stride=[2, 1],
+                      kernel_size=[8, 1],
+                      stride=[8, 1],
                       padding=0,
                       bias=False
                       ),
             nn.InstanceNorm2d(512, eps=1e-5),
             nn.LeakyReLU(negative_slope=0.2),
             nn.Dropout(0.5),
+
+            self.resnet,
 
             nn.Conv2d(in_channels=512,
                       out_channels=1024,
@@ -89,16 +79,6 @@ class NewClassifier(nn.Module):
             nn.Dropout(0.5),
 
             nn.Conv2d(in_channels=1024,
-                      out_channels=2048,
-                      kernel_size=[2, 1],
-                      stride=[2, 1],
-                      padding=0,
-                      bias=False
-                      ),
-            nn.InstanceNorm2d(2048, eps=1e-5),
-            nn.LeakyReLU(negative_slope=0.2),
-
-            nn.Conv2d(in_channels=2048,
                       out_channels=2,
                       kernel_size=[1, 7],
                       stride=[1, 7],
