@@ -10,8 +10,8 @@ class Config(object):
         self.name = 'classifier'
 
         self.dataset_name = 'free_midi_library'
-        self.genreA = 'rock'
-        self.genreB = 'jazz'
+        self.genreA = 'punk'
+        self.genreB = 'classical'
         self.dataset_mode = 'unaligned'
         self.track_merged = False
 
@@ -44,9 +44,9 @@ class Config(object):
         self.weight_decay = 0.
 
         self.no_flip = True
-        self.num_threads = 1
+        self.num_threads = 0
         self.batch_size = 16
-        self.max_epoch = 30
+        self.max_epoch = 50
         self.epoch_step = 5
 
         self.data_shape = (self.batch_size, 1, 64, 84)

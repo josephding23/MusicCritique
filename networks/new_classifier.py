@@ -16,7 +16,7 @@ class NewClassifier(nn.Module):
 
         self.resnet = nn.Sequential()
         for i in range(20):
-            self.resnet.add_module('resnet_block', ResnetBlock(dim=512,
+            self.resnet.add_module('resnet_block', ResnetBlock(dim=256,
                                                                padding_type='reflect',
                                                                use_dropout=True,
                                                                use_bias=False,
@@ -43,18 +43,21 @@ class NewClassifier(nn.Module):
             nn.InstanceNorm2d(64, eps=1e-5),
             nn.LeakyReLU(negative_slope=0.2),
 
+
             nn.Conv2d(in_channels=64,
-                      out_channels=128,
-                      kernel_size=[4, 1],
-                      stride=[4, 1],
+                      out_channels=256,
+                      kernel_size=[16, 1],
+                      stride=[16, 1],
                       padding=0,
                       bias=False
                       ),
-            nn.InstanceNorm2d(128, eps=1e-5),
+            nn.InstanceNorm2d(256, eps=1e-5),
             nn.LeakyReLU(negative_slope=0.2),
             nn.Dropout(0.5),
 
-            nn.Conv2d(in_channels=128,
+            self.resnet,
+
+            nn.Conv2d(in_channels=256,
                       out_channels=512,
                       kernel_size=[8, 1],
                       stride=[8, 1],
@@ -65,20 +68,7 @@ class NewClassifier(nn.Module):
             nn.LeakyReLU(negative_slope=0.2),
             nn.Dropout(0.5),
 
-            self.resnet,
-
             nn.Conv2d(in_channels=512,
-                      out_channels=1024,
-                      kernel_size=[2, 1],
-                      stride=[2, 1],
-                      padding=0,
-                      bias=False
-                      ),
-            nn.InstanceNorm2d(1024, eps=1e-5),
-            nn.LeakyReLU(negative_slope=0.2),
-            nn.Dropout(0.5),
-
-            nn.Conv2d(in_channels=1024,
                       out_channels=2,
                       kernel_size=[1, 7],
                       stride=[1, 7],

@@ -22,7 +22,7 @@ class Config(object):
         self.instr_num = 5
 
         self.phase = 'train'
-        self.continue_train = True
+        self.continue_train = False
 
         self.direction = 'AtoB'
 
@@ -31,7 +31,7 @@ class Config(object):
         ###########################
         # Structure
 
-        self.model = 'full'  # three different models, base, partial, full
+        self.model = 'base'  # three different models, base, partial, full
 
         self.use_image_pool = True
         self.image_pool_info = 'pooled' if self.use_image_pool else 'not_pooled'
@@ -52,13 +52,13 @@ class Config(object):
         self.beta1 = 0.5                     # Adam optimizer beta1 & 2
         self.beta2 = 0.999
 
-        self.lr = 0.0001
+        self.lr = 0.00005
 
-        self.weight_decay = 0.001
+        self.weight_decay = 0.0
 
         self.no_flip = True
         self.num_threads = 0
-        self.batch_size = 16
+        self.batch_size = 8
         self.max_epoch = 30
         self.epoch_step = 5
 

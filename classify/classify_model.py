@@ -35,7 +35,7 @@ class Classify(object):
         self._build_model()
 
     def _build_model(self):
-        self.classifier = NewClassifier()
+        self.classifier = Classifier()
 
         if self.opt.gpu:
             self.classifier.to(self.device)
@@ -45,11 +45,13 @@ class Classify(object):
                                          betas=(self.opt.beta1, self.opt.beta2),
                                          weight_decay=self.opt.weight_decay)
 
-        self.classifier_scheduler = lr_scheduler.StepLR(self.classifier_optimizer, step_size=5, gamma=0.2)
+        self.classifier_scheduler = lr_scheduler.MultiStepLR(optimizer=self.classifier_optimizer,
+                                                             milestones=[10, 15, 20, 22, 25, 30, 33, 35, 37, 40, 42, 45, 47],
+                                                             gamma=0.5)
 
     def save_model(self, epoch):
         classifier_filename = f'{self.opt.name}_C_{epoch}.pth'
-        classifier_filepath = os.path.join(self.opt.save_path, classifier_filename)
+        classifier_filepath = os.path.join(self.opt.checkpoint_path, '/' + classifier_filename)
 
         torch.save(self.classifier.state_dict(), classifier_filepath)
 
@@ -60,6 +62,9 @@ class Classify(object):
         file_list = os.listdir(path)
         match_str = r'\d+'
         epoch_list = sorted([int(re.findall(match_str, file)[0]) for file in file_list])
+
+        print(epoch_list)
+
         if len(epoch_list) == 0:
             raise Exception('No model to load.')
         latest_num = epoch_list[-1]
@@ -71,7 +76,7 @@ class Classify(object):
 
         C_filename = f'{self.opt.name}_C_{latest_checked_epoch}.pth'
 
-        C_path = self.opt.save_path + C_filename
+        C_path = self.opt.checkpoint_path + '/' + C_filename
 
         self.classifier.load_state_dict(torch.load(C_path))
 
@@ -98,8 +103,7 @@ class Classify(object):
                 self.continue_from_latest_checkpoint()
             except Exception as e:
                 self.logger.error(e)
-                self.opt.continue_train = False
-                self.reset_save()
+                return
 
         else:
             self.reset_save()
