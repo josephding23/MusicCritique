@@ -78,22 +78,22 @@ class Generator(nn.Module):
                                                       bias=False),
                                             nn.InstanceNorm2d(64, eps=1e-5),
                                             nn.LeakyReLU(negative_slope=0.2),
+                                            nn.Dropout(0.5)
                                             # nn.RReLU(lower=0.2, upper=0.4),
-
-
                                             )
         init_weight_(self.paragraph_net1)
 
-        self.bar_cnet = nn.Sequential(nn.Conv2d(in_channels=16,
-                                                out_channels=32,
+        self.bar_cnet = nn.Sequential(nn.Conv2d(in_channels=64,
+                                                out_channels=128,
                                                 kernel_size=3,
                                                 stride=2,
                                                 padding=1,
                                                 bias=False),
-                                      nn.InstanceNorm2d(32, eps=1e-5),
+                                      nn.InstanceNorm2d(128, eps=1e-5),
                                       nn.LeakyReLU(negative_slope=0.2),
-                                      nn.Conv2d(in_channels=32,
-                                                out_channels=64,
+
+                                      nn.Conv2d(in_channels=128,
+                                                out_channels=256,
                                                 kernel_size=3,
                                                 stride=2,
                                                 padding=1,
@@ -114,20 +114,18 @@ class Generator(nn.Module):
                                                                use_bias=False,
                                                                norm_layer=nn.InstanceNorm2d))
 
-        self.bar_tcnet = nn.Sequential(nn.ConvTranspose2d(in_channels=64,
-                                                          out_channels=32,
-                                                          kernel_size=3,
-                                                          stride=2,
-                                                          padding=1,
-                                                          bias=False)
-                                       )
-        self.bar_tcnet_after = nn.Sequential(nn.ZeroPad2d((0, 1, 0, 1)),
-                                             nn.InstanceNorm2d(128, eps=1e-5),
-                                             nn.LeakyReLU(negative_slope=0.2),)
+        self.paragraph_net2 = nn.Sequential(nn.ConvTranspose2d(in_channels=256,
+                                                               out_channels=128,
+                                                               kernel_size=3,
+                                                               stride=2,
+                                                               padding=1,
+                                                               bias=False),
+                                            nn.ZeroPad2d((0, 1, 0, 1)),
+                                            nn.InstanceNorm2d(128, eps=1e-5),
+                                            nn.LeakyReLU(negative_slope=0.2),
+                                            nn.Dropout(0.5),
 
-        init_weight_(self.bar_tcnet)
-
-        self.paragraph_net2 = nn.Sequential(nn.ConvTranspose2d(in_channels=128,
+                                            nn.ConvTranspose2d(in_channels=128,
                                                                out_channels=64,
                                                                kernel_size=3,
                                                                stride=2,
@@ -136,6 +134,7 @@ class Generator(nn.Module):
                                             nn.ZeroPad2d((0, 1, 0, 1)),
                                             nn.InstanceNorm2d(64, eps=1e-5),
                                             nn.LeakyReLU(negative_slope=0.2),
+                                            nn.Dropout(0.5),
 
                                             nn.ReflectionPad2d((3, 3, 3, 3)),
                                             nn.Conv2d(in_channels=64,
@@ -159,7 +158,7 @@ class Generator(nn.Module):
         # ↓
         # (batch * 256 * 32 * 42)
 
-        x1, x2, x3, x4 = x.split([16, 16, 16, 16], dim=1)
+        x1, x2, x3, x4 = x.split([16, 16, 16, 16], dim=2)
 
         # (batch * 64 * 32 * 42)
         x1 = self.bar_cnet(x1)
@@ -168,7 +167,7 @@ class Generator(nn.Module):
         x4 = self.bar_cnet(x4)
         # (batch * 64 * 16 * 21)
 
-        x = torch.cat([x1, x2, x3, x4], dim=1)
+        x = torch.cat([x1, x2, x3, x4], dim=2)
         x = self.bar_cnet_after(x)
 
         # (batch * 256 * 16 * 21)
@@ -176,18 +175,6 @@ class Generator(nn.Module):
         x = self.resnet(x)
 
         # (batch * 256 * 16 * 21)
-
-        x1, x2, x3, x4 = x.split([64, 64, 64, 64], dim=1)
-
-        # (batch * 64 * 16 * 21)
-        x1 = self.bar_tcnet(x1)
-        x2 = self.bar_tcnet(x2)
-        x3 = self.bar_tcnet(x3)
-        x4 = self.bar_tcnet(x4)
-        # (batch * 64 * 32 * 42)
-
-        x = torch.cat([x1, x2, x3, x4], dim=1)
-        x = self.bar_tcnet_after(x)
 
         x = self.paragraph_net2(x)
         # (batch * 256 * 32 * 42)
@@ -197,6 +184,6 @@ class Generator(nn.Module):
         # After padding, (batch * 64 * 70 * 90)
         # ↓
         # (batch * 1 * 64 * 84)
-        x = nn.functional.sigmoid(x)
+        x = torch.sigmoid(x)
 
         return x

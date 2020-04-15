@@ -88,9 +88,9 @@ class Classifier(nn.Module):
 def test_classifier():
     conv1 = nn.Sequential(
         nn.Conv2d(in_channels=1,
-                  out_channels=16,
-                  kernel_size=[1, 4],
-                  stride=[1, 4],
+                  out_channels=64,
+                  kernel_size=[1, 12],
+                  stride=[1, 12],
                   padding=0,
                   bias=False
                   ),
@@ -98,18 +98,6 @@ def test_classifier():
     )
 
     conv2 = nn.Sequential(
-        nn.Conv2d(in_channels=16,
-                  out_channels=64,
-                  kernel_size=[1, 3],
-                  stride=[1, 3],
-                  padding=0,
-                  bias=False
-                  ),
-        nn.InstanceNorm2d(64, eps=1e-5),
-        nn.LeakyReLU(negative_slope=0.2),
-    )
-
-    conv3 = nn.Sequential(
         nn.Conv2d(in_channels=64,
                   out_channels=128,
                   kernel_size=[4, 1],
@@ -119,9 +107,10 @@ def test_classifier():
                   ),
         nn.InstanceNorm2d(128, eps=1e-5),
         nn.LeakyReLU(negative_slope=0.2),
+
     )
 
-    conv4 = nn.Sequential(
+    conv3 = nn.Sequential(
         nn.Conv2d(in_channels=128,
                   out_channels=256,
                   kernel_size=[2, 1],
@@ -133,7 +122,7 @@ def test_classifier():
         nn.LeakyReLU(negative_slope=0.2),
     )
 
-    conv5 = nn.Sequential(
+    conv4 = nn.Sequential(
         nn.Conv2d(in_channels=256,
                   out_channels=512,
                   kernel_size=[8, 1],
@@ -145,17 +134,16 @@ def test_classifier():
         nn.LeakyReLU(negative_slope=0.2),
     )
 
-    conv6 = nn.Sequential(
+    conv5 = nn.Sequential(
         nn.Conv2d(in_channels=512,
                   out_channels=2,
                   kernel_size=[1, 7],
                   stride=[1, 7],
                   padding=0,
                   bias=False
-                  )
+                  ),
     )
 
-    soft = nn.Softmax(dim=1)
 
     x = torch.zeros((16, 1, 64, 84))
     print(x.shape)
@@ -173,12 +161,6 @@ def test_classifier():
     print(x.shape)
 
     x = conv5(x)
-    print(x.shape)
-
-    x = conv6(x)
-    print(x.shape)
-
-    x = soft(x)
     print(x.shape)
 
     x = x.view(-1, 2)

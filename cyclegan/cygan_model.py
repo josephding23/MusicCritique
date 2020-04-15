@@ -193,6 +193,17 @@ class CycleGAN(object):
         D_A_filename = f'{self.opt.name}_D_A_{epoch}.pth'
         D_B_filename = f'{self.opt.name}_D_B_{epoch}.pth'
 
+        if epoch - self.opt.save_every >= 0:
+            G_A2B_old_filename = f'{self.opt.name}_G_A2B_{epoch - self.opt.save_every}.pth'
+            G_B2A_old_filename = f'{self.opt.name}_G_B2A_{epoch - self.opt.save_every}.pth'
+            D_A_old_filename = f'{self.opt.name}_D_A_{epoch - self.opt.save_every}.pth'
+            D_B_old_filename = f'{self.opt.name}_D_B_{epoch - self.opt.save_every}.pth'
+
+            os.remove(os.path.join(self.opt.G_A2B_save_path, G_A2B_old_filename))
+            os.remove(os.path.join(self.opt.G_B2A_save_path, G_B2A_old_filename))
+            os.remove(os.path.join(self.opt.D_A_save_path, D_A_old_filename))
+            os.remove(os.path.join(self.opt.D_B_save_path, D_B_old_filename))
+
         G_A2B_filepath = os.path.join(self.opt.G_A2B_save_path, G_A2B_filename)
         G_B2A_filepath = os.path.join(self.opt.G_B2A_save_path, G_B2A_filename)
         D_A_filepath = os.path.join(self.opt.D_A_save_path, D_A_filename)
