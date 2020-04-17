@@ -4,7 +4,7 @@ from torch.nn import init
 from networks.util import ResnetBlock
 
 
-def test_deeper_d():
+def test_G():
     # shape = (64, 84, 1)
     # df_dim = 64
 
@@ -17,28 +17,62 @@ def test_deeper_d():
                                                   padding=0,
                                                   bias=False),
                                         nn.InstanceNorm2d(64, eps=1e-5),
-                                        nn.LeakyReLU(negative_slope=0.2),
+                                        nn.LeakyReLU(negative_slope=0.2))
                                         # nn.RReLU(lower=0.2, upper=0.4),
 
+    paragraph_net2 = nn.Sequential(nn.Conv2d(in_channels=32,
+                                             out_channels=64,
+                                             kernel_size=5,
+                                             stride=1,
+                                             padding=2,
+                                             bias=False),
+                                   nn.InstanceNorm2d(64, eps=1e-5),
+                                   nn.LeakyReLU(negative_slope=0.2),
+                                   # nn.RReLU(lower=0.2, upper=0.4),
                                         )
 
-    bar_cnet = nn.Sequential(nn.Conv2d(in_channels=64,
-                                            out_channels=128,
-                                            kernel_size=3,
-                                            stride=2,
-                                            padding=1,
-                                            bias=False),
-                                  nn.InstanceNorm2d(128, eps=1e-5),
-                                  nn.LeakyReLU(negative_slope=0.2),
-                                  nn.Conv2d(in_channels=128,
-                                            out_channels=256,
-                                            kernel_size=3,
-                                            stride=2,
-                                            padding=1,
-                                            bias=False),
-                                  nn.InstanceNorm2d(256, eps=1e-5),
-                                  nn.LeakyReLU(negative_slope=0.2)
-                                  )
+    bar_net1 = nn.Sequential(nn.Conv2d(in_channels=64,
+                                       out_channels=128,
+                                       kernel_size=3,
+                                       stride=2,
+                                       padding=1,
+                                       bias=False),
+                             nn.InstanceNorm2d(128, eps=1e-5),
+                             nn.ReLU()
+                             )
+
+    bar_net2 = nn.Sequential(nn.Conv2d(in_channels=128,
+                                       out_channels=256,
+                                       kernel_size=3,
+                                       stride=2,
+                                       padding=1,
+                                       bias=False),
+                             nn.InstanceNorm2d(256, eps=1e-5),
+                             nn.ReLU()
+                             )
+
+    bar_net3 = nn.Sequential(nn.ConvTranspose2d(in_channels=256,
+                                       out_channels=128,
+                                       kernel_size=3,
+                                       stride=2,
+                                       padding=1,
+                                       bias=False),
+                             nn.ZeroPad2d((0, 1, 0, 1)),
+                             nn.InstanceNorm2d(128, eps=1e-5),
+                             nn.ReLU()
+                             )
+
+    bar_net4 = nn.Sequential(nn.ConvTranspose2d(in_channels=128,
+                                                out_channels=64,
+                                                kernel_size=3,
+                                                stride=2,
+                                                padding=1,
+                                                bias=False),
+                             nn.ZeroPad2d((0, 1, 0, 1)),
+                             nn.InstanceNorm2d(256, eps=1e-5),
+                             nn.ReLU()
+                             )
+
 
     bar_cnet_after = nn.Sequential(nn.InstanceNorm2d(256, eps=1e-5),
                                         nn.LeakyReLU(negative_slope=0.2),
@@ -54,7 +88,7 @@ def test_deeper_d():
                                                            norm_layer=nn.InstanceNorm2d))
 
 
-    paragraph_net2 = nn.Sequential(nn.ConvTranspose2d(in_channels=256,
+    paragraph_net3 = nn.Sequential(nn.ConvTranspose2d(in_channels=256,
                                                            out_channels=128,
                                                            kernel_size=3,
                                                            stride=2,
@@ -89,6 +123,23 @@ def test_deeper_d():
     x = paragraph_net1(x)
     print(x.shape)
 
+
+    x1, x2, x3, x4 = x.split([16, 16, 16, 16], dim=2)
+
+    x1 = bar_net1(x1)
+    print(x1.shape)
+
+    x1 = bar_net2(x1)
+    print(x1.shape)
+
+    x1 = bar_net3(x1)
+    print(x1.shape)
+
+    x1 = bar_net4(x1)
+    print(x1.shape)
+
+
+    '''
     x1, x2, x3, x4 = x.split([16, 16, 16, 16], dim=2)
     print(x1.shape)
 
@@ -110,8 +161,76 @@ def test_deeper_d():
 
     # x = net4(x)
     # print(x.shape)
+    '''
 
+
+def test_D():
+    net1 = nn.Sequential(nn.Conv2d(in_channels=1,
+                                            out_channels=16,
+                                            kernel_size=4,
+                                            stride=2,
+                                            padding=1,
+                                            bias=False),
+                                  nn.InstanceNorm2d(16, eps=1e-5),
+                                  nn.RReLU(lower=0.2, upper=0.3))
+
+    net2 = nn.Sequential(nn.Conv2d(in_channels=16,
+                                            out_channels=64,
+                                            kernel_size=4,
+                                            stride=1,
+                                            padding=1,
+                                            bias=False),
+                                  nn.ZeroPad2d((0, 1, 0, 1)),
+                                  nn.InstanceNorm2d(64, eps=1e-5),
+                                  nn.RReLU(lower=0.2, upper=0.3))
+
+    net3 = nn.Sequential(nn.Conv2d(in_channels=64,
+                                            out_channels=128,
+                                            kernel_size=4,
+                                            stride=2,
+                                            padding=1,
+                                            bias=False),
+                                  nn.InstanceNorm2d(128, eps=1e-5),
+                                  nn.RReLU(lower=0.2, upper=0.3))
+
+    net4 = nn.Sequential(nn.Conv2d(in_channels=128,
+                                            out_channels=256,
+                                            kernel_size=4,
+                                            stride=1,
+                                            padding=1,
+                                            bias=False),
+                                  nn.ZeroPad2d((1, 0, 1, 0)),
+                                  nn.InstanceNorm2d(256, eps=1e-5),
+                                  nn.RReLU(lower=0.2, upper=0.3)
+                                  )
+
+
+    net6 = nn.Sequential(nn.Conv2d(in_channels=256,
+                                   out_channels=1,
+                                   kernel_size=7,
+                                   stride=[2, 3],
+                                   padding=3,
+                                   bias=False),
+                         )
+
+    x = torch.zeros(1, 1, 64, 84)
+    print(x.shape)
+
+    x = net1(x)
+    print(x.shape)
+
+    x = net2(x)
+    print(x.shape)
+
+    x = net3(x)
+    print(x.shape)
+
+    x = net4(x)
+    print(x.shape)
+
+    x = net6(x)
+    print(x.shape)
 
 
 if __name__ == '__main__':
-    test_deeper_d()
+    test_D()

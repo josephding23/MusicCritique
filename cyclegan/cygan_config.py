@@ -8,10 +8,11 @@ class Config(object):
         # Info
 
         self.name = 'steely_gan'
+        # self.name = 'SMGT'
 
         self.dataset_name = 'free_midi_library'
-        self.genreA = 'metal'
-        self.genreB = 'country'
+        self.genreA = 'punk'
+        self.genreB = 'classical'
         self.dataset_mode = 'unaligned'
         self.track_merged = False
 
@@ -52,7 +53,7 @@ class Config(object):
         self.beta1 = 0.5                     # Adam optimizer beta1 & 2
         self.beta2 = 0.999
 
-        self.lr = 0.00005
+        self.lr = 0.0001
 
         self.weight_decay = 0.0
 

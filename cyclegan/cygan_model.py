@@ -96,11 +96,16 @@ class CycleGAN(object):
         self.GB2A_optimizer = Adam(params=self.generator_B2A.parameters(), lr=self.opt.lr,
                                    betas=(self.opt.beta1, self.opt.beta2),
                                    weight_decay=self.opt.weight_decay)
-
+        '''
         self.DA_scheduler = lr_scheduler.StepLR(self.DA_optimizer, step_size=5, gamma=0.2)
         self.DB_scheduler = lr_scheduler.StepLR(self.DB_optimizer, step_size=5, gamma=0.2)
         self.GA2B_scheduler = lr_scheduler.StepLR(self.GA2B_optimizer, step_size=5, gamma=0.2)
         self.GB2A_scheduler = lr_scheduler.StepLR(self.GB2A_optimizer, step_size=5, gamma=0.2)
+        '''
+        self.DA_scheduler = lr_scheduler.ExponentialLR(self.DA_optimizer, gamma=0.6)
+        self.DB_scheduler = lr_scheduler.ExponentialLR(self.DB_optimizer, gamma=0.6)
+        self.GA2B_scheduler = lr_scheduler.ExponentialLR(self.GA2B_optimizer, gamma=0.6)
+        self.GB2A_scheduler = lr_scheduler.ExponentialLR(self.GB2A_optimizer, gamma=0.6)
 
         if self.opt.model != 'base':
             self.DA_all_optimizer = torch.optim.Adam(params=self.discriminator_A_all.parameters(), lr=self.opt.lr,
@@ -110,8 +115,12 @@ class CycleGAN(object):
                                                      betas=(self.opt.beta1, self.opt.beta2),
                                                      weight_decay=self.opt.weight_decay)
 
+            '''
             self.DA_all_scheduler = lr_scheduler.StepLR(self.DA_all_optimizer, step_size=5, gamma=0.2)
             self.DB_all_scheduler = lr_scheduler.StepLR(self.DB_all_optimizer, step_size=5, gamma=0.2)
+            '''
+            self.DA_all_scheduler = lr_scheduler.ExponentialLR(self.DA_all_optimizer, gamma=0.5)
+            self.DB_all_scheduler = lr_scheduler.ExponentialLR(self.DB_all_optimizer, gamma=0.5)
 
     def continue_from_latest_checkpoint(self):
         latest_checked_epoch = self.find_latest_checkpoint()

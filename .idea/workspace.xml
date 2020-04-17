@@ -20,11 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b77e5dfc-4c90-42b0-97d0-a4afd2ccd659" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/util/data/csv_is_alright.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classify/classify_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/classify/classify_config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cyclegan/cygan_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/cygan_config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cyclegan/cygan_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/cygan_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/networks/SMGT.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/SMGT.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/networks/SteelyGAN.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/SteelyGAN.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networks/classifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/classifier.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/networks/test_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/test_network.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -176,7 +178,7 @@
       <recent name="D:\PycharmProjects\MusicCritique\scratch" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.classifier">
+  <component name="RunManager" selected="Python.cygan_model">
     <configuration name="classifier" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MusicCritique" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -199,7 +201,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="classify_config" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="csv_is_alright (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MusicCritique" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -207,12 +209,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/classify" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/util/data" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/classify/classify_config.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/util/data/csv_is_alright.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -221,7 +223,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="classify_model" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="csv_is_alright" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MusicCritique" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -229,12 +231,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/classify" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/util/data" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/classify/classify_model.py" />
+      <option name="SCRIPT_NAME" value="D:\PycharmProjects\MusicCritique\util\data\csv_is_alright.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -289,11 +291,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.classifier" />
         <item itemvalue="Python.cygan_model" />
         <item itemvalue="Python.test_network" />
-        <item itemvalue="Python.classify_model" />
-        <item itemvalue="Python.classify_config" />
+        <item itemvalue="Python.csv_is_alright (1)" />
+        <item itemvalue="Python.csv_is_alright" />
+        <item itemvalue="Python.classifier" />
       </list>
     </recent_temporary>
   </component>
@@ -443,7 +445,10 @@
       <workItem from="1586852344790" duration="1182000" />
       <workItem from="1586864553370" duration="10723000" />
       <workItem from="1586914921094" duration="18607000" />
-      <workItem from="1586950830026" duration="8506000" />
+      <workItem from="1586950830026" duration="8971000" />
+      <workItem from="1587000321018" duration="1685000" />
+      <workItem from="1587002678674" duration="41863000" />
+      <workItem from="1587116499950" duration="19183000" />
     </task>
     <task id="LOCAL-00001" summary="pretty">
       <created>1578794444076</created>
@@ -524,38 +529,38 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="740" y="309" key="FileChooserDialogImpl/0.30.1920.1050@0.30.1920.1050" timestamp="1586509938768" />
-    <state width="1877" height="300" key="GridCell.Tab.0.bottom" timestamp="1586963881510">
+    <state width="1877" height="71" key="GridCell.Tab.0.bottom" timestamp="1587137500611">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="300" key="GridCell.Tab.0.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1586963881510" />
-    <state width="1877" height="300" key="GridCell.Tab.0.center" timestamp="1586963881509">
+    <state width="1877" height="71" key="GridCell.Tab.0.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1587137500611" />
+    <state width="1877" height="71" key="GridCell.Tab.0.center" timestamp="1587137500611">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="300" key="GridCell.Tab.0.center/0.30.1920.1050@0.30.1920.1050" timestamp="1586963881509" />
-    <state width="1877" height="300" key="GridCell.Tab.0.left" timestamp="1586963881509">
+    <state width="1877" height="71" key="GridCell.Tab.0.center/0.30.1920.1050@0.30.1920.1050" timestamp="1587137500611" />
+    <state width="1877" height="71" key="GridCell.Tab.0.left" timestamp="1587137500611">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="300" key="GridCell.Tab.0.left/0.30.1920.1050@0.30.1920.1050" timestamp="1586963881509" />
-    <state width="1877" height="300" key="GridCell.Tab.0.right" timestamp="1586963881510">
+    <state width="1877" height="71" key="GridCell.Tab.0.left/0.30.1920.1050@0.30.1920.1050" timestamp="1587137500611" />
+    <state width="1877" height="71" key="GridCell.Tab.0.right" timestamp="1587137500611">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="300" key="GridCell.Tab.0.right/0.30.1920.1050@0.30.1920.1050" timestamp="1586963881509" />
-    <state width="1877" height="349" key="GridCell.Tab.1.bottom" timestamp="1586949362702">
+    <state width="1877" height="71" key="GridCell.Tab.0.right/0.30.1920.1050@0.30.1920.1050" timestamp="1587137500611" />
+    <state width="1877" height="128" key="GridCell.Tab.1.bottom" timestamp="1587135602864">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="349" key="GridCell.Tab.1.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1586949362702" />
-    <state width="1877" height="349" key="GridCell.Tab.1.center" timestamp="1586949362702">
+    <state width="1877" height="128" key="GridCell.Tab.1.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1587135602864" />
+    <state width="1877" height="128" key="GridCell.Tab.1.center" timestamp="1587135602863">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="349" key="GridCell.Tab.1.center/0.30.1920.1050@0.30.1920.1050" timestamp="1586949362702" />
-    <state width="1877" height="349" key="GridCell.Tab.1.left" timestamp="1586949362702">
+    <state width="1877" height="128" key="GridCell.Tab.1.center/0.30.1920.1050@0.30.1920.1050" timestamp="1587135602863" />
+    <state width="1877" height="128" key="GridCell.Tab.1.left" timestamp="1587135602863">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="349" key="GridCell.Tab.1.left/0.30.1920.1050@0.30.1920.1050" timestamp="1586949362702" />
-    <state width="1877" height="349" key="GridCell.Tab.1.right" timestamp="1586949362702">
+    <state width="1877" height="128" key="GridCell.Tab.1.left/0.30.1920.1050@0.30.1920.1050" timestamp="1587135602863" />
+    <state width="1877" height="128" key="GridCell.Tab.1.right" timestamp="1587135602863">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="349" key="GridCell.Tab.1.right/0.30.1920.1050@0.30.1920.1050" timestamp="1586949362702" />
+    <state width="1877" height="128" key="GridCell.Tab.1.right/0.30.1920.1050@0.30.1920.1050" timestamp="1587135602863" />
     <state width="218" height="483" key="HiddenNamespacesPopup" timestamp="1586401726100">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -571,16 +576,18 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MusicCritique$classify_model.coverage" NAME="classify_model Coverage Results" MODIFIED="1586932777305" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/classify" />
+    <SUITE FILE_PATH="coverage/MusicCritique$csv_is_alright__1_.coverage" NAME="csv_is_alright (1) Coverage Results" MODIFIED="1587043909774" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
+    <SUITE FILE_PATH="coverage/MusicCritique$toolkit.coverage" NAME="toolkit Coverage Results" MODIFIED="1586583775573" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
+    <SUITE FILE_PATH="coverage/MusicCritique$csv.coverage" NAME="csv Coverage Results" MODIFIED="1587043388533" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
+    <SUITE FILE_PATH="coverage/MusicCritique$dataset.coverage" NAME="dataset Coverage Results" MODIFIED="1586418282219" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
+    <SUITE FILE_PATH="coverage/MusicCritique$config.coverage" NAME="config Coverage Results" MODIFIED="1586503807124" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
     <SUITE FILE_PATH="coverage/MusicCritique$auxillary.coverage" NAME="auxillary Coverage Results" MODIFIED="1586760361770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
-    <SUITE FILE_PATH="coverage/MusicCritique$test_network.coverage" NAME="test_network Coverage Results" MODIFIED="1586948030427" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/networks" />
+    <SUITE FILE_PATH="coverage/MusicCritique$test_network.coverage" NAME="test_network Coverage Results" MODIFIED="1587135586760" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/networks" />
     <SUITE FILE_PATH="coverage/MusicCritique$model.coverage" NAME="model Coverage Results" MODIFIED="1586419301960" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
     <SUITE FILE_PATH="coverage/MusicCritique$classify_config.coverage" NAME="classify_config Coverage Results" MODIFIED="1586877337177" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/classify" />
-    <SUITE FILE_PATH="coverage/MusicCritique$toolkit.coverage" NAME="toolkit Coverage Results" MODIFIED="1586583775573" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
     <SUITE FILE_PATH="coverage/MusicCritique$create_database.coverage" NAME="create_database Coverage Results" MODIFIED="1586871575063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
-    <SUITE FILE_PATH="coverage/MusicCritique$dataset.coverage" NAME="dataset Coverage Results" MODIFIED="1586418282219" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
-    <SUITE FILE_PATH="coverage/MusicCritique$cygan_model.coverage" NAME="cygan_model Coverage Results" MODIFIED="1586957032082" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
+    <SUITE FILE_PATH="coverage/MusicCritique$cygan_model.coverage" NAME="cygan_model Coverage Results" MODIFIED="1587137500606" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
     <SUITE FILE_PATH="coverage/MusicCritique$classifier.coverage" NAME="classifier Coverage Results" MODIFIED="1586960265846" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/networks" />
-    <SUITE FILE_PATH="coverage/MusicCritique$config.coverage" NAME="config Coverage Results" MODIFIED="1586503807124" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
   </component>
   <component name="masterDetails">
     <states>
