@@ -39,9 +39,9 @@ def test_G():
                                             # nn.RReLU(lower=0.2, upper=0.4),.Conv2d)
     bar_cnet1 = nn.Sequential(nn.Conv2d(in_channels=64,
                                     out_channels=128,
-                                    kernel_size=3,
-                                    stride=2,
-                                    padding=1,
+                                    kernel_size=5,
+                                    stride=1,
+                                    padding=2,
                                     bias=False),
                           # nn.InstanceNorm2d(128, eps=1e-5),
                           nn.LeakyReLU(0.2),
@@ -49,32 +49,30 @@ def test_G():
 
     bar_cnet2 = nn.Sequential(nn.Conv2d(in_channels=128,
                                         out_channels=256,
-                                        kernel_size=3,
-                                        stride=2,
-                                        padding=1,
+                                        kernel_size=5,
+                                        stride=1,
+                                        padding=2,
                                         bias=False),
                               # nn.InstanceNorm2d(128, eps=1e-5),
                               nn.LeakyReLU(0.2),
                               nn.Dropout(0.5))
 
-    bar_cnet3 = nn.Sequential(nn.ConvTranspose2d(in_channels=256,
+    bar_cnet3 = nn.Sequential(nn.Conv2d(in_channels=256,
                                         out_channels=128,
-                                        kernel_size=3,
-                                        stride=2,
-                                        padding=1,
+                                        kernel_size=5,
+                                        stride=1,
+                                        padding=2,
                                         bias=False),
                               # nn.InstanceNorm2d(128, eps=1e-5),
-                              nn.ZeroPad2d((1, 0, 1, 0)),
                               nn.LeakyReLU(0.2),
                               nn.Dropout(0.5))
 
-    bar_cnet4 = nn.Sequential(nn.ConvTranspose2d(in_channels=128,
+    bar_cnet4 = nn.Sequential(nn.Conv2d(in_channels=128,
                                     out_channels=64,
-                                    kernel_size=3,
-                                    stride=2,
-                                    padding=1,
+                                    kernel_size=5,
+                                    stride=1,
+                                    padding=2,
                                     bias=False),
-                              nn.ZeroPad2d((0, 1, 0, 1)),
                           nn.InstanceNorm2d(64, eps=1e-5),
                           nn.LeakyReLU(0.2),
                           nn.Dropout(0.5)
@@ -82,31 +80,20 @@ def test_G():
 
     net4 = nn.Sequential(nn.Conv2d(in_channels=64,
                                                       out_channels=128,
-                                                      kernel_size=3,
+                                                      kernel_size=5,
                                                       stride=2,
-                                                      padding=1,
+                                                      padding=2,
                                                       bias=False),
                                             nn.InstanceNorm2d(128, eps=1e-5),
                                             nn.LeakyReLU(0.2)
                                         )
 
-    net5 = nn.Sequential( nn.Conv2d(in_channels=128,
-                                                  out_channels=128,
-                                                  kernel_size=3,
-                                                  stride=1,
-                                                  padding=1,
-                                                  bias=False),
-                                        nn.InstanceNorm2d(256, eps=1e-5),
-                                        nn.LeakyReLU(0.2),
-                                        # nn.LeakyReLU(negative_slope=0.2),
-                                        # nn.RReLU(lower=0.2, upper=0.4),
-                         )
 
     net6 = nn.Sequential(nn.Conv2d(in_channels=128,
               out_channels=256,
-              kernel_size=3,
+              kernel_size=5,
               stride=2,
-              padding=1,
+              padding=2,
               bias=False),
     nn.InstanceNorm2d(256, eps=1e-5),
     nn.ReLU())
@@ -125,9 +112,9 @@ def test_G():
 
                         nn.ConvTranspose2d(in_channels=256,
                                                                out_channels=128,
-                                                               kernel_size=3,
+                                                               kernel_size=5,
                                                                stride=2,
-                                                               padding=1,
+                                                               padding=2,
                                                                bias=False),
                         nn.ZeroPad2d((0, 1, 0, 1)),
                                             nn.InstanceNorm2d(128, eps=1e-5),
@@ -138,9 +125,9 @@ def test_G():
 
                         nn.ConvTranspose2d(in_channels=128,
                                                                out_channels=128,
-                                                               kernel_size=3,
+                                                               kernel_size=5,
                                                                stride=1,
-                                                               padding=1,
+                                                               padding=2,
                                                                bias=False),
                         # nn.ZeroPad2d((0, 1, 0, 1)),
                                             nn.InstanceNorm2d(128, eps=1e-5),
@@ -167,35 +154,34 @@ def test_G():
 
 
     x = torch.zeros((1, 1, 64, 84))
-    print(x.shape)
+    # print(x.shape)
 
     x = net1(x)
-    print(x.shape)
+    # print(x.shape)
 
     x = net2(x)
-    print(x.shape)
+    # print(x.shape)
 
     x = net3(x)
-    print(x.shape)
+    # print(x.shape)
 
 
-    '''
+
     x1, x2, x3, x4 = x.split([16, 16, 16, 16], dim=2)
     print(x1.shape)
 
     x1 = bar_cnet1(x1)
     print(x1.shape)
 
-
     x1 = bar_cnet2(x1)
-    print(x.shape)
+    print(x1.shape)
 
     x1 = bar_cnet3(x1)
     print(x1.shape)
 
     x1 = bar_cnet4(x1)
     print(x1.shape)
-    '''
+
 
 
 
@@ -203,8 +189,6 @@ def test_G():
     x = net4(x)
     print(x.shape)
 
-    x = net5(x)
-    print(x.shape)
 
     x = net6(x)
     print(x.shape)
@@ -265,27 +249,19 @@ def test_D():
 
     net21 = nn.Sequential(nn.Conv2d(in_channels=64,
                                             out_channels=128,
-                                            kernel_size=3,
+                                            kernel_size=5,
                                             stride=2,
-                                            padding=1,
+                                            padding=2,
                                             bias=False),
                                   # nn.InstanceNorm2d(128, eps=1e-5),
                                   nn.RReLU(lower=0.2, upper=0.3))
 
-    net22 = nn.Sequential(nn.Conv2d(in_channels=128,
-                                            out_channels=128,
-                                            kernel_size=3,
-                                            stride=1,
-                                            padding=1,
-                                            bias=False),
-                                  # nn.InstanceNorm2d(128, eps=1e-5),
-                                  nn.RReLU(lower=0.2, upper=0.3))
 
     net23 = nn.Sequential(nn.Conv2d(in_channels=128,
                                             out_channels=256,
-                                            kernel_size=3,
+                                            kernel_size=5,
                                             stride=2,
-                                            padding=1,
+                                            padding=2,
                                             bias=False),
                                   nn.InstanceNorm2d(256, eps=1e-5),
                                   nn.RReLU(lower=0.2, upper=0.3))
@@ -339,9 +315,6 @@ def test_D():
     x = net21(x)
     print(x.shape)
 
-    x = net22(x)
-    print(x.shape)
-
     x = net23(x)
     print(x.shape)
 
@@ -360,4 +333,4 @@ def test_D():
 
 
 if __name__ == '__main__':
-    test_G()
+    test_D()

@@ -53,7 +53,7 @@ class Config(object):
         self.beta1 = 0.5                     # Adam optimizer beta1 & 2
         self.beta2 = 0.999
 
-        self.lr = 0.0001
+        self.lr = 0.0002
 
         self.weight_decay = 0.0
 
