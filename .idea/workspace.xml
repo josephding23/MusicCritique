@@ -22,9 +22,9 @@
     <list default="true" id="b77e5dfc-4c90-42b0-97d0-a4afd2ccd659" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cyclegan/cygan_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/cygan_config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cyclegan/cygan_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/cygan_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/networks/SteelyGAN.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/SteelyGAN.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/networks/test_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/test_network.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/data/csv_is_alright.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/data/csv_is_alright.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -383,7 +383,8 @@
       <workItem from="1587116499950" duration="24392000" />
       <workItem from="1587171454729" duration="138000" />
       <workItem from="1587171604072" duration="40665000" />
-      <workItem from="1587260867785" duration="23621000" />
+      <workItem from="1587260867785" duration="47561000" />
+      <workItem from="1587346103232" duration="30201000" />
     </task>
     <task id="LOCAL-00001" summary="pretty">
       <created>1578794444076</created>
@@ -464,38 +465,38 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="740" y="309" key="FileChooserDialogImpl/0.30.1920.1050@0.30.1920.1050" timestamp="1586509938768" />
-    <state width="1877" height="147" key="GridCell.Tab.0.bottom" timestamp="1587289673029">
+    <state width="1877" height="258" key="GridCell.Tab.0.bottom" timestamp="1587389352038">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="147" key="GridCell.Tab.0.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1587289673029" />
-    <state width="1877" height="147" key="GridCell.Tab.0.center" timestamp="1587289673029">
+    <state width="1877" height="258" key="GridCell.Tab.0.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1587389352038" />
+    <state width="1877" height="258" key="GridCell.Tab.0.center" timestamp="1587389352037">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="147" key="GridCell.Tab.0.center/0.30.1920.1050@0.30.1920.1050" timestamp="1587289673029" />
-    <state width="1877" height="147" key="GridCell.Tab.0.left" timestamp="1587289673029">
+    <state width="1877" height="258" key="GridCell.Tab.0.center/0.30.1920.1050@0.30.1920.1050" timestamp="1587389352037" />
+    <state width="1877" height="258" key="GridCell.Tab.0.left" timestamp="1587389352036">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="147" key="GridCell.Tab.0.left/0.30.1920.1050@0.30.1920.1050" timestamp="1587289673029" />
-    <state width="1877" height="147" key="GridCell.Tab.0.right" timestamp="1587289673029">
+    <state width="1877" height="258" key="GridCell.Tab.0.left/0.30.1920.1050@0.30.1920.1050" timestamp="1587389352036" />
+    <state width="1877" height="258" key="GridCell.Tab.0.right" timestamp="1587389352037">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="147" key="GridCell.Tab.0.right/0.30.1920.1050@0.30.1920.1050" timestamp="1587289673029" />
-    <state width="1877" height="128" key="GridCell.Tab.1.bottom" timestamp="1587278907966">
+    <state width="1877" height="258" key="GridCell.Tab.0.right/0.30.1920.1050@0.30.1920.1050" timestamp="1587389352037" />
+    <state width="1877" height="128" key="GridCell.Tab.1.bottom" timestamp="1587317753043">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="128" key="GridCell.Tab.1.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1587278907966" />
-    <state width="1877" height="128" key="GridCell.Tab.1.center" timestamp="1587278907966">
+    <state width="1877" height="128" key="GridCell.Tab.1.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1587317753043" />
+    <state width="1877" height="128" key="GridCell.Tab.1.center" timestamp="1587317753043">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="128" key="GridCell.Tab.1.center/0.30.1920.1050@0.30.1920.1050" timestamp="1587278907966" />
-    <state width="1877" height="128" key="GridCell.Tab.1.left" timestamp="1587278907966">
+    <state width="1877" height="128" key="GridCell.Tab.1.center/0.30.1920.1050@0.30.1920.1050" timestamp="1587317753043" />
+    <state width="1877" height="128" key="GridCell.Tab.1.left" timestamp="1587317753043">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="128" key="GridCell.Tab.1.left/0.30.1920.1050@0.30.1920.1050" timestamp="1587278907966" />
-    <state width="1877" height="128" key="GridCell.Tab.1.right" timestamp="1587278907966">
+    <state width="1877" height="128" key="GridCell.Tab.1.left/0.30.1920.1050@0.30.1920.1050" timestamp="1587317753043" />
+    <state width="1877" height="128" key="GridCell.Tab.1.right" timestamp="1587317753043">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="128" key="GridCell.Tab.1.right/0.30.1920.1050@0.30.1920.1050" timestamp="1587278907966" />
+    <state width="1877" height="128" key="GridCell.Tab.1.right/0.30.1920.1050@0.30.1920.1050" timestamp="1587317753043" />
     <state width="218" height="483" key="HiddenNamespacesPopup" timestamp="1586401726100">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -504,10 +505,10 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="461" y="199" key="SettingsEditor/0.30.1920.1050@0.30.1920.1050" timestamp="1587217017316" />
-    <state x="623" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1586699072667">
+    <state x="623" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1587300038676">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="623" y="257" width="672" height="678" key="search.everywhere.popup/0.30.1920.1050@0.30.1920.1050" timestamp="1586699072667" />
+    <state x="623" y="257" width="672" height="678" key="search.everywhere.popup/0.30.1920.1050@0.30.1920.1050" timestamp="1587300038676" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MusicCritique$classify_model.coverage" NAME="classify_model Coverage Results" MODIFIED="1586932777305" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/classify" />
@@ -518,11 +519,11 @@
     <SUITE FILE_PATH="coverage/MusicCritique$config.coverage" NAME="config Coverage Results" MODIFIED="1586503807124" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
     <SUITE FILE_PATH="coverage/MusicCritique$SteelyGAN.coverage" NAME="SteelyGAN Coverage Results" MODIFIED="1587280426922" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/networks" />
     <SUITE FILE_PATH="coverage/MusicCritique$auxillary.coverage" NAME="auxillary Coverage Results" MODIFIED="1586760361770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
-    <SUITE FILE_PATH="coverage/MusicCritique$test_network.coverage" NAME="test_network Coverage Results" MODIFIED="1587289615351" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/networks" />
+    <SUITE FILE_PATH="coverage/MusicCritique$test_network.coverage" NAME="test_network Coverage Results" MODIFIED="1587292507290" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/networks" />
     <SUITE FILE_PATH="coverage/MusicCritique$model.coverage" NAME="model Coverage Results" MODIFIED="1586419301960" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
     <SUITE FILE_PATH="coverage/MusicCritique$classify_config.coverage" NAME="classify_config Coverage Results" MODIFIED="1586877337177" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/classify" />
     <SUITE FILE_PATH="coverage/MusicCritique$create_database.coverage" NAME="create_database Coverage Results" MODIFIED="1586871575063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
-    <SUITE FILE_PATH="coverage/MusicCritique$cygan_model.coverage" NAME="cygan_model Coverage Results" MODIFIED="1587289673024" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
+    <SUITE FILE_PATH="coverage/MusicCritique$cygan_model.coverage" NAME="cygan_model Coverage Results" MODIFIED="1587389293155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
     <SUITE FILE_PATH="coverage/MusicCritique$classifier.coverage" NAME="classifier Coverage Results" MODIFIED="1586960265846" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/networks" />
     <SUITE FILE_PATH="coverage/MusicCritique$csv_is_alright.coverage" NAME="csv_is_alright Coverage Results" MODIFIED="1587272371180" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
   </component>

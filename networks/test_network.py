@@ -221,27 +221,27 @@ def test_G():
 def test_D():
     net11 = nn.Sequential(nn.Conv2d(in_channels=1,
                                             out_channels=32,
-                                            kernel_size=3,
+                                            kernel_size=5,
                                             stride=1,
-                                            padding=1,
+                                            padding=2,
                                             bias=False),
                                   # nn.InstanceNorm2d(16, eps=1e-5),
                                   nn.RReLU(lower=0.2, upper=0.3))
 
     net12 = nn.Sequential(nn.Conv2d(in_channels=32,
                                             out_channels=32,
-                                            kernel_size=3,
+                                            kernel_size=5,
                                             stride=1,
-                                            padding=1,
+                                            padding=2,
                                             bias=False),
                                   # nn.InstanceNorm2d(16, eps=1e-5),
                                   nn.RReLU(lower=0.2, upper=0.3))
 
     net13 = nn.Sequential(nn.Conv2d(in_channels=32,
                                             out_channels=64,
-                                            kernel_size=3,
+                                            kernel_size=5,
                                             stride=1,
-                                            padding=1,
+                                            padding=2,
                                             bias=False),
                                   nn.InstanceNorm2d(64, eps=1e-5),
                                   nn.RReLU(lower=0.2, upper=0.3),

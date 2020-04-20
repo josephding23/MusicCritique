@@ -38,6 +38,8 @@ class Config(object):
         self.image_pool_info = 'pooled' if self.use_image_pool else 'not_pooled'
         self.image_pool_max_size = 20
 
+        self.bat_unit_eta = 0.2
+
         ##########################
 
         ##########################
@@ -53,7 +55,7 @@ class Config(object):
         self.beta1 = 0.5                     # Adam optimizer beta1 & 2
         self.beta2 = 0.999
 
-        self.lr = 0.0002
+        self.lr = 0.0001
 
         self.weight_decay = 0.0
 
@@ -76,9 +78,12 @@ class Config(object):
         ##########################
         # Save Paths
 
-        self.save_path = 'd:/checkpoints/' + '{}_{}2{}_{}_{}_gn{}_lr{}_wd{}'.format(self.name, self.genreA, self.genreB,
-                                                                          self.model, self.image_pool_info,
-                                                                          self.gaussian_std, self.lr, self.weight_decay)
+        self.root_dir = 'd:'
+
+        self.save_path = self.root_dir + '/checkpoints/' + '{}_{}2{}_{}_{}_gn{}_lr{}_wd{}'.format(
+            self.name, self.genreA, self.genreB, self.model, self.image_pool_info,
+            self.gaussian_std, self.lr, self.weight_decay)
+
         self.model_path = self.save_path + '/models'
         self.checkpoint_path = self.save_path + '/checkpoints'
 
