@@ -21,7 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b77e5dfc-4c90-42b0-97d0-a4afd2ccd659" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/attempts/coffin_dance.py" beforeDir="false" afterPath="$PROJECT_DIR$/attempts/coffin_dance.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/midi/write/coffin_dance.mid" beforeDir="false" afterPath="$PROJECT_DIR$/data/midi/write/coffin_dance.mid" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -394,7 +393,7 @@
       <workItem from="1587520816474" duration="12566000" />
       <workItem from="1587561346998" duration="747000" />
       <workItem from="1587562299545" duration="2362000" />
-      <workItem from="1587564830716" duration="8737000" />
+      <workItem from="1587564830716" duration="9045000" />
     </task>
     <task id="LOCAL-00001" summary="pretty">
       <created>1578794444076</created>
@@ -475,22 +474,22 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="740" y="309" key="FileChooserDialogImpl/0.30.1920.1050@0.30.1920.1050" timestamp="1586509938768" />
-    <state width="916" height="365" key="GridCell.Tab.0.bottom" timestamp="1587574606864">
+    <state width="916" height="365" key="GridCell.Tab.0.bottom" timestamp="1587574873127">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="916" height="365" key="GridCell.Tab.0.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1587574606864" />
-    <state width="916" height="365" key="GridCell.Tab.0.center" timestamp="1587574606864">
+    <state width="916" height="365" key="GridCell.Tab.0.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1587574873127" />
+    <state width="916" height="365" key="GridCell.Tab.0.center" timestamp="1587574873126">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="916" height="365" key="GridCell.Tab.0.center/0.30.1920.1050@0.30.1920.1050" timestamp="1587574606864" />
-    <state width="916" height="365" key="GridCell.Tab.0.left" timestamp="1587574606864">
+    <state width="916" height="365" key="GridCell.Tab.0.center/0.30.1920.1050@0.30.1920.1050" timestamp="1587574873126" />
+    <state width="916" height="365" key="GridCell.Tab.0.left" timestamp="1587574873126">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="916" height="365" key="GridCell.Tab.0.left/0.30.1920.1050@0.30.1920.1050" timestamp="1587574606864" />
-    <state width="916" height="365" key="GridCell.Tab.0.right" timestamp="1587574606864">
+    <state width="916" height="365" key="GridCell.Tab.0.left/0.30.1920.1050@0.30.1920.1050" timestamp="1587574873126" />
+    <state width="916" height="365" key="GridCell.Tab.0.right" timestamp="1587574873126">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="916" height="365" key="GridCell.Tab.0.right/0.30.1920.1050@0.30.1920.1050" timestamp="1587574606864" />
+    <state width="916" height="365" key="GridCell.Tab.0.right/0.30.1920.1050@0.30.1920.1050" timestamp="1587574873126" />
     <state width="1877" height="128" key="GridCell.Tab.1.bottom" timestamp="1587565151737">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -527,7 +526,7 @@
     <SUITE FILE_PATH="coverage/MusicCritique$csv.coverage" NAME="csv Coverage Results" MODIFIED="1587043388533" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
     <SUITE FILE_PATH="coverage/MusicCritique$dataset.coverage" NAME="dataset Coverage Results" MODIFIED="1586418282219" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
     <SUITE FILE_PATH="coverage/MusicCritique$config.coverage" NAME="config Coverage Results" MODIFIED="1586503807124" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
-    <SUITE FILE_PATH="coverage/MusicCritique$coffin_dance.coverage" NAME="coffin_dance Coverage Results" MODIFIED="1587574418849" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/attempts" />
+    <SUITE FILE_PATH="coverage/MusicCritique$coffin_dance.coverage" NAME="coffin_dance Coverage Results" MODIFIED="1587574873118" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/attempts" />
     <SUITE FILE_PATH="coverage/MusicCritique$SteelyGAN.coverage" NAME="SteelyGAN Coverage Results" MODIFIED="1587280426922" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/networks" />
     <SUITE FILE_PATH="coverage/MusicCritique$auxillary.coverage" NAME="auxillary Coverage Results" MODIFIED="1587453276908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
     <SUITE FILE_PATH="coverage/MusicCritique$test_network.coverage" NAME="test_network Coverage Results" MODIFIED="1587292507290" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/networks" />

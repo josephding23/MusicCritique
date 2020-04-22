@@ -85,8 +85,8 @@ class CoffinDance():
 
         for i in range(12):
             track_lead.add_note(6, 0.125)
-        track_lead.add_note(2, 0.125, base_num=1)
-        track_lead.add_note(1, 0.125, base_num=1)
+        track_lead.add_note(2, 0.125)
+        track_lead.add_note(1, 0.125)
         track_lead.add_note(7, 0.125)
         track_lead.add_note(6, 0.125)
 
