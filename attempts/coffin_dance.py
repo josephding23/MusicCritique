@@ -13,18 +13,19 @@ class CoffinDance():
         self.intro()
         self.verse()
         self.verse()
+        self.verse()
         self.end()
 
     def intro(self):
         track_lead = self.mid.get_extended_track('Lead')
         track_lead.add_meta_info()
         for i in range(16):
-            track_lead.add_note(5, 0.125)
+            track_lead.add_note(6, 0.125)
         for i in range(8):
             track_lead.add_note(1, 0.125, base_num=1)
 
         for i in range(4):
-            track_lead.add_note(5, 0.125)
+            track_lead.add_note(6, 0.125)
         for i in range(4):
             track_lead.add_note(3, 0.125, base_num=1)
         for i in range(4):
@@ -42,9 +43,9 @@ class CoffinDance():
     def verse(self):
         track_lead = self.mid.get_extended_track('Lead')
 
-        track_lead.add_note(5, 0.125, base_num=-1)
+        track_lead.add_note(6, 0.125, base_num=-1)
         track_lead.wait(0.125)
-        track_lead.add_note(5, 0.125, base_num=-1)
+        track_lead.add_note(6, 0.125, base_num=-1)
         track_lead.add_note(3, 0.125)
         track_lead.add_note(2, 0.125)
         track_lead.wait(0.125)
@@ -61,9 +62,9 @@ class CoffinDance():
         track_lead.add_note(7, 0.125, -1)
 
         for i in range(2):
-            track_lead.add_note(5, 0.125, base_num=-1)
+            track_lead.add_note(6, 0.125, base_num=-1)
             track_lead.wait(0.125)
-            track_lead.add_note(5, 0.125, base_num=-1)
+            track_lead.add_note(6, 0.125, base_num=-1)
             track_lead.add_note(1, 0.125, base_num=1)
             track_lead.add_note(7, 0.125)
             track_lead.add_note(1, 0.125, base_num=1)
@@ -72,7 +73,6 @@ class CoffinDance():
 
     def end(self):
         track_lead = self.mid.get_extended_track('Lead')
-
         for i in range(4):
             track_lead.add_note(1, 0.125)
         for i in range(4):
