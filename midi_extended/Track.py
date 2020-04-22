@@ -87,7 +87,7 @@ class TrackExtended(MidiTrack):
 
     def add_bass(self, note, length, base_num=-1, velocity=0.7, channel=6, delay=0):
         bpm = self.bpm
-        meta_time = 60 * 60 * 10 / bpm
+        meta_time = 60 * 4 * 1000 / bpm
         major_notes = [0, 2, 2, 1, 2, 2, 2, 1]
         base_note = 60
         super().append(
@@ -101,7 +101,7 @@ class TrackExtended(MidiTrack):
     def add_note(self, note, length, base_num=0, delay=0, velocity=1.0, channel=0, pitch_type=0, tremble_setting=None,
                  bend_setting=None):
         bpm = self.bpm
-        meta_time = 60 * 60 * 10 / bpm
+        meta_time = 60 * 4 * 960 / bpm
         major_notes = [0, 2, 2, 1, 2, 2, 2, 1]
         base_note = 60
         if pitch_type == 0:  # No Pitch Wheel Message
@@ -152,7 +152,7 @@ class TrackExtended(MidiTrack):
 
     def wait(self, time):
         bpm = self.bpm
-        meta_time = 60 * 60 * 10 / bpm
+        meta_time = 60 * 4 * 960 / bpm
         super().append(Message('note_off', time=round(meta_time * time)))
 
     def add_drum(self, name, time, delay=0, velocity=1):

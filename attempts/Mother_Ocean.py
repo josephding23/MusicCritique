@@ -1,5 +1,6 @@
 from midi_extended.UtilityBox import *
-from midi_extended.MidiFileExtended import MidiFileExtended
+from midi_extended.MidiFileExtended import MidiFileExtended, generate_track_from_numpy_matrix
+
 
 class Mother_Ocean():
     def __init__(self):
@@ -403,16 +404,16 @@ def piano_roll_test():
     mid = MidiFileExtended(path, 'r')
 
     mid.turn_track_into_numpy_matrix('Melody', "../data/numpy/mother_ocean/melody.npy")
-    mid.generate_track_from_numpy_matrix("../data/numpy/mother_ocean/melody.npy", (288, 128), 'Melody', False)
+    generate_track_from_numpy_matrix("../data/numpy/mother_ocean/melody.npy", (288, 128), 'Melody', False)
 
     mid.turn_track_into_numpy_matrix('Chord', "../data/numpy/mother_ocean/chord.npy")
-    mid.generate_track_from_numpy_matrix("../data/numpy/mother_ocean/chord.npy", (288, 128), 'Chord', False, True, '../data/plots/mother_ocean/chord.png')
+    generate_track_from_numpy_matrix("../data/numpy/mother_ocean/chord.npy", (288, 128), 'Chord', False, True, '../data/plots/mother_ocean/chord.png')
 
     mid.turn_track_into_numpy_matrix('Hi-Hat', "../data/numpy/mother_ocean/hi-hat.npy")
-    mid.generate_track_from_numpy_matrix("../data/numpy/mother_ocean/hi-hat.npy", (288, 128), 'Hi-Hat', True, True, '../data/plots/mother_ocean/hi-hat.png')
+    generate_track_from_numpy_matrix("../data/numpy/mother_ocean/hi-hat.npy", (288, 128), 'Hi-Hat', True, True, '../data/plots/mother_ocean/hi-hat.png')
 
     mid.turn_track_into_numpy_matrix('Tom And Snare', "../data/numpy/mother_ocean/tom_and_snare.npy")
-    mid.generate_track_from_numpy_matrix("../data/numpy/mother_ocean/tom_and_snare.npy", (288, 128), 'Tom And Snare', True, True, '../data/plots/mother_ocean/tom_and_snare.png')
+    generate_track_from_numpy_matrix("../data/numpy/mother_ocean/tom_and_snare.npy", (288, 128), 'Tom And Snare', True, True, '../data/plots/mother_ocean/tom_and_snare.png')
 
     '''
     mid.generate_multiple_tracks_from_numpy_matrices(4, "../data/numpy/mother_ocean/",

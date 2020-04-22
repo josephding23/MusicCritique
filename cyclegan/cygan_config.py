@@ -11,8 +11,21 @@ class Config(object):
         # self.name = 'SMGT'
 
         self.dataset_name = 'free_midi_library'
-        self.genreA = 'punk'
-        self.genreB = 'classical'
+
+        self.genre_group = 1
+
+        if self.genre_group == 1:
+            self.genreA = 'metal'
+            self.genreB = 'country'
+
+        elif self.genre_group == 2:
+            self.genreA = 'punk'
+            self.genreB = 'classical'
+
+        else:
+            self.genreA = 'rock'
+            self.genreB = 'jazz'
+
         self.dataset_mode = 'unaligned'
         self.track_merged = False
 
@@ -55,14 +68,16 @@ class Config(object):
         self.beta1 = 0.5                     # Adam optimizer beta1 & 2
         self.beta2 = 0.999
 
-        self.lr = 0.0001
+        self.lr = 0.0002
+        self.milestones = [2, 5, 8, 11, 13, 15, 17, 19, 20]
+        self.gamma = 0.5
 
         self.weight_decay = 0.0
 
         self.no_flip = True
         self.num_threads = 0
         self.batch_size = 8
-        self.max_epoch = 30
+        self.max_epoch = 20
         self.epoch_step = 5
 
         self.data_shape = (self.batch_size, 1, 64, 84)

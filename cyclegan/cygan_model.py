@@ -28,6 +28,7 @@ from cyclegan.error import CyganException
 
 class CycleGAN(object):
     def __init__(self):
+        torch.autograd.set_detect_anomaly(True)
         self.opt = Config()
 
         self.device = torch.device('cuda') if self.opt.gpu else torch.device('cpu')
@@ -106,23 +107,25 @@ class CycleGAN(object):
         self.DB_scheduler = lr_scheduler.ExponentialLR(self.DB_optimizer, gamma=0.6)
         self.GA2B_scheduler = lr_scheduler.ExponentialLR(self.GA2B_optimizer, gamma=0.6)
         self.GB2A_scheduler = lr_scheduler.ExponentialLR(self.GB2A_optimizer, gamma=0.6)
-        '''
+        
         self.DA_scheduler = lr_scheduler.MultiStepLR(optimizer=self.DA_optimizer,
-                                                     milestones=[2, 4, 6, 8, 10, 11, 12, 13, 15, 16, 18, 19,
-                                                                 21, 22, 24, 25, 27, 28, 29],
-                                                     gamma=0.5)
+                                                     milestones=self.opt.milestones,
+                                                     gamma=self.opt.gamma)
         self.DB_scheduler = lr_scheduler.MultiStepLR(optimizer=self.DB_optimizer,
-                                                     milestones=[2, 4, 6, 8, 10, 11, 12, 13, 15, 16, 18, 19,
-                                                                 21, 22, 24, 25, 27, 28, 29],
-                                                     gamma=0.5)
+                                                     milestones=self.opt.milestones,
+                                                     gamma=self.opt.gamma)
         self.GA2B_scheduler = lr_scheduler.MultiStepLR(optimizer=self.GA2B_optimizer,
-                                                       milestones=[2, 4, 6, 8, 10, 11, 12, 13, 15, 16, 18, 19,
-                                                                   21, 22, 24, 25, 27, 28, 29],
-                                                       gamma=0.5)
+                                                       milestones=self.opt.milestones,
+                                                       gamma=self.opt.gamma)
         self.GB2A_scheduler = lr_scheduler.MultiStepLR(optimizer=self.GB2A_optimizer,
-                                                       milestones=[2, 4, 6, 8, 10, 11, 12, 13, 15, 16, 18, 19,
-                                                                   21, 22, 24, 25, 27, 28, 29],
-                                                       gamma=0.5)
+                                                       milestones=self.opt.milestones,
+                                                       gamma=self.opt.gamma)
+        '''
+
+        self.DA_scheduler = lr_scheduler.CosineAnnealingWarmRestarts(self.DA_optimizer, T_0=1, T_mult=2, eta_min=4e-08)
+        self.DB_scheduler = lr_scheduler.CosineAnnealingWarmRestarts(self.DB_optimizer, T_0=1, T_mult=2, eta_min=4e-08)
+        self.GA2B_scheduler = lr_scheduler.CosineAnnealingWarmRestarts(self.GA2B_optimizer, T_0=1, T_mult=2, eta_min=4e-08)
+        self.GB2A_scheduler = lr_scheduler.CosineAnnealingWarmRestarts(self.GB2A_optimizer, T_0=1, T_mult=2, eta_min=4e-08)
 
         if self.opt.model != 'base':
             self.DA_all_optimizer = torch.optim.Adam(params=self.discriminator_A_all.parameters(), lr=self.opt.lr,
@@ -138,15 +141,16 @@ class CycleGAN(object):
             
             self.DA_all_scheduler = lr_scheduler.ExponentialLR(self.DA_all_optimizer, gamma=0.5)
             self.DB_all_scheduler = lr_scheduler.ExponentialLR(self.DB_all_optimizer, gamma=0.5)
-            '''
+            
             self.DA_all_scheduler = lr_scheduler.MultiStepLR(optimizer=self.DA_all_optimizer,
-                                                             milestones=[2, 4, 6, 8, 10, 11, 12, 13, 15, 16, 18, 19,
-                                                                 21, 22, 24, 25, 27, 28, 29],
-                                                             gamma=0.5)
+                                                             milestones=self.opt.milestones,
+                                                             gamma=self.opt.gamma)
             self.DB_all_scheduler = lr_scheduler.MultiStepLR(optimizer=self.DB_all_optimizer,
-                                                             milestones=[2, 4, 6, 8, 10, 11, 12, 13, 15, 16, 18, 19,
-                                                                 21, 22, 24, 25, 27, 28, 29],
-                                                             gamma=0.5)
+                                                             milestones=self.opt.milestones,
+                                                             gamma=self.opt.gamma)
+            '''
+            self.DA_all_scheduler = lr_scheduler.CosineAnnealingWarmRestarts(self.DA_all_optimizer, T_0=1, T_mult=2, eta_min=4e-08)
+            self.DB_all_scheduler = lr_scheduler.CosineAnnealingWarmRestarts(self.DB_all_optimizer, T_0=1, T_mult=2, eta_min=4e-08)
 
     def continue_from_latest_checkpoint(self):
         latest_checked_epoch = self.find_latest_checkpoint()

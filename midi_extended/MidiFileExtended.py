@@ -11,6 +11,44 @@ import contextlib
 with contextlib.redirect_stdout(None):
     import pygame
 
+
+def generate_multiple_tracks_from_numpy_matrices(num, dir, files, size, names, are_drums,
+                                                 tempo, downbeat, beat_resolution, programs=None, save_fig=False, save_path=None):
+    tracks = []
+    for i in range(num):
+        path = dir + files[i]
+        name = names[i]
+        if programs == None:
+            program = 0
+        else:
+            program = programs[i]
+        is_drum = are_drums[i]
+        piano_roll = np.load(path)
+        piano_roll.resize(size)
+        track = Track(piano_roll, program, is_drum, name)
+        tracks.append(track)
+
+    multitrack = Multitrack(tracks=tracks, tempo=tempo, downbeat=downbeat, beat_resolution=beat_resolution)
+    multitrack.save(dir + 'multi.npz')
+
+    fig, axs = pypianoroll.multitrack.plot_multitrack(multitrack, grid_linewidth=0.8, ytick='off')
+    if save_fig:
+        plt.savefig(save_path)
+    else:
+        plt.show()
+
+
+def generate_track_from_numpy_matrix(path, size, name, is_drum, save_fig=False, save_path=None, program=0):
+    piano_roll = np.load(path)
+    piano_roll.resize(size)
+    track = Track(piano_roll, program, is_drum,  name)
+    fig, ax = pypianoroll.track.plot_track(track)
+    if save_fig:
+        plt.savefig(save_path)
+    else:
+        plt.show()
+
+
 class MidiFileExtended(MidiFile):
     def __init__(self, path, mode='r', type=1, charset='utf-8'):
         self.path = path
@@ -33,7 +71,7 @@ class MidiFileExtended(MidiFile):
 
     def turn_track_into_numpy_matrix(self, track_name, path):
         track = self.get_track_by_name(track_name)
-        time_per_unit = 60 * 60 * 10 / get_bpm_from_track(track) / 4
+        time_per_unit = 60 * 4 * 1000 / get_bpm_from_track(track)
         note_time_units = []
         length_units = []
         for msg in track:
@@ -62,42 +100,6 @@ class MidiFileExtended(MidiFile):
         # plt.show()
         np.save(path, piano_roll)
         return piano_roll
-
-    def generate_track_from_numpy_matrix(self, path, size, name, is_drum, save_fig=False, save_path=None, program=0):
-        piano_roll = np.load(path)
-        piano_roll.resize(size)
-        track = Track(piano_roll, program, is_drum,  name)
-        fig, ax = pypianoroll.track.plot_track(track)
-        if save_fig:
-            plt.savefig(save_path)
-        else:
-            plt.show()
-
-    def generate_multiple_tracks_from_numpy_matrices(self, num, dir, files, size, names, are_drums,
-                                                     tempo, downbeat, beat_resolution, programs=None, save_fig=False, save_path=None):
-        tracks = []
-        for i in range(num):
-            path = dir + files[i]
-            name = names[i]
-            if programs == None:
-                program = 0
-            else:
-                program = programs[i]
-            is_drum = are_drums[i]
-            piano_roll = np.load(path)
-            piano_roll.resize(size)
-            track = Track(piano_roll, program, is_drum, name)
-            tracks.append(track)
-
-        multitrack = Multitrack(tracks=tracks, tempo=tempo, downbeat=downbeat, beat_resolution=beat_resolution)
-        multitrack.save(dir + 'multi.npz')
-
-        fig, axs = pypianoroll.multitrack.plot_multitrack(multitrack, grid_linewidth=0.8, ytick='off')
-        if save_fig:
-            plt.savefig(save_path)
-        else:
-            plt.show()
-
 
     def get_track_by_name(self, name):
         tracks = []

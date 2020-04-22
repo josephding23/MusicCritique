@@ -201,5 +201,25 @@ def fix_jazz_pieces_num():
     )
 
 
+def print_files_num():
+    all_num = 0
+    for genre in get_genre_collection().find():
+        if genre['Name'] != 'jazz':
+            all_num += genre['FilesNum']
+        else:
+            all_num += genre['FilesNumDict']['whole']
+    print(all_num)
+
+
+def print_pieces_num():
+    all_num = 0
+    for genre in get_genre_collection().find():
+        if genre['Name'] != 'jazz':
+            all_num += genre['ValidPiecesNum']
+        else:
+            all_num += genre['ValidPiecesNumDict']['whole']
+    print(all_num)
+
+
 if __name__ == '__main__':
-    fix_jazz_pieces_num()
+    print_pieces_num()
