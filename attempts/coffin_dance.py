@@ -93,8 +93,8 @@ class CoffinDance():
         track_lead.add_note(5, 0.125, base_num=-1)
         track_lead.wait(7.875)
 
-
 if __name__ == '__main__':
     coffin = CoffinDance()
     coffin.write_coffin()
     coffin.mid.save_midi()
+    coffin.mid.play_it()
