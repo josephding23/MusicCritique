@@ -2,16 +2,16 @@ from mido import Message, MidiFile, MidiTrack, MetaMessage
 from midi_extended.Track import TrackExtended
 from midi_extended.UtilityBox import *
 import traceback
-import pypianoroll
-import matplotlib.pyplot as plt
-import numpy as np
-from pypianoroll import Multitrack, Track
+# import pypianoroll
+# import matplotlib.pyplot as plt
+# import numpy as np
+# from pypianoroll import Multitrack, Track
 import os
 import contextlib
 with contextlib.redirect_stdout(None):
     import pygame
 
-
+'''
 def generate_multiple_tracks_from_numpy_matrices(num, dir, files, size, names, are_drums,
                                                  tempo, downbeat, beat_resolution, programs=None, save_fig=False, save_path=None):
     tracks = []
@@ -36,8 +36,8 @@ def generate_multiple_tracks_from_numpy_matrices(num, dir, files, size, names, a
         plt.savefig(save_path)
     else:
         plt.show()
-
-
+'''
+'''
 def generate_track_from_numpy_matrix(path, size, name, is_drum, save_fig=False, save_path=None, program=0):
     piano_roll = np.load(path)
     piano_roll.resize(size)
@@ -47,6 +47,7 @@ def generate_track_from_numpy_matrix(path, size, name, is_drum, save_fig=False, 
         plt.savefig(save_path)
     else:
         plt.show()
+        '''
 
 
 class MidiFileExtended(MidiFile):
@@ -69,6 +70,7 @@ class MidiFileExtended(MidiFile):
             if type(track) == TrackExtended and type(track) != MidiTrack and track.name == name:
                 return track
 
+    '''
     def turn_track_into_numpy_matrix(self, track_name, path):
         track = self.get_track_by_name(track_name)
         time_per_unit = 60 * 4 * 1000 / get_bpm_from_track(track)
@@ -100,6 +102,7 @@ class MidiFileExtended(MidiFile):
         # plt.show()
         np.save(path, piano_roll)
         return piano_roll
+        '''
 
     def get_track_by_name(self, name):
         tracks = []
