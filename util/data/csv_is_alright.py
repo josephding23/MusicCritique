@@ -16,7 +16,7 @@ if __name__ == '__main__':
             l.append(new_row)
             print(row)
 
-    with open("E:/data/ding.data", "wt") as new_f:
+    with open("E:/data/ding.data", "w", newline='') as new_f:
         cw = csv.writer(new_f, delimiter=',')
         for item in l:
             # print(item)

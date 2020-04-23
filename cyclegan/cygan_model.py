@@ -18,7 +18,7 @@ import networks.SteelyGAN as SteelyGAN
 import networks.SMGT as SMGT
 from networks.SteelyGAN import Discriminator, Generator
 from cyclegan.cygan_config import Config
-from util.toolkit import generate_midi_segment_from_tensor, generate_data_from_midi, generate_whole_midi_from_tensor, evaluate_tonal_scale, get_md5_of
+from util.toolkit import generate_midi_segment_from_tensor, generate_data_from_midi, generate_whole_midi_from_tensor, evaluate_tonal_scale_of_data, get_md5_of
 from util.image_pool import ImagePool
 import logging
 import colorlog
@@ -353,8 +353,8 @@ class CycleGAN(object):
                     fake_B = self.generator_A2B(real_A)  # X -> Y'
                     fake_A = self.generator_B2A(real_B)  # Y -> X'
 
-                    fake_B_copy = copy.copy(fake_B.detach())
-                    fake_A_copy = copy.copy(fake_A.detach())
+                    fake_B_copy = copy.copy(fake_B)
+                    fake_A_copy = copy.copy(fake_A)
 
                     DB_fake = self.discriminator_B(fake_B + gaussian_noise)  # netD_x provide feedback to netG_x
                     DA_fake = self.discriminator_A(fake_A + gaussian_noise)
@@ -453,8 +453,8 @@ class CycleGAN(object):
                     fake_B = self.generator_A2B(real_A)  # X -> Y'
                     fake_A = self.generator_B2A(real_B)  # Y -> X'
 
-                    fake_B_copy = copy.copy(fake_B)
-                    fake_A_copy = copy.copy(fake_A)
+                    fake_B_copy = fake_B.detach().clone()
+                    fake_A_copy = fake_A.detach().clone()
 
                     DB_fake = self.discriminator_B(fake_B + gaussian_noise)  # netD_x provide feedback to netG_x
                     DA_fake = self.discriminator_A(fake_A + gaussian_noise)
@@ -679,7 +679,7 @@ class CycleGAN(object):
 
         for i, data in enumerate(loader):
             if self.opt.direction == 'AtoB':
-                origin = torch.unsqueeze(data[:, 0, :, :], 1).to(self.device, dtype=torch.float)
+                origin = data[:, 0, :, :].unsqueeze(1).to(self.device, dtype=torch.float)
                 transfer = self.generator_A2B(origin)
                 cycle = self.generator_B2A(transfer)
 
@@ -759,11 +759,11 @@ def test_sample_song_old():
         midi_B_path = converted_dir + '/midi_B_' + str(index) + '.mid'
         midi_B2A_path = converted_dir + '/midi_B2A_' + str(index) + '.mid'
 
-        tonality_A = evaluate_tonal_scale(dataA)
-        tonality_A2B = evaluate_tonal_scale(dataA2B)
+        tonality_A = evaluate_tonal_scale_of_data(dataA)
+        tonality_A2B = evaluate_tonal_scale_of_data(dataA2B)
 
-        tonality_B = evaluate_tonal_scale(dataB)
-        tonality_B2A = evaluate_tonal_scale(dataB2A)
+        tonality_B = evaluate_tonal_scale_of_data(dataB)
+        tonality_B2A = evaluate_tonal_scale_of_data(dataB2A)
 
         print(tonality_A, tonality_A2B)
         print(tonality_B, tonality_B2A)

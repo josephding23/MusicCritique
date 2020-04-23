@@ -13,6 +13,26 @@ def get_midi_collection():
     return client.free_midi.midi
 
 
+def get_classical_collection():
+    client = MongoClient(connect=False)
+    return client.classical_midi.midi
+
+
+def get_jazz_collection():
+    client = MongoClient(connect=False)
+    return client.jazz_midi.midi
+
+
+def get_jazzkar_collection():
+    client = MongoClient(connect=False)
+    return client.jazz_midikar.midi
+
+
+def get_genre_collection():
+    client = MongoClient(connect=False)
+    return client.free_midi.genres
+
+
 def plot_data(data):
     sample_data = data
     dataX = []
@@ -59,6 +79,15 @@ def generate_midi_segment_from_tensor(data, path):
                     during_note = False
     pm.instruments.append(instr_track)
     pm.write(path)
+
+
+def get_md5_of(performer, song, genre):
+    midi_collection = aux.get_midi_collection()
+    try:
+        md5 = midi_collection.find_one({'Performer': performer, 'Name': song, 'Genre': genre})['md5']
+        return md5
+    except Exception:
+        raise Exception('No midi Found.')
 
 
 def generate_whole_midi_from_tensor(data, path):
@@ -127,94 +156,5 @@ def generate_data_from_midi(path):
     return data
 
 
-def evaluate_tonal_scale(data):
-
-    # should consider minor
-    note_range = 84
-    time_step = 64
-    tonal_distance = [0, 2, 4, 5, 7, 9, 11]
-    in_tone_notes = 0
-    outta_tone_notes = 0
-    for note in range(note_range):
-        for time in range(time_step):
-            has_note = data[time, note] >= 0.5
-            if has_note:
-                if note % 12 in tonal_distance:
-                    in_tone_notes += 1
-                else:
-                    outta_tone_notes += 1
-    tonality = in_tone_notes / (in_tone_notes + outta_tone_notes)
-    return tonality
-
-
-def get_md5_of(performer, song, genre):
-    midi_collection = aux.get_midi_collection()
-    try:
-        md5 = midi_collection.find_one({'Performer': performer, 'Name': song, 'Genre': genre})['md5']
-        return md5
-    except Exception:
-        raise Exception('No midi Found.')
-
-
-def get_chord(note_nums):
-    notes = []
-    for note_num in note_nums:
-        name = pretty_midi.note_number_to_name(note_num)
-        note = music21.note.pitch.Pitch(name)
-        notes.append(note)
-    # print(notes)
-    chord = music21.chord.Chord(notes)
-    # chord.duration = music21.duration.Duration(length)
-    return chord
-
-
-def evaluate_midi_chord(song='21 Guns', performer='Green Day', genre='rock'):
-    root_dir = 'E:/free_midi_library/transposed_midi'
-
-    try:
-        md5 = get_md5_of(performer, song, genre)
-        original_path = root_dir + '/' + genre + '/' + md5 + '.mid'
-        print(original_path)
-    except Exception as e:
-        print(e)
-        return
-
-    key_mode = get_midi_collection().find_one({'md5': md5})['KeySignature']['Mode']
-    if key_mode == 'major':
-        current_key = music21.key.Key('C')
-    else:
-        current_key = music21.key.Key('a')
-    ori_data = generate_data_from_midi(original_path)
-    data_piece = ori_data[0, :, :]
-    # plot_data(data=ori_data[0, :, :])
-
-    notes = []
-    for part in range(ori_data.shape[0]):
-        print(f'Part {part}:')
-        data_piece = ori_data[part, :, :]
-        for time in range(64):
-            if time == 0:
-                old_notes = []
-            else:
-                old_notes = notes
-            notes = []
-            for note in range(84):
-                if data_piece[time][note] != 0:
-                    notes.append(note + 24)
-
-            if len(notes) == 0:
-                notes = old_notes
-            elif notes == old_notes:
-                continue
-            else:
-                try:
-                    chord = get_chord(notes)
-                    print(current_key.getScaleDegreeAndAccidentalFromPitch(chord.root()), chord.commonName)
-                except Exception as e:
-                    print(e.__traceback__)
-                    return
-        print()
-
-
 if __name__ == '__main__':
-    evaluate_midi_chord()
+    pass

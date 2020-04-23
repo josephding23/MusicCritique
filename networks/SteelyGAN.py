@@ -37,11 +37,11 @@ class BarUnit(nn.Module):
         x = tensor_in
         # (batch * 64 * 16 * 84)
 
-        x = self.eta * self.net(x) + (1-self.eta) * x
+        out = self.eta * self.net(x) + (1-self.eta) * x
         # ↓
         # (batch * 64 * 16 * 84)
 
-        return x
+        return out
 
 
 class Discriminator(nn.Module):
@@ -277,6 +277,7 @@ class Generator(nn.Module):
         # (batch * 64 * 16 * 84) * 4
 
         x = torch.cat([x1, x2, x3, x4], dim=2)
+
         # (batch * 64 * 64 * 84)
 
         x = self.paragraph_cnet2(x)

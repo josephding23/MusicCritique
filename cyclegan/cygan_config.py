@@ -36,7 +36,7 @@ class Config(object):
         self.instr_num = 5
 
         self.phase = 'train'
-        self.continue_train = False
+        self.continue_train = True
 
         self.direction = 'AtoB'
 
@@ -68,7 +68,7 @@ class Config(object):
         self.beta1 = 0.5                     # Adam optimizer beta1 & 2
         self.beta2 = 0.999
 
-        self.lr = 0.0002
+        self.lr = 0.0001
         self.milestones = [2, 5, 8, 11, 13, 15, 17, 19, 20]
         self.gamma = 0.5
 

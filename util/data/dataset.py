@@ -56,6 +56,7 @@ class SteelyDataset(data.Dataset):
             else:
                 dataA = np.expand_dims(generate_sparse_matrix_of_genre(genreA, phase)[:self.length], 1)
                 dataB = np.expand_dims(generate_sparse_matrix_of_genre(genreB, phase)[:self.length], 1)
+                print(dataA.shape)
 
                 self.data = np.concatenate((dataA, dataB), axis=1)
         else:
@@ -124,4 +125,4 @@ class ClassifierDataset(data.Dataset):
 
 
 if __name__ == '__main__':
-    print(np.concatenate((np.ones(5), np.zeros(5)), axis=0))
+    dataset = SteelyDataset('rock', 'jazz', 'train', False)
