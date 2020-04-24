@@ -1,27 +1,16 @@
 import time
 import torch
 import re
-import numpy as np
-import copy
-import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader
 from torch.optim import lr_scheduler, Adam
 import os
 from util.data.dataset import ClassifierDataset
 import torch.nn as nn
-import torchvision as tv
 from torchsummary import summary
 from torchnet.meter import MovingAverageValueMeter
-from networks.musegan import GANLoss
 import shutil
-from networks.classifier import Classifier
-from networks.new_classifier import NewClassifier
-from networks.SteelyGAN import Discriminator, Generator
+from classify.old_network import Classifier
 from classify.classify_config import Config
-from util.image_pool import ImagePool
-import logging
-import colorlog
-import json
 from util.logger import TerminalLogger
 
 
@@ -51,7 +40,9 @@ class Classify(object):
 
     def save_model(self, epoch):
         classifier_filename = f'{self.opt.name}_C_{epoch}.pth'
-        classifier_filepath = os.path.join(self.opt.checkpoint_path, '/' + classifier_filename)
+        classifier_filepath = os.path.join(self.opt.checkpoint_path, classifier_filename)
+
+        print(classifier_filepath)
 
         torch.save(self.classifier.state_dict(), classifier_filepath)
 

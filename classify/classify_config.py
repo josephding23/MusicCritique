@@ -10,8 +10,8 @@ class Config(object):
         self.name = 'classifier'
 
         self.dataset_name = 'free_midi_library'
-        self.genreA = 'punk'
-        self.genreB = 'classical'
+        self.genreA = 'metal'
+        self.genreB = 'country'
         self.dataset_mode = 'unaligned'
         self.track_merged = False
 
@@ -63,8 +63,8 @@ class Config(object):
         # Save Paths
 
         self.save_path = 'd:/checkpoints/' + '{}_{}2{}'.format(self.name, self.genreA, self.genreB)
-        self.model_path = self.save_path + '/models'
-        self.checkpoint_path = self.save_path + '/checkpoints'
+        self.model_path = self.save_path + '/models/'
+        self.checkpoint_path = self.save_path + '/checkpoints/'
 
         self.log_path = self.save_path + '/info.log'
         self.loss_save_path = self.save_path + '/losses.json'

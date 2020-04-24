@@ -72,6 +72,9 @@ class SteelyDataset(data.Dataset):
     def __len__(self):
         return self.length
 
+    def get_data(self):
+        return self.data
+
 
 class ClassifierDataset(data.Dataset):
     def __init__(self, genreA, genreB, phase):

@@ -12,7 +12,7 @@ class Config(object):
 
         self.dataset_name = 'free_midi_library'
 
-        self.genre_group = 1
+        self.genre_group = 2
 
         if self.genre_group == 1:
             self.genreA = 'metal'
@@ -84,7 +84,7 @@ class Config(object):
         self.input_shape = (1, 64, 84)
 
         self.plot_every = 100                # iterations
-        self.save_every = 2                  # epochs
+        self.save_every = 1                  # epochs
 
         self.start_epoch = 0
 

@@ -17,8 +17,11 @@ import shutil
 import networks.SteelyGAN as SteelyGAN
 import networks.SMGT as SMGT
 from networks.SteelyGAN import Discriminator, Generator
+from classify.old_network import Classifier
+from classify.classify_model import Classify
 from cyclegan.cygan_config import Config
-from util.toolkit import generate_midi_segment_from_tensor, generate_data_from_midi, generate_whole_midi_from_tensor, evaluate_tonal_scale_of_data, get_md5_of
+from util.toolkit import generate_midi_segment_from_tensor, generate_data_from_midi, generate_whole_midi_from_tensor
+from util.analysis.tonality import evaluate_tonal_scale_of_data, get_md5_of
 from util.image_pool import ImagePool
 import logging
 import colorlog
@@ -626,7 +629,7 @@ class CycleGAN(object):
             with open(self.opt.loss_save_path, 'w') as f:
                 json.dump(losses_dict, f)
 
-    def test(self):
+    def test_by_generating_music(self):
         torch.cuda.empty_cache()
 
         ######################
@@ -692,6 +695,85 @@ class CycleGAN(object):
             generate_midi_segment_from_tensor(transfer.cpu().detach().numpy()[0, 0, :, :], midi_save_dir + '/transfer/' + str(i + 1) + '.mid')
             generate_midi_segment_from_tensor(cycle.cpu().detach().numpy()[0, 0, :, :], midi_save_dir + '/cycle/' + str(i + 1) + '.mid')
 
+    def test_by_using_classifier(self):
+        torch.cuda.empty_cache()
+
+        ######################
+        # Load Classifier
+        ######################
+
+        classify_model = Classify()
+        classify_model.continue_from_latest_checkpoint()
+
+        classifier = classify_model.classifier
+
+        ######################
+        # Dataset
+        ######################
+
+        if self.opt.model == 'base':
+            dataset = SteelyDataset(self.opt.genreA, self.opt.genreB, 'test', use_mix=False)
+
+        else:
+            dataset = SteelyDataset(self.opt.genreA, self.opt.genreB, 'test', use_mix=True)
+
+        dataset_size = len(dataset)
+        # loader = DataLoader(dataset, batch_size=1, shuffle=False, num_workers=1, drop_last=True)
+        self.logger.info(f'Dataset loaded, genreA: {self.opt.genreA}, genreB: {self.opt.genreB}, total size: {dataset_size}.')
+
+        ######################
+        # Load model
+        ######################
+
+        try:
+            self.continue_from_latest_checkpoint()
+        except CyganException as e:
+            self.logger.error(e)
+            return
+
+        ######################
+        # Test
+        ######################
+
+        data_A = torch.unsqueeze(torch.from_numpy(dataset.get_data()[0:500, 0, :, :]), 1).to(self.device, dtype=torch.float)
+        data_B = torch.unsqueeze(torch.from_numpy(dataset.get_data()[0:500, 1, :, :]), 1).to(self.device, dtype=torch.float)
+
+        label_A = np.array([[1.0, 0.0] for _ in range(len(data_A))])
+        label_B = np.array([[0.0, 1.0] for _ in range(len(data_B))])
+        label_A = torch.from_numpy(label_A).view(-1, 2).to(self.device, dtype=torch.float)
+        label_B = torch.from_numpy(label_B).view(-1, 2).to(self.device, dtype=torch.float)
+
+        direction = 'BtoA'
+
+        if direction == 'AtoB':
+
+            with torch.no_grad():
+                fake_B = self.generator_A2B(data_A)
+                classify_A = classifier(data_A)
+                classify_fake_B = classifier(fake_B)
+
+            accuracy_A = torch.mean(torch.argmax(
+                nn.functional.softmax(classify_A, dim=1), 1).eq(torch.argmax(label_A, 1)).type(torch.float32)).cpu()
+            accuracy_fake_B = torch.mean(torch.argmax(
+                nn.functional.softmax(classify_fake_B, dim=1), 1).eq(torch.argmax(label_B, 1)).type(torch.float32)).cpu()
+
+            print(accuracy_A, accuracy_fake_B)
+
+        else:
+            with torch.no_grad():
+                fake_A = self.generator_B2A(data_B)
+                classify_B = classifier(data_B)
+                classify_fake_A = classifier(fake_A)
+
+            accuracy_B = torch.mean(torch.argmax(
+                nn.functional.softmax(classify_B, dim=1), 1).eq(torch.argmax(label_B, 1)).type(torch.float32)).cpu()
+            accuracy_fake_A = torch.mean(torch.argmax(
+                nn.functional.softmax(classify_fake_A, dim=1), 1).eq(torch.argmax(label_A, 1)).type(
+                torch.float32)).cpu()
+
+            print(accuracy_B, accuracy_fake_A)
+
+
     def find_latest_checkpoint(self):
         path = self.opt.D_B_save_path
         file_list = os.listdir(path)
@@ -701,22 +783,6 @@ class CycleGAN(object):
             raise CyganException('No model to load.')
         latest_num = epoch_list[-1]
         return latest_num
-
-
-def test_lr():
-    model = Generator()
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.002)
-    lr = 0.002
-    epoch_step = 10
-    whole_epoch = 20
-    decay_lr = lambda epoch: lr if epoch < epoch_step else lr * (whole_epoch - epoch) / (whole_epoch - epoch_step)
-    scheduler = lr_scheduler.LambdaLR(optimizer, lr_lambda=decay_lr)
-    lr_list = []
-    for epoch in range(100):
-        scheduler.step(epoch)
-        lr_list.append(optimizer.state_dict()['param_groups'][0]['lr'])
-    plt.plot(range(100), lr_list)
-    plt.show()
 
 
 def load_model_test():
@@ -733,83 +799,6 @@ def load_model_test():
     print(params2['cnet1.1.weight'])
 
 
-def test_sample_song_old():
-    dataset = SteelyDataset('rock', 'jazz', 'test', False)
-
-    cyclegan = CycleGAN()
-    cyclegan.continue_from_latest_checkpoint()
-
-    converted_dir = '../data/converted_midi'
-
-    for index in range(10):
-        data = dataset[index + 2000]
-        dataA, dataB = data[0, :, :], data[1, :, :]
-        # print(torch.unsqueeze(torch.from_numpy(dataA), 0).shape)
-        dataA2B = cyclegan.generator_A2B(
-            torch.unsqueeze(torch.unsqueeze(torch.from_numpy(dataA), 0), 0).to(device='cuda',
-                                                                               dtype=torch.float)).cpu().detach().numpy()[
-                  0, 0, :, :]
-        dataB2A = cyclegan.generator_B2A(
-            torch.unsqueeze(torch.unsqueeze(torch.from_numpy(dataB), 0), 0).to(device='cuda',
-                                                                               dtype=torch.float)).cpu().detach().numpy()[
-                  0, 0, :, :]
-        midi_A_path = converted_dir + '/midi_A_' + str(index) + '.mid'
-        midi_A2B_path = converted_dir + '/midi_A2B_' + str(index) + '.mid'
-
-        midi_B_path = converted_dir + '/midi_B_' + str(index) + '.mid'
-        midi_B2A_path = converted_dir + '/midi_B2A_' + str(index) + '.mid'
-
-        tonality_A = evaluate_tonal_scale_of_data(dataA)
-        tonality_A2B = evaluate_tonal_scale_of_data(dataA2B)
-
-        tonality_B = evaluate_tonal_scale_of_data(dataB)
-        tonality_B2A = evaluate_tonal_scale_of_data(dataB2A)
-
-        print(tonality_A, tonality_A2B)
-        print(tonality_B, tonality_B2A)
-
-        # plot_data(dataA)
-        # plot_data(dataA2B)
-
-        generate_midi_segment_from_tensor(dataA, midi_A_path)
-        generate_midi_segment_from_tensor(dataA2B, midi_A2B_path)
-        generate_midi_segment_from_tensor(dataB, midi_B_path)
-        generate_midi_segment_from_tensor(dataB2A, midi_B2A_path)
-
-
-def test_whole_song(performer='Bill Evans', song='Autumn Leaves', genre='jazz'):
-    root_dir = 'E:/free_midi_library/merged_midi'
-    try:
-        md5 = get_md5_of(performer, song, genre)
-        original_path = root_dir + '/' + genre + '/' + md5 + '.mid'
-    except Exception as e:
-        print(e)
-        return
-
-    cyclegan = CycleGAN()
-    cyclegan.continue_from_latest_checkpoint()
-
-    # direction = 'AtoB'
-    direction = 'BtoA'
-
-    transformed_path = '../data/converted_midi/' + song + ' - ' + performer + '.mid'
-    copy_path = '../data/original_midi/' + song + ' - ' + performer + '.mid'
-
-    ori_data = generate_data_from_midi(original_path)
-
-    if direction == 'AtoB':
-        transformed_data = cyclegan.generator_A2B(
-            torch.unsqueeze(torch.from_numpy(ori_data), 1).to(
-                device='cuda',  dtype=torch.float)).cpu().detach().numpy()
-    else:
-        transformed_data = cyclegan.generator_B2A(
-            torch.unsqueeze(torch.from_numpy(ori_data), 1).to(
-                device='cuda', dtype=torch.float)).cpu().detach().numpy()
-    print(transformed_data.shape)
-    generate_whole_midi_from_tensor(transformed_data, transformed_path)
-    shutil.copyfile(original_path, copy_path)
-
-
 def remove_dir_test():
     path = 'D:/checkpoints/steely_gan/base'
     shutil.rmtree(path)
@@ -821,6 +810,11 @@ def run():
         cyclegan.train()
     elif cyclegan.opt.phase == 'test':
         cyclegan.test()
+
+
+def test():
+    cyclegan = CycleGAN()
+    cyclegan.test_by_using_classifier()
 
 
 if __name__ == '__main__':
