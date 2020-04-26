@@ -12,7 +12,7 @@ class Config(object):
 
         self.dataset_name = 'free_midi_library'
 
-        self.genre_group = 2
+        self.genre_group = 3
 
         if self.genre_group == 1:
             self.genreA = 'metal'
@@ -27,7 +27,7 @@ class Config(object):
             self.genreB = 'jazz'
 
         self.dataset_mode = 'unaligned'
-        self.track_merged = False
+        self.track_merged = True
 
         self.time_step = 120
         self.bar_length = 4
@@ -121,5 +121,6 @@ class Config(object):
 
 if __name__ == '__main__':
     config = Config()
-    print(config.save_path)
+    config.genreA = 'rock'
+    config.genreB = 'jazz'
 

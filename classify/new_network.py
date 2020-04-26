@@ -25,29 +25,30 @@ class NewClassifier(nn.Module):
         # shape = (64, 84, 1)
         self.net = nn.Sequential(
             nn.Conv2d(in_channels=1,
-                      out_channels=16,
-                      kernel_size=[1, 2],
-                      stride=[1, 2],
-                      padding=0,
-                      bias=False
-                      ),
-            nn.LeakyReLU(negative_slope=0.2),
-
-            nn.Conv2d(in_channels=16,
                       out_channels=64,
-                      kernel_size=[1, 6],
-                      stride=[1, 6],
+                      kernel_size=[1, 12],
+                      stride=[1, 12],
                       padding=0,
                       bias=False
                       ),
-            nn.InstanceNorm2d(64, eps=1e-5),
             nn.LeakyReLU(negative_slope=0.2),
-
+            nn.Dropout(0.5),
 
             nn.Conv2d(in_channels=64,
+                      out_channels=128,
+                      kernel_size=[4, 1],
+                      stride=[4, 1],
+                      padding=0,
+                      bias=False
+                      ),
+            nn.InstanceNorm2d(128, eps=1e-5),
+            nn.LeakyReLU(negative_slope=0.2),
+            nn.Dropout(0.5),
+
+            nn.Conv2d(in_channels=128,
                       out_channels=256,
-                      kernel_size=[16, 1],
-                      stride=[16, 1],
+                      kernel_size=[2, 1],
+                      stride=[2, 1],
                       padding=0,
                       bias=False
                       ),
@@ -55,7 +56,7 @@ class NewClassifier(nn.Module):
             nn.LeakyReLU(negative_slope=0.2),
             nn.Dropout(0.5),
 
-            self.resnet,
+            # self.resnet,
 
             nn.Conv2d(in_channels=256,
                       out_channels=512,
@@ -66,7 +67,6 @@ class NewClassifier(nn.Module):
                       ),
             nn.InstanceNorm2d(512, eps=1e-5),
             nn.LeakyReLU(negative_slope=0.2),
-            nn.Dropout(0.5),
 
             nn.Conv2d(in_channels=512,
                       out_channels=2,
