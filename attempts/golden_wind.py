@@ -10,17 +10,16 @@ class GoldenWind(object):
 
     def write(self):
         self.mid.add_new_track('Piano1', self.time_signature, self.bpm, self.key, {'0': 0})
-        track1 = self.mid.get_extended_track('Piano1')
-        track1.add_meta_info()
         self.mid.add_new_track('Piano2', self.time_signature, self.bpm, self.key, {'0': 0})
-        track2 = self.mid.get_extended_track('Piano2')
-        track2.add_meta_info()
 
         for i in [1, 2, 1, 3]:
             self.intro(i, False)
         for i in [1, 2, 1, 4]:
             self.intro(i, True)
-        for i in [1, 2, 1, 3, 1, 2, 1, 3, 1, 2, 1, 3, 1, 2, 1, 3]:
+        for i in [1, 2, 1, 3,
+                  1, 2, 1, 3,
+                  1, 2, 1, 3,
+                  1, 2, 1, 3]:
             self.piano2_pattern(i)
         for i in [1, 2, 3, 4]:
             self.piano1_parapraph(i)
@@ -142,8 +141,8 @@ class GoldenWind(object):
             track.add_note(3, 1/8, base_num=1)
 
         if paragraph == 3:
-            track.add_note([4, 2, 7], 1/ 4 + 1/8, alt=[1, 0, 0], base_num=[1, 1, 0])
-            track.add_note([4, 2, 7], 1/8 + 1/4, base_num=[1, 1, 0])
+            track.add_note([4, 2, 7], 1/4+1/8, alt=[1, 0, 0], base_num=[1, 1, 0])
+            track.add_note([4, 2, 7], 1/8+1/4, base_num=[1, 1, 0])
             track.wait(1/8)
             track.add_note(2, 1/16, base_num=1)
             track.add_note(3, 1/16, base_num=1)
@@ -192,6 +191,7 @@ class GoldenWind(object):
             track.add_note(4, 1/8+1/16, base_num=1)
             track.add_note(2, 1/16+1/8, base_num=2)
             track.add_note(6, 1/8, base_num=1, alt=1)
+
 
 if __name__ == '__main__':
     golden_wind = GoldenWind()

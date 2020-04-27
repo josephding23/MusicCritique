@@ -62,8 +62,8 @@ class TrackExtended(MidiTrack):
         tempo = mido.bpm2tempo(self.bpm)
         numerator = Fraction(self.time_signature).numerator
         denominator = Fraction(self.time_signature).denominator
+        super().append(MetaMessage('set_tempo', tempo=tempo))
         super().append(MetaMessage('time_signature', numerator=numerator, denominator=denominator))
-        super().append(MetaMessage('set_tempo', tempo=tempo, time=0))
         super().append(MetaMessage('key_signature', key=self.key))
         for channel, program in self.instruments.items():
             super().append(Message('program_change', channel=int(channel), program=program, time=0))

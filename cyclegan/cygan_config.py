@@ -7,8 +7,8 @@ class Config(object):
         ##########################
         # Info
 
-        self.name = 'steely_gan'
-        # self.name = 'SMGT'
+        # self.name = 'steely_gan'
+        self.name = 'SMGT'
 
         self.dataset_name = 'free_midi_library'
 
