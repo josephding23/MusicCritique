@@ -13,9 +13,9 @@ class GoldenWind(object):
         self.mid.add_new_track('Piano2', self.time_signature, self.bpm, self.key, {'0': 0})
 
         for i in [1, 2, 1, 3]:
-            self.intro(i, False)
+            self.intro_outro(i, False)
         for i in [1, 2, 1, 4]:
-            self.intro(i, True)
+            self.intro_outro(i, True)
         for i in [1, 2, 1, 3,
                   1, 2, 1, 3,
                   1, 2, 1, 3,
@@ -24,15 +24,15 @@ class GoldenWind(object):
         for i in [1, 2, 3, 4]:
             self.piano1_parapraph(i)
         for i in [1, 2, 1, 3]:
-            self.intro(i, False)
+            self.intro_outro(i, False)
         for i in [1, 2, 1, 4]:
-            self.intro(i, True)
+            self.intro_outro(i, True)
 
-    def intro(self, pattern, both):
+    def intro_outro(self, pattern, both):
         tracks = [self.mid.get_extended_track('Piano1'), self.mid.get_extended_track('Piano2')]
         for i in range(2):
             track = tracks[i]
-            if not both and i == 0:
+            if not both and i == 1:
                 track.wait(1)
                 continue
             if pattern == 4:
