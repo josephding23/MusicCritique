@@ -31,8 +31,8 @@ class NewClassifier(nn.Module):
                       padding=0,
                       bias=False
                       ),
-            nn.LeakyReLU(negative_slope=0.2),
-            nn.Dropout(0.5),
+            nn.LeakyReLU(negative_slope=0.3),
+            nn.Dropout(0.2),
 
             nn.Conv2d(in_channels=64,
                       out_channels=128,
@@ -42,8 +42,8 @@ class NewClassifier(nn.Module):
                       bias=False
                       ),
             nn.InstanceNorm2d(128, eps=1e-5),
-            nn.LeakyReLU(negative_slope=0.2),
-            nn.Dropout(0.5),
+            nn.LeakyReLU(negative_slope=0.3),
+            nn.Dropout(0.2),
 
             nn.Conv2d(in_channels=128,
                       out_channels=256,
@@ -53,8 +53,8 @@ class NewClassifier(nn.Module):
                       bias=False
                       ),
             nn.InstanceNorm2d(256, eps=1e-5),
-            nn.LeakyReLU(negative_slope=0.2),
-            nn.Dropout(0.5),
+            nn.LeakyReLU(negative_slope=0.3),
+            nn.Dropout(0.2),
 
             # self.resnet,
 
@@ -66,7 +66,8 @@ class NewClassifier(nn.Module):
                       bias=False
                       ),
             nn.InstanceNorm2d(512, eps=1e-5),
-            nn.LeakyReLU(negative_slope=0.2),
+            nn.LeakyReLU(negative_slope=0.3),
+            nn.Dropout(0.2),
 
             nn.Conv2d(in_channels=512,
                       out_channels=2,

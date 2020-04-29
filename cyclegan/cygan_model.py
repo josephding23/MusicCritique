@@ -580,9 +580,9 @@ class CycleGAN(object):
 
                 if i % self.opt.plot_every == 0:
                     file_name = self.opt.name + '_snap_%03d_%05d.png' % (epoch, i,)
-                    test_path = os.path.join(self.opt.checkpoint_path, file_name)
-                    tv.utils.save_image(fake_B, test_path, normalize=True)
-                    self.logger.info(f'Snapshot {file_name} saved.')
+                    # test_path = os.path.join(self.opt.checkpoint_path, file_name)
+                    # tv.utils.save_image(fake_B, test_path, normalize=True)
+                    # self.logger.info(f'Snapshot {file_name} saved.')
 
                     losses['loss_C'] = float(CycleLoss_meter.value()[0])
                     losses['loss_G'] = float(GLoss_meter.value()[0])
@@ -735,43 +735,65 @@ class CycleGAN(object):
         # Test
         ######################
 
-        data_A = torch.unsqueeze(torch.from_numpy(dataset.get_data()[0:500, 0, :, :]), 1).to(self.device, dtype=torch.float)
-        data_B = torch.unsqueeze(torch.from_numpy(dataset.get_data()[0:500, 1, :, :]), 1).to(self.device, dtype=torch.float)
+        batch_size = 200
 
-        label_A = np.array([[1.0, 0.0] for _ in range(len(data_A))])
-        label_B = np.array([[0.0, 1.0] for _ in range(len(data_B))])
-        label_A = torch.from_numpy(label_A).view(-1, 2).to(self.device, dtype=torch.float)
-        label_B = torch.from_numpy(label_B).view(-1, 2).to(self.device, dtype=torch.float)
+        accuracy_A = []
+        accuracy_fake_B = []
+        accuracy_cycle_A = []
 
-        direction = 'BtoA'
+        accuracy_B = []
+        accuracy_fake_A = []
+        accuracy_cycle_B = []
 
-        if direction == 'AtoB':
+        loader = DataLoader(dataset, batch_size=batch_size, shuffle=False, num_workers=1, drop_last=False)
+        for i, data in enumerate(loader):
+            data_A = torch.unsqueeze(data[:, 0, :, :], 1).to(self.device, dtype=torch.float)
+            data_B = torch.unsqueeze(data[:, 1, :, :], 1).to(self.device, dtype=torch.float)
+
+            label_A = np.array([[1.0, 0.0] for _ in range(data_A.shape[0])])
+            label_B = np.array([[0.0, 1.0] for _ in range(data_B.shape[0])])
+            label_A = torch.from_numpy(label_A).view(-1, 2).to(self.device, dtype=torch.float)
+            label_B = torch.from_numpy(label_B).view(-1, 2).to(self.device, dtype=torch.float)
 
             with torch.no_grad():
                 fake_B = self.generator_A2B(data_A)
+                cycle_A = self.generator_B2A(fake_B)
+
                 classify_A = classifier(data_A)
                 classify_fake_B = classifier(fake_B)
+                classify_cycle_A = classifier(cycle_A)
 
-            accuracy_A = torch.mean(torch.argmax(
-                nn.functional.softmax(classify_A, dim=1), 1).eq(torch.argmax(label_A, 1)).type(torch.float32)).cpu()
-            accuracy_fake_B = torch.mean(torch.argmax(
-                nn.functional.softmax(classify_fake_B, dim=1), 1).eq(torch.argmax(label_B, 1)).type(torch.float32)).cpu()
+                accuracy_A.append(torch.mean(torch.argmax(
+                    nn.functional.softmax(classify_A, dim=1), 1).eq(torch.argmax(label_A, 1)).type(
+                    torch.float32)).cpu().float())
+                accuracy_fake_B.append(torch.mean(torch.argmax(
+                    nn.functional.softmax(classify_fake_B, dim=1), 1).eq(torch.argmax(label_B, 1)).type(
+                    torch.float32)).cpu().float())
+                accuracy_cycle_A.append(torch.mean(torch.argmax(
+                    nn.functional.softmax(classify_cycle_A, dim=1), 1).eq(torch.argmax(label_A, 1)).type(
+                    torch.float32)).cpu().float())
 
-            print(accuracy_A, accuracy_fake_B)
-
-        else:
             with torch.no_grad():
                 fake_A = self.generator_B2A(data_B)
+                cycle_B = self.generator_A2B(fake_A)
+
                 classify_B = classifier(data_B)
                 classify_fake_A = classifier(fake_A)
+                classify_cycle_B = classifier(cycle_B)
 
-            accuracy_B = torch.mean(torch.argmax(
-                nn.functional.softmax(classify_B, dim=1), 1).eq(torch.argmax(label_B, 1)).type(torch.float32)).cpu()
-            accuracy_fake_A = torch.mean(torch.argmax(
-                nn.functional.softmax(classify_fake_A, dim=1), 1).eq(torch.argmax(label_A, 1)).type(
-                torch.float32)).cpu()
+                accuracy_B.append(torch.mean(torch.argmax(
+                    nn.functional.softmax(classify_B, dim=1), 1).eq(torch.argmax(label_B, 1)).type(
+                    torch.float32)).cpu().float())
+                accuracy_fake_A.append(torch.mean(torch.argmax(
+                    nn.functional.softmax(classify_fake_A, dim=1), 1).eq(torch.argmax(label_A, 1)).type(
+                    torch.float32)).cpu().float())
+                accuracy_cycle_B.append(torch.mean(torch.argmax(
+                    nn.functional.softmax(classify_cycle_B, dim=1), 1).eq(torch.argmax(label_B, 1)).type(
+                    torch.float32)).cpu().float())
 
-            print(accuracy_B, accuracy_fake_A)
+        print(f'Original_A acc: {np.mean(accuracy_A)}, Original_B acc: {np.mean(accuracy_B)}\n'
+              f'Fake_A acc: {np.mean(accuracy_fake_A)}, Fake_B acc: {np.mean(accuracy_fake_B)}\n'
+              f'Cycle_A acc: {np.mean(accuracy_cycle_A)}, Cycle_B acc: {np.mean(accuracy_cycle_B)}\n')
 
 
     def find_latest_checkpoint(self):

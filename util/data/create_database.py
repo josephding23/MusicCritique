@@ -433,8 +433,8 @@ def generate_nonzeros_by_notes():
             for instr in pm.instruments:
                 if not instr.is_drum:
                     for note in instr.notes:
-                        start = int(note.start / sixteenth_length)
-                        end = int(note.end / sixteenth_length)
+                        start = int(round(note.start / sixteenth_length))
+                        end = int(round(note.end / sixteenth_length))
                         pitch = note.pitch
                         if pitch < note_range[0] or pitch >= note_range[1]:
                             continue

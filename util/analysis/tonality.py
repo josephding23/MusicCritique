@@ -1,31 +1,38 @@
 from util.toolkit import *
 
 
-def evaluate_tonal_scale_of_data(data):
+def evaluate_tonal_scale_of_data(whole_data):
     # should consider minor
     note_range = 84
     time_step = 64
     tonal_distance = [0, 2, 4, 5, 7, 9, 11]
     in_tone_notes = 0
     outta_tone_notes = 0
-    for note in range(note_range):
-        for time in range(time_step):
-            has_note = data[time, note] >= 0.5
-            if has_note:
-                if note % 12 in tonal_distance:
-                    in_tone_notes += 1
-                else:
-                    outta_tone_notes += 1
+    for i in range(whole_data.shape[0]):
+        data = whole_data[i, :, :]
+        for note in range(note_range):
+            for time in range(time_step):
+                has_note = data[time, note] >= 0.5
+                if has_note:
+                    if note % 12 in tonal_distance:
+                        in_tone_notes += 1
+                    else:
+                        outta_tone_notes += 1
     tonality = in_tone_notes / (in_tone_notes + outta_tone_notes)
     return tonality
 
 
-def evaluate_tonal_scale_of_file(npy_path, type):
+def get_mode_type_of_song(md5):
+    midi_collection = get_midi_collection()
+    return midi_collection.find_one({'md5': md5})['KeySignature']['Mode']
+
+
+def evaluate_tonal_scale_of_file(npy_path, mode_type):
     npy_file = np.load(npy_path)
     data = npy_file['arr_0']
     # print(data.shape)
     # should consider minor
-    if type == 'major':
+    if mode_type == 'major':
         tonal_distance = [0, 2, 4, 5, 7, 9, 11]
         root_note = 0
     else:

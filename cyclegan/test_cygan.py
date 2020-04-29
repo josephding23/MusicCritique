@@ -1,12 +1,14 @@
 import torch
 from util.data.dataset import SteelyDataset, get_dataset
 import shutil
-from util.toolkit import generate_midi_segment_from_tensor, generate_data_from_midi, generate_whole_midi_from_tensor
+from util.toolkit import *
 from util.analysis.tonality import evaluate_tonal_scale_of_data, get_md5_of
 from cyclegan.cygan_model import CycleGAN
 from classify.classify_model import Classify
 from networks.SteelyGAN import Discriminator, Generator
 import matplotlib.pyplot as plt
+import numpy as np
+from util.analysis.tonality import *
 from torch.optim import lr_scheduler, Adam
 
 
@@ -54,15 +56,22 @@ def test_sample_song_old():
         generate_midi_segment_from_tensor(dataB, midi_B_path)
         generate_midi_segment_from_tensor(dataB2A, midi_B2A_path)
 
-
-def test_whole_song(performer='Bill Evans', song='Autumn Leaves', genre='jazz'):
+def test_whole_song(performer='Nirvana', song='In Bloom', genre='rock'):
+# def test_whole_song(performer='Frank Sinatra', song='Fly Me To The Moon', genre='jazz'):
     root_dir = 'E:/free_midi_library/merged_midi'
     try:
         md5 = get_md5_of(performer, song, genre)
         original_path = root_dir + '/' + genre + '/' + md5 + '.mid'
+        print(original_path)
     except Exception as e:
         print(e)
         return
+    transformed_path = '../data/converted_midi/' + song + ' - ' + performer + '.mid'
+    copy_path = '../data/original_midi/' + song + ' - ' + performer + '.mid'
+
+    ori_data = generate_data_from_midi(original_path)
+    ori_data = np.expand_dims(ori_data, 1)
+
 
     cyclegan = CycleGAN()
     cyclegan.continue_from_latest_checkpoint()
@@ -70,22 +79,18 @@ def test_whole_song(performer='Bill Evans', song='Autumn Leaves', genre='jazz'):
     # direction = 'AtoB'
     direction = 'BtoA'
 
-    transformed_path = '../data/converted_midi/' + song + ' - ' + performer + '.mid'
-    copy_path = '../data/original_midi/' + song + ' - ' + performer + '.mid'
-
-    ori_data = generate_data_from_midi(original_path)
-
     if direction == 'AtoB':
-        transformed_data = cyclegan.generator_A2B(
-            torch.unsqueeze(torch.from_numpy(ori_data), 1).to(
+        transformed_data = cyclegan.generator_A2B(torch.from_numpy(ori_data.copy()).to(
                 device='cuda',  dtype=torch.float)).cpu().detach().numpy()
     else:
-        transformed_data = cyclegan.generator_B2A(
-            torch.unsqueeze(torch.from_numpy(ori_data), 1).to(
+        transformed_data = cyclegan.generator_B2A(torch.from_numpy(ori_data.copy()).to(
                 device='cuda', dtype=torch.float)).cpu().detach().numpy()
-    print(transformed_data.shape)
-    generate_whole_midi_from_tensor(transformed_data, transformed_path)
-    shutil.copyfile(original_path, copy_path)
+
+    save_midis(ori_data, copy_path)
+    save_midis(transformed_data, transformed_path)
+    print(round(evaluate_tonal_scale_of_file()),
+          round(evaluate_tonal_scale_of_data(transformed_data[:, 0, :, :]), 3))
+
 
 
 def test_lr():
@@ -102,3 +107,6 @@ def test_lr():
         lr_list.append(optimizer.state_dict()['param_groups'][0]['lr'])
     plt.plot(range(100), lr_list)
     plt.show()
+
+if __name__ == '__main__':
+    test_whole_song()

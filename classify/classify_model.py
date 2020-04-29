@@ -10,6 +10,7 @@ from torchsummary import summary
 from torchnet.meter import MovingAverageValueMeter
 import shutil
 from classify.old_network import Classifier
+from classify.new_network import NewClassifier
 from classify.classify_config import Config
 from util.logger import TerminalLogger
 
@@ -24,7 +25,7 @@ class Classify(object):
         self._build_model()
 
     def _build_model(self):
-        self.classifier = Classifier()
+        self.classifier = NewClassifier()
 
         if self.opt.gpu:
             self.classifier.to(self.device)
@@ -34,9 +35,7 @@ class Classify(object):
                                          betas=(self.opt.beta1, self.opt.beta2),
                                          weight_decay=self.opt.weight_decay)
 
-        self.classifier_scheduler = lr_scheduler.MultiStepLR(optimizer=self.classifier_optimizer,
-                                                             milestones=[10, 15, 20, 22, 25, 30, 33, 35, 37, 40, 42, 45, 47],
-                                                             gamma=0.5)
+        self.classifier_scheduler = lr_scheduler.CosineAnnealingWarmRestarts(self.classifier_optimizer, T_0=1, T_mult=2, eta_min=4e-08)
 
     def save_model(self, epoch):
         classifier_filename = f'{self.opt.name}_C_{epoch}.pth'
