@@ -1,8 +1,8 @@
 import torch
 from util.data.dataset import SteelyDataset, get_dataset
 import shutil
-from util.toolkit import *
-from util.analysis.tonality import evaluate_tonal_scale_of_data, get_md5_of
+from util.analysis.tonality import evaluate_tonal_scale_of_data
+from util.toolkits.database import get_md5_of
 from cyclegan.cygan_model import CycleGAN
 from classify.classify_model import Classify
 from networks.SteelyGAN import Discriminator, Generator
@@ -56,28 +56,56 @@ def test_sample_song_old():
         generate_midi_segment_from_tensor(dataB, midi_B_path)
         generate_midi_segment_from_tensor(dataB2A, midi_B2A_path)
 
-def test_whole_song(performer='Nirvana', song='In Bloom', genre='rock'):
-# def test_whole_song(performer='Frank Sinatra', song='Fly Me To The Moon', genre='jazz'):
-    root_dir = 'E:/free_midi_library/merged_midi'
+
+def test_whole_song():
+    test_dict = [
+        {
+            'performer': 'Nirvana',
+            'song': 'In Bloom',
+            'genre': 'rock',
+            'dir': 'E:/free_midi_library/merged_midi/rock',
+            'direction': 'AtoB'
+        },
+        {
+            'performer': 'Frank Sinatra',
+            'song': 'Fly Me To The Moon',
+            'genre': 'jazz',
+            'dir': 'E:/free_midi_library/merged_midi/jazz',
+            'direction': 'AtoB'
+        },
+        {
+            'performer': 'Beethoven',
+            'song': "Symphony No.6 in F 'Pastorale', Op.68 --1.Allegro ma non troppo",
+            'genre': 'classical',
+            'dir': 'E:/classical_midi/scaled',
+            'direction': 'BtoA'
+        },
+        {
+            'performer': 'Green Day',
+            'song': "Basket Case",
+            'genre': 'punk',
+            'dir': 'E:/free_midi_library/merged_midi/punk',
+            'direction': 'AtoB'
+        }
+    ]
+    test_info = test_dict[3]
     try:
-        md5 = get_md5_of(performer, song, genre)
-        original_path = root_dir + '/' + genre + '/' + md5 + '.mid'
+        md5 = get_md5_of(test_info['performer'], test_info['song'], test_info['genre'])
+        original_path = test_info['dir'] + '/' + md5 + '.mid'
         print(original_path)
     except Exception as e:
         print(e)
         return
-    transformed_path = '../data/converted_midi/' + song + ' - ' + performer + '.mid'
-    copy_path = '../data/original_midi/' + song + ' - ' + performer + '.mid'
+    transformed_path = '../data/converted_midi/' + test_info['song'] + ' - ' + test_info['performer'] + '.mid'
+    copy_path = '../data/original_midi/' + test_info['song'] + ' - ' + test_info['performer'] + '.mid'
 
     ori_data = generate_data_from_midi(original_path)
     ori_data = np.expand_dims(ori_data, 1)
 
-
     cyclegan = CycleGAN()
     cyclegan.continue_from_latest_checkpoint()
 
-    # direction = 'AtoB'
-    direction = 'BtoA'
+    direction = test_info['direction']
 
     if direction == 'AtoB':
         transformed_data = cyclegan.generator_A2B(torch.from_numpy(ori_data.copy()).to(
@@ -88,25 +116,19 @@ def test_whole_song(performer='Nirvana', song='In Bloom', genre='rock'):
 
     save_midis(ori_data, copy_path)
     save_midis(transformed_data, transformed_path)
-    print(round(evaluate_tonal_scale_of_file()),
-          round(evaluate_tonal_scale_of_data(transformed_data[:, 0, :, :]), 3))
-
 
 
 def test_lr():
-    model = Generator()
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.002)
-    lr = 0.002
-    epoch_step = 10
-    whole_epoch = 20
-    decay_lr = lambda epoch: lr if epoch < epoch_step else lr * (whole_epoch - epoch) / (whole_epoch - epoch_step)
-    scheduler = lr_scheduler.LambdaLR(optimizer, lr_lambda=decay_lr)
+    model = Discriminator()
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.0002)
+    scheduler = lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=1, T_mult=2, eta_min=4e-08)
     lr_list = []
-    for epoch in range(100):
+    for epoch in range(20):
         scheduler.step(epoch)
         lr_list.append(optimizer.state_dict()['param_groups'][0]['lr'])
-    plt.plot(range(100), lr_list)
+    plt.plot(range(20), lr_list)
     plt.show()
+
 
 if __name__ == '__main__':
     test_whole_song()

@@ -1,4 +1,4 @@
-from midi_extended.UtilityBox import *
+from util.toolkits.midi import *
 from midi_extended.MidiFileExtended import MidiFileExtended, generate_track_from_numpy_matrix
 
 

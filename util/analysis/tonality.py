@@ -1,4 +1,6 @@
-from util.toolkit import *
+from util.toolkits.database import *
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 def evaluate_tonal_scale_of_data(whole_data):
@@ -8,6 +10,27 @@ def evaluate_tonal_scale_of_data(whole_data):
     tonal_distance = [0, 2, 4, 5, 7, 9, 11]
     in_tone_notes = 0
     outta_tone_notes = 0
+    for i in range(whole_data.shape[0]):
+        data = whole_data[i, :, :]
+        for note in range(note_range):
+            for time in range(time_step):
+                has_note = data[time, note] >= 0.5
+                if has_note:
+                    if note % 12 in tonal_distance:
+                        in_tone_notes += 1
+                    else:
+                        outta_tone_notes += 1
+    tonality = in_tone_notes / (in_tone_notes + outta_tone_notes)
+    return tonality
+
+def evaluate_tonal_scale_of_data_advanced(whole_data):
+    # should consider minor
+    note_range = 84
+    time_step = 64
+    tonal_distance = [0, 2, 4, 5, 7, 9, 11]
+    in_tone_notes = 0
+    outta_tone_notes = 0
+
     for i in range(whole_data.shape[0]):
         data = whole_data[i, :, :]
         for note in range(note_range):

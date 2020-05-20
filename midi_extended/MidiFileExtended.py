@@ -1,6 +1,6 @@
 from mido import Message, MidiFile, MidiTrack, MetaMessage
 from midi_extended.Track import TrackExtended
-from midi_extended.UtilityBox import *
+from util.toolkits.midi import *
 import traceback
 # import pypianoroll
 # import matplotlib.pyplot as plt

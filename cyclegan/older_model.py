@@ -10,15 +10,14 @@ from torch.utils.data import DataLoader
 from torch.optim import lr_scheduler, Adam
 import os
 from util.data.dataset import SteelyDataset, get_dataset
-from util.toolkit import plot_data
+from util.toolkits.data_convert import plot_data
 import torch.nn as nn
 import torchvision as tv
 from torchsummary import summary
 from torchnet.meter import MovingAverageValueMeter
 from networks.musegan import MuseDiscriminator, MuseGenerator, GANLoss
 from networks.SMGT import Discriminator, Generator
-from model.config import Config
-from util.toolkit import generate_midi_from_data, plot_data, evaluate_tonal_scale
+from cyclegan.cygan_config import Config
 from util.image_pool import ImagePool
 
 

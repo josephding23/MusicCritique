@@ -20,21 +20,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b77e5dfc-4c90-42b0-97d0-a4afd2ccd659" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/composition/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/composition/rocknroll.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/tonal.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/toolkits/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/toolkits/database.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/util/toolkits/midi.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/attempts/Mother_Ocean.py" beforeDir="false" afterPath="$PROJECT_DIR$/attempts/Mother_Ocean.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/attempts/RATM.py" beforeDir="false" afterPath="$PROJECT_DIR$/attempts/RATM.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classify/classify_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/classify/classify_config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classify/classify_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/classify/classify_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classify/new_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/classify/new_network.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cyclegan/cygan_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/cygan_config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cyclegan/cygan_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/cygan_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cyclegan/older_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/older_model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cyclegan/test_cygan.py" beforeDir="false" afterPath="$PROJECT_DIR$/cyclegan/test_cygan.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/converted_midi/Autumn Leaves - Bill Evans.mid" beforeDir="false" afterPath="$PROJECT_DIR$/data/converted_midi/Autumn Leaves - Bill Evans.mid" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/converted_midi/Basket Case - Green Day.mid" beforeDir="false" afterPath="$PROJECT_DIR$/data/converted_midi/Basket Case - Green Day.mid" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/converted_midi/In Bloom - Nirvana.mid" beforeDir="false" afterPath="$PROJECT_DIR$/data/converted_midi/In Bloom - Nirvana.mid" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/original_midi/Autumn Leaves - Bill Evans.mid" beforeDir="false" afterPath="$PROJECT_DIR$/data/original_midi/Autumn Leaves - Bill Evans.mid" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/original_midi/Basket Case - Green Day.mid" beforeDir="false" afterPath="$PROJECT_DIR$/data/original_midi/Basket Case - Green Day.mid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/midi_extended/MidiFileExtended.py" beforeDir="false" afterPath="$PROJECT_DIR$/midi_extended/MidiFileExtended.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/midi_extended/Track.py" beforeDir="false" afterPath="$PROJECT_DIR$/midi_extended/Track.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/midi_extended/UtilityBox.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/analysis/chord.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/analysis/chord.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/analysis/density.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/analysis/density.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/util/analysis/tonality.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/analysis/tonality.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/data/create_database.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/data/create_database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/util/toolkit.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/toolkit.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/data/auxillary.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/data/auxillary.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/util/toolkit.py" beforeDir="false" afterPath="$PROJECT_DIR$/util/toolkits/data_convert.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +151,7 @@
       <recent name="D:\PycharmProjects\MusicCritique\misc\GuitarPro\data" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.test_cygan">
+  <component name="RunManager" selected="Python.tonal">
     <configuration name="classify_model" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MusicCritique" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -157,28 +166,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/classify/classify_model.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="coffin_dance" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="MusicCritique" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/attempts" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/attempts/coffin_dance.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -209,7 +196,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="golden_wind" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="rocknroll" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MusicCritique" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -217,12 +204,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/attempts" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/composition" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/attempts/golden_wind.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/composition/rocknroll.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -253,20 +240,42 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="tonal" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MusicCritique" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/util" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/util/tonal.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.cygan_model" />
       <item itemvalue="Python.classify_model" />
-      <item itemvalue="Python.coffin_dance" />
-      <item itemvalue="Python.golden_wind" />
       <item itemvalue="Python.test_cygan" />
+      <item itemvalue="Python.rocknroll" />
+      <item itemvalue="Python.tonal" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.tonal" />
+        <item itemvalue="Python.rocknroll" />
         <item itemvalue="Python.test_cygan" />
         <item itemvalue="Python.cygan_model" />
         <item itemvalue="Python.classify_model" />
-        <item itemvalue="Python.golden_wind" />
-        <item itemvalue="Python.coffin_dance" />
       </list>
     </recent_temporary>
   </component>
@@ -441,7 +450,10 @@
       <workItem from="1587994731091" duration="597000" />
       <workItem from="1588061184066" duration="17468000" />
       <workItem from="1588124449260" duration="22837000" />
-      <workItem from="1588173234091" duration="3078000" />
+      <workItem from="1588173234091" duration="3873000" />
+      <workItem from="1588210705751" duration="4397000" />
+      <workItem from="1589853241668" duration="11487000" />
+      <workItem from="1589943138439" duration="11840000" />
     </task>
     <task id="LOCAL-00001" summary="pretty">
       <created>1578794444076</created>
@@ -481,15 +493,6 @@
     <option name="localTasksCounter" value="6" />
     <servers />
   </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
   </component>
@@ -518,42 +521,46 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="552" y="213" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1587280470773" />
+    <state x="690" y="301" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1589863455744">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="690" y="301" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.30.1920.1050@0.30.1920.1050" timestamp="1589863455744" />
     <state x="740" y="309" key="FileChooserDialogImpl" timestamp="1587697556814">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="740" y="309" key="FileChooserDialogImpl/0.30.1920.1050@0.30.1920.1050" timestamp="1587697556814" />
-    <state width="1877" height="142" key="GridCell.Tab.0.bottom" timestamp="1588176917143">
+    <state width="1877" height="292" key="GridCell.Tab.0.bottom" timestamp="1589959227342">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="142" key="GridCell.Tab.0.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1588176917143" />
-    <state width="1877" height="142" key="GridCell.Tab.0.center" timestamp="1588176917143">
+    <state width="1877" height="292" key="GridCell.Tab.0.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1589959227342" />
+    <state width="1877" height="292" key="GridCell.Tab.0.center" timestamp="1589959227342">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="142" key="GridCell.Tab.0.center/0.30.1920.1050@0.30.1920.1050" timestamp="1588176917143" />
-    <state width="1877" height="142" key="GridCell.Tab.0.left" timestamp="1588176917143">
+    <state width="1877" height="292" key="GridCell.Tab.0.center/0.30.1920.1050@0.30.1920.1050" timestamp="1589959227342" />
+    <state width="1877" height="292" key="GridCell.Tab.0.left" timestamp="1589959227342">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="142" key="GridCell.Tab.0.left/0.30.1920.1050@0.30.1920.1050" timestamp="1588176917143" />
-    <state width="1877" height="142" key="GridCell.Tab.0.right" timestamp="1588176917143">
+    <state width="1877" height="292" key="GridCell.Tab.0.left/0.30.1920.1050@0.30.1920.1050" timestamp="1589959227342" />
+    <state width="1877" height="292" key="GridCell.Tab.0.right" timestamp="1589959227342">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="142" key="GridCell.Tab.0.right/0.30.1920.1050@0.30.1920.1050" timestamp="1588176917143" />
-    <state width="1877" height="128" key="GridCell.Tab.1.bottom" timestamp="1588165270451">
+    <state width="1877" height="292" key="GridCell.Tab.0.right/0.30.1920.1050@0.30.1920.1050" timestamp="1589959227342" />
+    <state width="1877" height="128" key="GridCell.Tab.1.bottom" timestamp="1589954612010">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="128" key="GridCell.Tab.1.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1588165270451" />
-    <state width="1877" height="128" key="GridCell.Tab.1.center" timestamp="1588165270451">
+    <state width="1877" height="128" key="GridCell.Tab.1.bottom/0.30.1920.1050@0.30.1920.1050" timestamp="1589954612010" />
+    <state width="1877" height="128" key="GridCell.Tab.1.center" timestamp="1589954612010">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="128" key="GridCell.Tab.1.center/0.30.1920.1050@0.30.1920.1050" timestamp="1588165270451" />
-    <state width="1877" height="128" key="GridCell.Tab.1.left" timestamp="1588165270451">
+    <state width="1877" height="128" key="GridCell.Tab.1.center/0.30.1920.1050@0.30.1920.1050" timestamp="1589954612010" />
+    <state width="1877" height="128" key="GridCell.Tab.1.left" timestamp="1589954612010">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="128" key="GridCell.Tab.1.left/0.30.1920.1050@0.30.1920.1050" timestamp="1588165270451" />
-    <state width="1877" height="128" key="GridCell.Tab.1.right" timestamp="1588165270451">
+    <state width="1877" height="128" key="GridCell.Tab.1.left/0.30.1920.1050@0.30.1920.1050" timestamp="1589954612010" />
+    <state width="1877" height="128" key="GridCell.Tab.1.right" timestamp="1589954612010">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1877" height="128" key="GridCell.Tab.1.right/0.30.1920.1050@0.30.1920.1050" timestamp="1588165270451" />
+    <state width="1877" height="128" key="GridCell.Tab.1.right/0.30.1920.1050@0.30.1920.1050" timestamp="1589954612010" />
     <state width="218" height="483" key="HiddenNamespacesPopup" timestamp="1586401726100">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -569,11 +576,12 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MusicCritique$classify_model.coverage" NAME="classify_model Coverage Results" MODIFIED="1588134852921" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/classify" />
+    <SUITE FILE_PATH="coverage/MusicCritique$tonal.coverage" NAME="tonal Coverage Results" MODIFIED="1589959227333" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
     <SUITE FILE_PATH="coverage/MusicCritique$csv_is_alright__1_.coverage" NAME="csv_is_alright (1) Coverage Results" MODIFIED="1587043909774" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
     <SUITE FILE_PATH="coverage/MusicCritique$csv.coverage" NAME="csv Coverage Results" MODIFIED="1587043388533" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
     <SUITE FILE_PATH="coverage/MusicCritique$toolkit.coverage" NAME="toolkit Coverage Results" MODIFIED="1587652118529" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util" />
     <SUITE FILE_PATH="coverage/MusicCritique$dataset.coverage" NAME="dataset Coverage Results" MODIFIED="1587631766095" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
-    <SUITE FILE_PATH="coverage/MusicCritique$test_cygan.coverage" NAME="test_cygan Coverage Results" MODIFIED="1588176917136" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
+    <SUITE FILE_PATH="coverage/MusicCritique$test_cygan.coverage" NAME="test_cygan Coverage Results" MODIFIED="1588231433754" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
     <SUITE FILE_PATH="coverage/MusicCritique$density.coverage" NAME="density Coverage Results" MODIFIED="1587697595458" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/analysis" />
     <SUITE FILE_PATH="coverage/MusicCritique$config.coverage" NAME="config Coverage Results" MODIFIED="1586503807124" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
     <SUITE FILE_PATH="coverage/MusicCritique$coffin_dance.coverage" NAME="coffin_dance Coverage Results" MODIFIED="1587822905152" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/attempts" />
@@ -585,7 +593,8 @@
     <SUITE FILE_PATH="coverage/MusicCritique$classify_config.coverage" NAME="classify_config Coverage Results" MODIFIED="1586877337177" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/classify" />
     <SUITE FILE_PATH="coverage/MusicCritique$create_database.coverage" NAME="create_database Coverage Results" MODIFIED="1586871575063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
     <SUITE FILE_PATH="coverage/MusicCritique$golden_wind.coverage" NAME="golden_wind Coverage Results" MODIFIED="1587958420537" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/attempts" />
-    <SUITE FILE_PATH="coverage/MusicCritique$cygan_model.coverage" NAME="cygan_model Coverage Results" MODIFIED="1588140960504" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
+    <SUITE FILE_PATH="coverage/MusicCritique$cygan_model.coverage" NAME="cygan_model Coverage Results" MODIFIED="1588211335662" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cyclegan" />
+    <SUITE FILE_PATH="coverage/MusicCritique$rocknroll.coverage" NAME="rocknroll Coverage Results" MODIFIED="1589858423249" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/composition" />
     <SUITE FILE_PATH="coverage/MusicCritique$classifier.coverage" NAME="classifier Coverage Results" MODIFIED="1586960265846" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/networks" />
     <SUITE FILE_PATH="coverage/MusicCritique$csv_is_alright.coverage" NAME="csv_is_alright Coverage Results" MODIFIED="1587655048230" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/util/data" />
   </component>

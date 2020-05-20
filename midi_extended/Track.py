@@ -2,7 +2,7 @@ from mido import Message, MidiFile, MidiTrack, MetaMessage
 from fractions import Fraction
 import mido
 import traceback
-from midi_extended.UtilityBox import *
+from util.toolkits.midi import *
 
 class TrackExtended(MidiTrack):
     def __init__(self, name='default', time_signature=None, bpm=None, key=None, instruments=None):
@@ -68,7 +68,7 @@ class TrackExtended(MidiTrack):
         for channel, program in self.instruments.items():
             super().append(Message('program_change', channel=int(channel), program=program, time=0))
 
-    def add_chord(self, root, name, format, length, root_base=0, channel=3):
+    def add_chord_arpeggio(self, root, name, format, length, root_base=0, channel=3):
         bpm = self.bpm
         major_notes = [0, 2, 2, 1, 2, 2, 2, 1]
         notes = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
@@ -76,12 +76,12 @@ class TrackExtended(MidiTrack):
         for i, note in enumerate(notes):
             notes_dict[note] = 60 + sum(major_notes[0:i + 1])
         root_note = notes_dict[root] + root_base * 12
-        chord = get_chord_arrangement(name)
+        chord = get_chord_arrangement(root_note, name)
         meta_time = 60 * 60 * 10 / bpm
         time = round(length / len(format) * meta_time)
 
         for dis in format:
-            note = root_note + chord[dis]
+            note = chord[dis]
             super().append(Message('note_on', note=note, velocity=56, time=0, channel=channel))
             super().append(Message('note_off', note=note, velocity=56, time=time, channel=channel))
 
@@ -105,112 +105,113 @@ class TrackExtended(MidiTrack):
         major_notes = [0, 2, 2, 1, 2, 2, 2, 1]
         base_note = 60
 
-        if type(note) is list:
-            for i in range(len(note)):
-                current_note = note[i]
-                if type(base_num) is list:
-                    current_base_num = base_num[i]
-                else:
-                    current_base_num = 0
-                if type(alt) is list:
-                    current_alt = alt[i]
-                else:
-                    current_alt = 0
-                super().append(Message('note_on',
-                                       note=base_note + current_base_num * 12 + sum(major_notes[0:current_note]) + current_alt,
-                                       velocity=round(127 * velocity), time=round(delay * meta_time),
-                                       channel=channel))
-            for i in range(len(note)):
-                current_note = note[i]
-                if type(length) is list:
-                    current_length = length[i]
-                else:
-                    current_length = length
-                if type(base_num) is list:
-                    current_base_num = base_num[i]
-                else:
-                    current_base_num = 0
-                if type(alt) is list:
-                    current_alt = alt[i]
-                else:
-                    current_alt = 0
-                if i == 0:
-                    super().append(Message('note_off',
-                                           note=base_note + current_base_num * 12 + sum(major_notes[0:current_note]) + current_alt,
-                                           velocity=round(127 * velocity), time=round(meta_time * current_length),
-                                           channel=channel))
-                else:
-                    super().append(Message('note_off',
-                                           note=base_note + current_base_num * 12 + sum(major_notes[0:current_note]) + current_alt,
-                                           velocity=round(127 * velocity), time=0,
-                                           channel=channel))
-
-        elif type(note) is int:
-            if pitch_type == 0:  # No Pitch Wheel Message
+        if pitch_type == 0:  # No Pitch Wheel Message
+            super().append(Message('note_on',
+                                   note=base_note + base_num * 12 + sum(major_notes[0:note]) + alt,
+                                   velocity=round(127 * velocity), time=round(delay * meta_time),
+                                   channel=channel))
+            super().append(Message('note_off', note=base_note + base_num * 12 + sum(major_notes[0:note]) + alt,
+                                   velocity=round(127 * velocity), time=round(meta_time * length),
+                                   channel=channel))
+        elif pitch_type == 1:  # Tremble
+            try:
+                pitch = tremble_setting['pitch']
+                wheel_times = tremble_setting['wheel_times']
                 super().append(Message('note_on',
                                        note=base_note + base_num * 12 + sum(major_notes[0:note]) + alt,
-                                       velocity=round(127 * velocity), time=round(delay * meta_time),
-                                       channel=channel))
-                super().append(Message('note_off', note=base_note + base_num * 12 + sum(major_notes[0:note]) + alt,
-                                       velocity=round(127 * velocity), time=round(meta_time * length),
-                                       channel=channel))
-            elif pitch_type == 1:  # Tremble
-                try:
-                    pitch = tremble_setting['pitch']
-                    wheel_times = tremble_setting['wheel_times']
-                    super().append(Message('note_on',
-                                           note=base_note + base_num * 12 + sum(major_notes[0:note]) + alt,
-                                           velocity=round(127 * velocity),
-                                           time=round(delay * meta_time), channel=channel))
-                    for i in range(wheel_times):
-                        super().append(Message('pitchwheel',
-                                               pitch=pitch,
-                                               time=round(meta_time * length / (2 * wheel_times)),
-                                               channel=channel))
-                        super().append(Message('pitchwheel',
-                                               pitch=0, time=0,
-                                               channel=channel))
-                        super().append(Message('pitchwheel',
-                                               pitch=-pitch,
-                                               time=round(meta_time * length / (2 * wheel_times)),
-                                               channel=channel))
+                                       velocity=round(127 * velocity),
+                                       time=round(delay * meta_time), channel=channel))
+                for i in range(wheel_times):
+                    super().append(Message('pitchwheel',
+                                           pitch=pitch,
+                                           time=round(meta_time * length / (2 * wheel_times)),
+                                           channel=channel))
                     super().append(Message('pitchwheel',
                                            pitch=0, time=0,
                                            channel=channel))
-                    super().append(Message('note_off',
-                                           note=base_note + base_num * 12 + sum(major_notes[0:note]) + alt,
-                                           velocity=round(127 * velocity), time=0, channel=channel))
-                except:
-                    print(traceback.format_exc())
-            elif pitch_type == 2:  # Bend
-                try:
-                    pitch = bend_setting['pitch']
-                    PASDA = bend_setting['PASDA']  # Prepare-Attack-Sustain-Decay-Aftermath (Taken the notion of ADSR)
-                    prepare_rate = PASDA[0] / sum(PASDA)
-                    attack_rate = PASDA[1] / sum(PASDA)
-                    sustain_rate = PASDA[2] / sum(PASDA)
-                    decay_rate = PASDA[3] / sum(PASDA)
-                    aftermath_rate = PASDA[4] / sum(PASDA)
-                    super().append(Message('note_on',
-                                           note=base_note + base_num * 12 + sum(major_notes[0:note]) + alt,
-                                           velocity=round(127 * velocity), time=round(delay * meta_time), channel=channel))
-                    super().append(Message('aftertouch',
-                                           time=round(meta_time * length * prepare_rate),
+                    super().append(Message('pitchwheel',
+                                           pitch=-pitch,
+                                           time=round(meta_time * length / (2 * wheel_times)),
                                            channel=channel))
-                    super().append(
-                        Message('pitchwheel', pitch=pitch,
-                                time=round(meta_time * length * attack_rate), channel=channel))
-                    super().append(Message('aftertouch',
-                                           time=round(meta_time * length * sustain_rate), channel=channel))
-                    super().append(
-                        Message('pitchwheel',
-                                pitch=0, time=round(meta_time * length * decay_rate), channel=channel))
-                    super().append(Message('note_off',
-                                           note=base_note + base_num * 12 + sum(major_notes[0:note]) + alt,
-                                           velocity=round(127 * velocity), time=round(meta_time * length * aftermath_rate),
-                                           channel=channel))
-                except:
-                    print(traceback.format_exc())
+                super().append(Message('pitchwheel',
+                                       pitch=0, time=0,
+                                       channel=channel))
+                super().append(Message('note_off',
+                                       note=base_note + base_num * 12 + sum(major_notes[0:note]) + alt,
+                                       velocity=round(127 * velocity), time=0, channel=channel))
+            except:
+                print(traceback.format_exc())
+        elif pitch_type == 2:  # Bend
+            try:
+                pitch = bend_setting['pitch']
+                PASDA = bend_setting['PASDA']  # Prepare-Attack-Sustain-Decay-Aftermath (Taken the notion of ADSR)
+                prepare_rate = PASDA[0] / sum(PASDA)
+                attack_rate = PASDA[1] / sum(PASDA)
+                sustain_rate = PASDA[2] / sum(PASDA)
+                decay_rate = PASDA[3] / sum(PASDA)
+                aftermath_rate = PASDA[4] / sum(PASDA)
+                super().append(Message('note_on',
+                                       note=base_note + base_num * 12 + sum(major_notes[0:note]) + alt,
+                                       velocity=round(127 * velocity), time=round(delay * meta_time), channel=channel))
+                super().append(Message('aftertouch',
+                                       time=round(meta_time * length * prepare_rate),
+                                       channel=channel))
+                super().append(
+                    Message('pitchwheel', pitch=pitch,
+                            time=round(meta_time * length * attack_rate), channel=channel))
+                super().append(Message('aftertouch',
+                                       time=round(meta_time * length * sustain_rate), channel=channel))
+                super().append(
+                    Message('pitchwheel',
+                            pitch=0, time=round(meta_time * length * decay_rate), channel=channel))
+                super().append(Message('note_off',
+                                       note=base_note + base_num * 12 + sum(major_notes[0:note]) + alt,
+                                       velocity=round(127 * velocity), time=round(meta_time * length * aftermath_rate),
+                                       channel=channel))
+            except:
+                print(traceback.format_exc())
+
+    def add_chord(self, notes, length, alt=0, delay=0, velocity=1.0, channel=0):
+        bpm = self.bpm
+        meta_time = 60 * 4 * 960 / bpm
+        base_note = 60
+
+        for i in range(len(notes)):
+            current_note = notes[i]
+            '''
+            if type(base_num) is list:
+                current_base_num = base_num[i]
+            else:
+                current_base_num = 0
+            '''
+
+            super().append(Message('note_on',
+                                   note=current_note,
+                                   velocity=round(127 * velocity), time=round(delay * meta_time),
+                                   channel=channel))
+        for i in range(len(notes)):
+            current_note = notes[i]
+            if type(length) is list:
+                current_length = length[i]
+            else:
+                current_length = length
+            '''
+            if type(base_num) is list:
+                current_base_num = base_num[i]
+            else:
+                current_base_num = 0
+            '''
+
+            if i == 0:
+                super().append(Message('note_off',
+                                       note=current_note,
+                                       velocity=round(127 * velocity), time=round(meta_time * current_length),
+                                       channel=channel))
+            else:
+                super().append(Message('note_off',
+                                       note=current_note,
+                                       velocity=round(127 * velocity), time=0,
+                                       channel=channel))
 
     def wait(self, time):
         bpm = self.bpm

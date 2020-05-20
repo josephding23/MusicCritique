@@ -1,5 +1,5 @@
-from util.toolkit import *
-
+from util.toolkits.data_convert import *
+from util.toolkits.database import *
 
 def evaluate_density_of_file(path, valid_pieces_num):
     npy_file = np.load(path)

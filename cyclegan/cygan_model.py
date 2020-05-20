@@ -20,8 +20,9 @@ from networks.SteelyGAN import Discriminator, Generator
 from classify.old_network import Classifier
 from classify.classify_model import Classify
 from cyclegan.cygan_config import Config
-from util.toolkit import generate_midi_segment_from_tensor, generate_data_from_midi, generate_whole_midi_from_tensor
-from util.analysis.tonality import evaluate_tonal_scale_of_data, get_md5_of
+from util.toolkits.data_convert import generate_midi_segment_from_tensor, generate_data_from_midi, generate_whole_midi_from_tensor
+from util.analysis.tonality import evaluate_tonal_scale_of_data
+from util.toolkits.database import get_md5_of
 from util.image_pool import ImagePool
 import logging
 import colorlog

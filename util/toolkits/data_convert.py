@@ -1,37 +1,8 @@
 import matplotlib.pyplot as plt
 import pretty_midi
 import math
-from pymongo import MongoClient
 
-from util.data import auxillary as aux
 import numpy as np
-import music21
-
-
-def get_midi_collection():
-    client = MongoClient(connect=False)
-    return client.free_midi.midi
-
-
-def get_classical_collection():
-    client = MongoClient(connect=False)
-    return client.classical_midi.midi
-
-
-def get_jazz_collection():
-    client = MongoClient(connect=False)
-    return client.jazz_midi.midi
-
-
-def get_jazzkar_collection():
-    client = MongoClient(connect=False)
-    return client.jazz_midikar.midi
-
-
-def get_genre_collection():
-    client = MongoClient(connect=False)
-    return client.free_midi.genres
-
 
 def plot_data(data):
     sample_data = data
@@ -79,16 +50,6 @@ def generate_midi_segment_from_tensor(data, path):
                     during_note = False
     pm.instruments.append(instr_track)
     pm.write(path)
-
-
-def get_md5_of(performer, song, genre):
-    midi_collection = aux.get_midi_collection()
-    try:
-        md5 = midi_collection.find_one({'Performer': performer, 'Name': song, 'Genre': genre})['md5']
-        return md5
-    except Exception:
-        raise Exception('No midi Found.')
-
 
 def save_midis(bars, path):
     pm = pretty_midi.PrettyMIDI()

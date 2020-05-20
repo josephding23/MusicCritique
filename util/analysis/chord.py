@@ -1,4 +1,6 @@
-from util.toolkit import *
+from util.toolkits.database import *
+from util.toolkits.data_convert import *
+import music21
 
 
 def get_chord(note_nums):

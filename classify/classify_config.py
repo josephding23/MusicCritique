@@ -10,7 +10,7 @@ class Config(object):
         self.name = 'classifier'
         self.dataset_name = 'free_midi_library'
 
-        self.genre_group = 3
+        self.genre_group = 2
 
         if self.genre_group == 1:
             self.genreA = 'metal'

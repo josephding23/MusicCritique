@@ -4,21 +4,7 @@ import pypianoroll
 import os
 import pretty_midi
 import matplotlib.pyplot as plt
-
-
-def get_midi_collection():
-    client = MongoClient(connect=False)
-    return client.free_midi.midi
-
-
-def get_genre_collection():
-    client = MongoClient(connect=False)
-    return client.free_midi.genres
-
-
-def get_jazz_collection():
-    client = MongoClient(connect=False)
-    return client.jazz_midi.midi
+from util.toolkits.database import *
 
 
 def find_music_with_multiple_genres():

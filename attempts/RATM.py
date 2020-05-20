@@ -1,5 +1,5 @@
 from midi_extended.MidiFileExtended import MidiFileExtended
-from midi_extended.UtilityBox import *
+from util.toolkits.midi import *
 import pretty_midi
 import pypianoroll
 
