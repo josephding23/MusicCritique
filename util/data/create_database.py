@@ -466,6 +466,19 @@ def generate_sparse_matrix_of_genre(genre, phase):
     return data
 
 
+def generate_sparse_matrix_of_genre_colab(genre, phase):
+    npy_path = 'D:/Datasets/steely_data_light/' + genre + f'/{phase}.npz'
+    with np.load(npy_path) as f:
+        shape = f['shape']
+        data = np.zeros(shape, np.float_)
+        nonzeros = f['nonzeros']
+        for x in nonzeros:
+            data[(int(x[0]), int(x[1]), int(x[2]))] = 1.
+
+    np.random.shuffle(data)
+    return data
+
+
 def get_genre_pieces_num(genre):
     genre_collection = get_genre_collection()
     return genre_collection.find_one({'Name': genre})['ValidPiecesNum']

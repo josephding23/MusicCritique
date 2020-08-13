@@ -101,15 +101,17 @@ def find_meta(path):
     for ks in pm.key_signature_changes:
         print(ks)
 
-def test():
-    path = 'E:/free_midi_library/unhashed/rock/All You Need Is Love - Beatles.mid'
-    s = converter.parse(path)
-    # s.plot('histogram', 'pitch')
 
-    p = analysis.discrete.Ambitus()
+def test():
+    path = '../data/midi/read/All You Need Is Love - Beatles.mid'
 
     find_meta(path)
+
+    s = converter.parse(path)
+    s.plot('histogram', 'pitch')
+    p = analysis.discrete.KrumhanslKessler()
     print(p.getSolution(s))
+
     krumhansl_schmuckler(path)
 
 

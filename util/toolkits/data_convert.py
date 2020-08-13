@@ -4,6 +4,7 @@ import math
 
 import numpy as np
 
+
 def plot_data(data):
     sample_data = data
     dataX = []
@@ -50,6 +51,7 @@ def generate_midi_segment_from_tensor(data, path):
                     during_note = False
     pm.instruments.append(instr_track)
     pm.write(path)
+
 
 def save_midis(bars, path):
     pm = pretty_midi.PrettyMIDI()

@@ -1,8 +1,8 @@
 import os
 
 
-class Config(object):
-    def __init__(self):
+class ClassifierConfig(object):
+    def __init__(self, genre_group, continue_train):
 
         ##########################
         # Info
@@ -10,7 +10,7 @@ class Config(object):
         self.name = 'classifier'
         self.dataset_name = 'free_midi_library'
 
-        self.genre_group = 2
+        self.genre_group = genre_group
 
         if self.genre_group == 1:
             self.genreA = 'metal'
@@ -27,14 +27,14 @@ class Config(object):
         self.dataset_mode = 'unaligned'
         self.track_merged = False
 
-        self.time_step = 120
+        self.time_stueep = 120
         self.bar_length = 4
         self.note_valid_range = (24, 108)
         self.note_valid_length = 84
         self.instr_num = 5
 
         self.phase = 'train'
-        self.continue_train = False
+        self.continue_train = continue_train
 
         ###########################
 
@@ -74,7 +74,7 @@ class Config(object):
         ##########################
         # Save Paths
 
-        self.save_path = 'd:/checkpoints/' + '{}_{}2{}'.format(self.name, self.genreA, self.genreB)
+        self.save_path = '/content/drive/My Drive/Colab Notebooks/MusicCritique/checkpoints/' + '{}_{}2{}'.format(self.name, self.genreA, self.genreB)
         self.model_path = self.save_path + '/models/'
         self.checkpoint_path = self.save_path + '/checkpoints/'
 

@@ -1,18 +1,20 @@
 import os
 
 
-class Config(object):
-    def __init__(self):
+class CyganConfig(object):
+    def __init__(self, name, genre_group, continue_train):
 
         ##########################
         # Info
 
-        self.name = 'steely_gan'
-        # self.name = 'SMGT'
+        self.name = name
+        assert self.name in ['steely_gan', 'SMGT']
 
         self.dataset_name = 'free_midi_library'
 
-        self.genre_group = 2
+        self.genre_group = genre_group
+
+        self.continue_train = continue_train
 
         if self.genre_group == 1:
             self.genreA = 'metal'
@@ -36,7 +38,6 @@ class Config(object):
         self.instr_num = 5
 
         self.phase = 'train'
-        self.continue_train = True
 
         self.direction = 'AtoB'
 
@@ -75,9 +76,9 @@ class Config(object):
         self.weight_decay = 0.0
 
         self.no_flip = True
-        self.num_threads = 0
+        self.num_threads = 4
         self.batch_size = 8
-        self.max_epoch = 20
+        self.max_epoch = 21
         self.epoch_step = 5
 
         self.data_shape = (self.batch_size, 1, 64, 84)
@@ -93,28 +94,13 @@ class Config(object):
         ##########################
         # Save Paths
 
-        self.root_dir = 'd:'
-
-        self.save_path = self.root_dir + '/checkpoints/' + '{}_{}2{}_{}_{}_gn{}_lr{}_wd{}'.format(
-            self.name, self.genreA, self.genreB, self.model, self.image_pool_info,
-            self.gaussian_std, self.lr, self.weight_decay)
-
-        self.model_path = self.save_path + '/models'
-        self.checkpoint_path = self.save_path + '/checkpoints'
+        self.save_path = 'D:/SteelyGAN/checkpoints/'
 
         self.log_path = self.save_path + '/info.log'
         self.loss_save_path = self.save_path + '/losses.json'
 
         self.test_path = self.save_path + '/test_results'
         self.test_save_path = self.test_path + '/' + self.direction
-
-        self.G_A2B_save_path = self.model_path + '/G_A2B/'
-        self.G_B2A_save_path = self.model_path + '/G_B2A/'
-        self.D_A_save_path = self.model_path + '/D_A/'
-        self.D_B_save_path = self.model_path + '/D_B/'
-
-        self.D_A_all_save_path = self.model_path + '/D_A_all/'
-        self.D_B_all_save_path = self.model_path + '/D_B_all/'
 
         ##########################
 

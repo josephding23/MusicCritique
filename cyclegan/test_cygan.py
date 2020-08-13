@@ -2,6 +2,7 @@ import torch
 from util.data.dataset import SteelyDataset, get_dataset
 import shutil
 from util.analysis.tonality import evaluate_tonal_scale_of_data
+from util.toolkits.data_convert import save_midis
 from util.toolkits.database import get_md5_of
 from cyclegan.cygan_model import CycleGAN
 from classify.classify_model import Classify
@@ -10,7 +11,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from util.analysis.tonality import *
 from torch.optim import lr_scheduler, Adam
-
+from util.toolkits.data_convert import *
 
 
 def test_sample_song_old():

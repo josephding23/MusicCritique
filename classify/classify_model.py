@@ -11,15 +11,21 @@ from torchnet.meter import MovingAverageValueMeter
 import shutil
 from classify.old_network import Classifier
 from classify.new_network import NewClassifier
-from classify.classify_config import Config
+from classify.classify_config import ClassifierConfig
 from util.logger import TerminalLogger
 
-
 class Classify(object):
-    def __init__(self):
-        self.opt = Config()
+    def __init__(self, opt, device_name):
+        self.opt = opt
 
-        self.device = torch.device('cuda') if self.opt.gpu else torch.device('cpu')
+        self.device_name = device_name
+        if self.device_name == 'TPU':
+            import torch_xla
+            import torch_xla.core.xla_model as xm
+            self.device = xm.xla_device() 
+        else:
+            self.device = torch.device('cuda')
+
         self.logger = TerminalLogger('logger')
 
         self._build_model()
@@ -29,7 +35,7 @@ class Classify(object):
 
         if self.opt.gpu:
             self.classifier.to(self.device)
-            summary(self.classifier, input_size=self.opt.input_shape)
+            # summary(self.classifier, input_size=self.opt.input_shape)
 
         self.classifier_optimizer = Adam(params=self.classifier.parameters(), lr=self.opt.lr,
                                          betas=(self.opt.beta1, self.opt.beta2),
@@ -38,12 +44,17 @@ class Classify(object):
         self.classifier_scheduler = lr_scheduler.CosineAnnealingWarmRestarts(self.classifier_optimizer, T_0=1, T_mult=2, eta_min=4e-08)
 
     def save_model(self, epoch):
-        classifier_filename = f'{self.opt.name}_C_{epoch}.pth'
+        classifier_filename = f'C_{self.opt.genreA}_{self.opt.genreB}_{epoch}.pth'
         classifier_filepath = os.path.join(self.opt.checkpoint_path, classifier_filename)
 
         print(classifier_filepath)
+        
+        if epoch - self.opt.save_every >= 0:
+            old_classifier_filename = f'C_{self.opt.genreA}_{self.opt.genreB}_{epoch - self.opt.save_every}.pth'
 
-        torch.save(self.classifier.state_dict(), classifier_filepath)
+            os.remove(old_classifier_filename)
+
+        torch.save(self.classifier.state_dict(), classifier_filename)
 
         self.logger.info('model saved')
 
@@ -64,11 +75,9 @@ class Classify(object):
         latest_checked_epoch = self.find_latest_checkpoint()
         self.opt.start_epoch = latest_checked_epoch + 1
 
-        C_filename = f'{self.opt.name}_C_{latest_checked_epoch}.pth'
+        classifier_filename = f'C_{self.opt.genreA}_{self.opt.genreB}_{latest_checked_epoch}.pth'
 
-        C_path = self.opt.checkpoint_path + '/' + C_filename
-
-        self.classifier.load_state_dict(torch.load(C_path))
+        self.classifier.load_state_dict(torch.load(classifier_filename))
 
         print(f'Loaded model from epoch {self.opt.start_epoch-1}')
 
@@ -138,7 +147,7 @@ class Classify(object):
         real_test_label = torch.from_numpy(test_dataset.get_labels()).view(-1, 2).to(self.device, dtype=torch.float)
 
         for epoch in range(self.opt.start_epoch, self.opt.max_epoch):
-            loader = DataLoader(dataset, batch_size=self.opt.batch_size, shuffle=True, num_workers=self.opt.num_threads, drop_last=True)
+            loader = DataLoader(dataset, batch_size=self.opt.batch_size, shuffle=True, num_workers=self.opt.num_threads, drop_last=False)
             epoch_start_time = time.time()
 
             for i, batch in enumerate(loader):
@@ -177,14 +186,11 @@ class Classify(object):
             self.logger.info(f'Epoch {epoch} finished, cost time {epoch_time}\n')
 
 
-def run():
-    classifiy = Classify()
-    if classifiy.opt.phase == 'train':
-        classifiy.train()
-    elif classifiy.opt.phase == 'test':
-        pass
-        # classifiy.test()
+def train():
+    opt = ClassifierConfig(1)
+    classifiy = Classify(opt)
+    classifiy.train()
 
 
 if __name__ == '__main__':
-    run()
+    train()

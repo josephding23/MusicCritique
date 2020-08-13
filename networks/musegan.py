@@ -182,7 +182,7 @@ class GANLoss(nn.Module):
     that has the same size as the input.
     """
 
-    def __init__(self, gan_mode, target_real_label=1.0, target_fake_label=0.0):
+    def __init__(self, gan_mode,  device, target_real_label=1.0, target_fake_label=0.0):
         """ Initialize the GANLoss class.
 
         Parameters:
@@ -197,6 +197,7 @@ class GANLoss(nn.Module):
         self.register_buffer('real_label', torch.tensor(target_real_label))
         self.register_buffer('fake_label', torch.tensor(target_fake_label))
         self.gan_mode = gan_mode
+        self.device = device
         if gan_mode == 'lsgan':
             self.loss = nn.MSELoss()
         elif gan_mode == 'vanilla':
@@ -222,7 +223,7 @@ class GANLoss(nn.Module):
         else:
             target_tensor = self.fake_label
         # return target_tensor.expand_as(prediction)
-        return target_tensor.expand_as(prediction).to(torch.device('cuda'))
+        return target_tensor.expand_as(prediction).to(self.device)
 
     def __call__(self, prediction, target_is_real):
         """Calculate loss given Discriminator's output and grount truth labels.

@@ -1,6 +1,5 @@
 import torch.nn as nn
 
-
 class ResnetBlock(nn.Module):
     """Define a Resnet block"""
 

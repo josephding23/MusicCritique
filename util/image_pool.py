@@ -2,6 +2,7 @@ import numpy as np
 import copy
 import torch
 
+
 class ImagePool(object):
 
     def __init__(self, maxsize):

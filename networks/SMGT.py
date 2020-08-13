@@ -14,9 +14,6 @@ class Discriminator(nn.Module):
     def __init__(self):
         super(Discriminator, self).__init__()
 
-        # shape = (64, 84, 1)
-        # df_dim = 64
-
         self.net1 = nn.Sequential(nn.Conv2d(in_channels=1,
                                             out_channels=64,
                                             kernel_size=7,
@@ -71,6 +68,7 @@ class Generator(nn.Module):
                                   nn.InstanceNorm2d(64, eps=1e-5),
                                   nn.ReLU()
                                   )
+        init_weight_(self.net1)
 
         self.net2 = nn.Sequential(nn.Conv2d(in_channels=64,
                                             out_channels=128,
@@ -90,6 +88,7 @@ class Generator(nn.Module):
                                   nn.InstanceNorm2d(256, eps=1e-5),
                                   nn.ReLU()
                                   )
+        init_weight_(self.net2)
 
         self.resnet = nn.Sequential()
         for i in range(10):
@@ -97,7 +96,9 @@ class Generator(nn.Module):
                                                                padding_type='reflect',
                                                                use_dropout=False,
                                                                use_bias=False,
-                                                               norm_layer=nn.InstanceNorm2d))
+                                                               norm_layer=nn.InstanceNorm2d)
+            )
+        init_weight_(self.resnet)
 
         self.net3 = nn.Sequential(nn.ConvTranspose2d(in_channels=256,
                                                      out_channels=128,
@@ -108,7 +109,7 @@ class Generator(nn.Module):
                                   nn.ZeroPad2d((0, 1, 0, 1)),
                                   nn.InstanceNorm2d(128, eps=1e-5),
                                   nn.ReLU(),
-
+                                  
                                   nn.ConvTranspose2d(in_channels=128,
                                                      out_channels=64,
                                                      kernel_size=3,
@@ -124,9 +125,11 @@ class Generator(nn.Module):
                                             out_channels=1,
                                             kernel_size=7,
                                             stride=1,
-                                            padding=0),
+                                            padding=0,
+                                            bias=False),
                                   nn.Sigmoid()
                                   )
+        init_weight_(self.net3)
 
     def forward(self, tensor_in):
         x = tensor_in
@@ -135,6 +138,7 @@ class Generator(nn.Module):
         x = self.net1(x)
         # (batch * 1 * 70 * 90) after padded
         # (batch * 64 * 64 * 84)
+
         x = self.net2(x)
         # (batch * 128 * 32 * 42)
         # (batch * 256 * 16 * 21)
